@@ -186,6 +186,12 @@ exclude:
   - package.json
   - package-lock.json
   - _pages/about_einstein.md
+  - _pages/publications
+  - _pages/repositories
+  - _pages/blog
+  - _pages/profiles
+  - _pages/dropdown
+  - _pages/cv
   - purgecss.config.js
   - README.md
   - readme_preview/
@@ -625,7 +631,7 @@ third_party_libraries:
 
 jekyll_get_json:
   - data: resume
-    json: assets/json/resume.json # it can also be an url
+    json: https://orfe.princeton.edu/sites/g/files/toruqf1286/files/documents/cv_burak_aydin%20-%20burak%20aydin.pdf # assets/json/resume.json # it can also be an url
 
 jsonresume:
   - basics

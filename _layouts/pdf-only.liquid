@@ -1,0 +1,17 @@
+---
+layout: default
+---
+
+<div class="container mt-5">
+  <object
+    data="{{ page.pdf_path | relative_url }}"
+    type="application/pdf"
+    width="100%"
+    height="900"
+  >
+    <p>
+      Your browser can’t display PDFs inline.
+      <a href="{{ page.pdf_path | relative_url }}">Download the PDF</a>.
+    </p>
+  </object>
+</div>
