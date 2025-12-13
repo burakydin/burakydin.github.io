@@ -31,6 +31,8 @@ I am a Ph.D. candidate at Princeton University in Operations Research and Financ
 
 I have been working on mean-field approximations to tractibly analyze competition in markets of perishable goods such as airline ticket pricing (see below for the recent paper). I am also interested in investigating the consumer side of the markets and trying to model customer population. 
 
+You can find my CV [here]({{ '/assets/pdf/resume.pdf' | relative_url }}).
+
 <!-- Put your address / P.O. box / other info right below your picture. You can also disable any of these elements by editing `profile` property of the YAML header of your `_pages/about.md`. Edit `_bibliography/papers.bib` and Jekyll will render your [publications page](/al-folio/publications/) automatically. -->
 
 <!-- Link to your social media connections, too. This theme is set up to use [Font Awesome icons](https://fontawesome.com/) and [Academicons](https://jpswalsh.github.io/academicons/), like the ones below. Add your Facebook, Twitter, LinkedIn, Google Scholar, or just disable all of them. -->

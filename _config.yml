@@ -47,7 +47,7 @@ repo_trophies:
 
 navbar_fixed: true
 footer_fixed: true
-search_enabled: true
+search_enabled: false
 socials_in_search: true
 posts_in_search: true
 bib_search: true
@@ -628,10 +628,12 @@ third_party_libraries:
 # -----------------------------------------------------------------------------
 # Get external JSON data
 # -----------------------------------------------------------------------------
+# jekyll_get_json:
+#   - data: resume
+#     json: https://orfe.princeton.edu/sites/g/files/toruqf1286/files/documents/cv_burak_aydin%20-%20burak%20aydin.pdf # assets/json/resume.json # it can also be an url
 
-jekyll_get_json:
-  - data: resume
-    json: https://orfe.princeton.edu/sites/g/files/toruqf1286/files/documents/cv_burak_aydin%20-%20burak%20aydin.pdf # assets/json/resume.json # it can also be an url
+jekyll_get_json: []
+
 
 jsonresume:
   - basics
