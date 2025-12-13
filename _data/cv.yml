@@ -11,32 +11,87 @@
   contents:
     - title: Ph.D. Candidate in Operations Research and Financial Engineering
       institution: Princeton University, Princeton, NJ
+      time: 2023-Present
       description:
         - Advisor — Prof. Ronnie Sircar
-    - title: B.Sc. in Electrical and Electronics Engineering (Minor in Economics)
+    - title: B.S. in Electrical and Electronics Engineering
       institution: Boğaziçi University, Istanbul, Turkey
+      time: 2019-2023
+      description:
+        - Graduated with High Honors (GPA: 3.90/4.00)
+        - Minor in Economics (GPA: 4.00/4.00)
+    - title:  High school diploma
+      institution: Kadıköy Anadolu Lisesi (Lycée), Istanbul, Turkey
+      time: 2014-2019
+      description:
+        - Valedictorian (Class Rank: 1/333)
 
-- title: Experience
+- title: Industry & Research Experience
   type: time_table
   contents:
-    # Add your experience items here, for example:
-    # - title: Research Intern
-    #   institution: Company/Institution, City, Country
-    #   year: 2024
-    #   description:
-    #     - Bullet 1
-    #     - Bullet 2
+    - title: Quantitative Analytics Intern
+      company: Wells Fargo Bank, N.A.
+      location: Charlotte, NC
+      time: June 2025 - August 2025
+      description:
+        - Member of the Rates team under Corporate & Investment Banking, Traded Products Model Development Center.
+        - Developed a C++ script for pricing of nonstandard European swaptions within bank's repository, worked on mathematical derivations of further functionalities.
+    - title: Teaching Assistant 
+      institution: Princeton University
+      location: Princeton, NJ
+      time: August 2024 - Present
+      description:
+        - Energy and Commodities Markets, ORF 555 & ORF 455/ENE 455. (Fall 2025)
+        - Computing and Optimization for Physical and Social Sciences, ORF 363/COS 323. (Fall 2024, Spring 2025)
+    - title: Undergraduate Research Assistant
+      company: Bogazici University Photonics and Optical Wireless Communication Laboratory 
+      location: Istanbul, Turkey
+      time: September 2022 - June 2023
+      description:
+        - Senior design project on Vehicle-to-Vehicle Communication. Focusing on field-of-view limitations on curvy roads, worked on hardware and software aspects for the project, used MATLAB for modeling.
+        - Editor's Choice Award from Photonics journal.
+    - title: Undergraduate Research Intern at Physical Intelligence Department
+      institution: Max Planck Institute for Intelligent Systems
+      location: Stuttgart, Germany
+      time: July 2022 - September 2022
+      description:
+        - Utilized Python and Robot Operating System in order to construct a closed-loop controller with visual feedback, ran systematic experiments
+        - Employed Machine Learning tools to achieve real-time data processing and decision making for robot motion.
 
-- title: Academic Interests
+    
+- title: Skills and Interests
   type: nested_list
   contents:
-    - title: Research Areas
+    - title:  Programming
       items:
-        - Mean-field approximations for competition in perishable goods markets
-        - Airline ticket pricing
-        - Consumer behavior modeling and population dynamics
+        - Python
+        - C++
+        - MATLAB
+        - R
+    - title: Languages
+      items:
+        - Turkish (native)
+        - English (fluent)
+        - Spanish (intermediate)
+        - German (intermediate)
+        - Greek (beginner)
+    - title: Hobbies
+      items:
+        - Member of Carnegie Lake Rowing Association, Princeton Club Tennis
 
-- title: Other Interests
+
+- title: Achievements and Scholarships
   type: list
+  items:
+      - Turkish University Entrance Exam 2019: 6th place in Quantitative & 1st in English sections, among 2,528,031 test takers.
+      - Recipient of Turkish Presidential Outstanding Success Scholarship, Bogazici University Outstanding Success Scholarship, Turkiye Is Bankasi Golden Youth Award during undergraduate education.
+
+- title: Talks and Publications
+  type: map
   contents:
-    - <u>Hobbies:</u> Add your hobbies here
+    - name: [T]
+      value: October 2025 - Oxford-Princeton Workshop XIV on Financial Mathematics & Stochastic Analysis, University of Oxford.
+    - name: [P]
+      value: May 2025 - Fare Game: A Mean Field Model of Stochastic Intensity Control in Dynamic Ticket Pricing, with E. Parmaksiz and R. Sircar
+    - name: [P]
+      value: May 2024 - An Empirical Approach to Rerouting Visible Light Pathways Using an Adjustable-Angle Mirror to Sustain Communication between Vehicles on Curvy Roads, with A. Deniz and H. Yuksel

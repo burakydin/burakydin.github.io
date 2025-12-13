@@ -2,6 +2,35 @@
  * CV shared styles
  *****************************/
 
+// Editable CV card colors (light/dark). Change these to customize.
+$cv-card-bg-color-light: #fffaf0 !default; // matches --global-bg-color
+$cv-card-border-color-light: rgba(0, 0, 0, 0.1) !default; // matches --global-divider-color
+$cv-card-bg-color-dark: #212529 !default; // matches --global-card-bg-color
+$cv-card-border-color-dark: #424246 !default; // matches dark --global-divider-color
+
+/* Card background for CV sections */
+.cv .card {
+  background-color: $cv-card-bg-color-light;
+  border: 1px solid $cv-card-border-color-light;
+}
+
+/* Ensure list items inside cards don't reintroduce white backgrounds */
+.cv .list-group-item {
+  background-color: transparent;
+  border-color: $cv-card-border-color-light;
+}
+
+// Dark theme overrides
+html[data-theme="dark"] {
+  .cv .card {
+    background-color: $cv-card-bg-color-dark;
+    border-color: $cv-card-border-color-dark;
+  }
+  .cv .list-group-item {
+    border-color: $cv-card-border-color-dark;
+  }
+}
+
 div.container-link-button {
   margin-right: 0.5rem;
 }
