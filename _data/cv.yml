@@ -32,7 +32,7 @@
   type: time_table
   contents:
     - title: Quantitative Analytics Intern
-      company: Wells Fargo Bank, N.A., Charlotte, NC (June 2025 - August 2025)
+      institution: Wells Fargo Bank, N.A., Charlotte, NC (June 2025 - August 2025)
       description:
         - Member of the Rates team under Corporate & Investment Banking, Traded Products Model Development Center.
         - Developed a C++ script for pricing of nonstandard European swaptions within bank's repository, worked on mathematical derivations of further functionalities.
