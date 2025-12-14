@@ -3,15 +3,15 @@ const ninja = document.querySelector('ninja-keys');
 
 // add the home and posts menu items
 ninja.data = [{
-    id: "nav-about",
-    title: "about",
+    id: "nav-home",
+    title: "home",
     section: "Navigation",
     handler: () => {
       window.location.href = "/";
     },
   },{id: "nav-resume",
           title: "resume",
-          description: "Text version of my resume. You can also download the PDF using the icon.",
+          description: "You can also download the PDF version of my resume using the icon on the right.",
           section: "Navigation",
           handler: () => {
             window.location.href = "/resume/";
