@@ -201,11 +201,26 @@ ul.task-list input[type="checkbox"] {
     margin-bottom: 5px;
     margin-top: 5px;
     font-family: monospace;
+    font-size: 0.85rem;
+    font-weight: 300;
 
     p {
       display: inline-block;
       margin: 0;
     }
+  }
+
+  // Cap profile image size on mobile
+  img {
+    max-width: 200px;
+    margin: 0 auto;
+    display: block;
+  }
+}
+
+@media (min-width: 576px) {
+  .profile img {
+    max-width: 100%; // restore on desktop
   }
 }
 
@@ -503,6 +518,15 @@ footer.sticky-bottom {
 
   .container {
     text-align: center;
+  }
+}
+
+// Smaller footer on mobile
+@media (max-width: 575px) {
+  footer.sticky-bottom {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 0.75rem;
   }
 }
 
