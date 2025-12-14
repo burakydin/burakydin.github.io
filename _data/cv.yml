@@ -1,75 +1,74 @@
-- title: General Information
+- title: General
   type: map
   contents:
-    - name: Full Name
-      value: "Burak Aydın"
-    - name: Email
-      value: "ba7735 [at] princeton [dot] edu"
-    - name: Horoscope
+    - name: Reach me at
+      value: "burakaydin [at] princeton [dot] edu"
+    - name: Find me on
+      value: " <a href='https://linkedin.com/in/burakydin/'><strong>LinkedIn</strong></a> | <a href='https://github.com/burakydin/'><strong>GitHub</strong></a> | <a href='https://scholar.google.com/citations?user=H86pkZ4AAAAJ&hl=en'><strong>Scholar</strong></a> | <a href='https://letterboxd.com/burakydin/'><strong>Letterboxd</strong></a>"
+    - name: Born a
       value: "Sagittarius"
-    - name: Letterboxd
-      value: "<a href='https://letterboxd.com/burakydin/'>burakydin</a>"
+
 
 - title: Education
   type: time_table
   contents:
-    - title: "Ph.D. Candidate in Operations Research and Financial Engineering"
-      institution: "Princeton University, Princeton, NJ"
-      year: "Aug 2024 - Present"
-      location: "<strong>Princeton, NJ</strong>"
+    - title: "Ph.D. in Operations Research and Financial Engineering"
+      institution: "Princeton University <img src='/assets/img/flags/princeton.svg' alt='Princeton' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;margin-right:0.25em;'></strong>"
+      year: "Aug ’23 - Present"
+      location: "<strong>Princeton, NJ <img src='/assets/img/flags/nj.png' alt='NJ' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;margin-right:0.25em;'></strong>"
       description:
         - "Advised by Prof. Ronnie Sircar"
         - "GPA: 3.95 / 4.00" 
         - "Coursework in Optimization, Probability, Stochastic Calculus, Statistics, Computational Finance, Risk Management, Asset Pricing, PDE Methods for Financial Mathematics, Functional Analysis"
         - "Departmental Graduate Student Committee Member"
     - title: "B.S. in Electrical and Electronics Engineering"
-      institution: "Boğaziçi University"
-      year: "Aug 2019 - Jun 2023"
-      location: "<strong>Istanbul, Turkey</strong>"
+      institution: "Boğaziçi University <img src='/assets/img/flags/bogazici.svg' alt='Bogazici' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;margin-right:0.25em;'></strong>"
+      year: "Aug ’19 - Jun ’23"
+      location: "<strong>Istanbul, TR 🇹🇷</strong>"
       description:
         - "Graduated with High Honors (GPA: 3.90/4.00)"
         - "Minor in Economics (GPA: 4.00/4.00)"
     - title: "High school diploma"
-      institution: "Kadıköy Anadolu Lisesi (Lycée)"
-      year: "Sep 2014 - Jun 2019"
-      location: "<strong>Istanbul, Turkey</strong>"
+      institution: "Kadıköy Anadolu Lisesi <i>(Lycée)</i> <img src='/assets/img/flags/kal.png' alt='Kadikoy' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;margin-right:0.25em;'></strong>"
+      year: "Sep ’14 - Jun ’19"
+      location: "<strong>Istanbul, TR 🇹🇷</strong>"
       description:
         - "Valedictorian (Class Rank: 1/333)"
   
-- title: Industry & Research Experience
+- title: Experience
   type: time_table
   contents:
     - title: "Quantitative Analytics Intern"
       company: "Wells Fargo Bank, N.A." 
-      year: "Jun 2025 - Aug 2025"
-      location: "<strong>Charlotte, NC</strong>"
+      year: "Jun ’25 - Aug ’25"
+      location: "<strong>Charlotte, NC <img src='/assets/img/flags/nc.png' alt='NC' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;margin-right:0.25em;'></strong>"
       description:
         - "Member of the Rates team under Corporate & Investment Banking, Traded Products Model Development Center."
         - "Developed a C++ script for pricing of nonstandard European swaptions within bank's repository, worked on mathematical derivations of further functionalities."
     - title: "Teaching Assistant" 
-      institution: "Princeton University"
-      year: Aug 2024 - Present
-      location: "<strong>Princeton, NJ</strong>"
+      institution: "Princeton University <img src='/assets/img/flags/princeton.svg' alt='Princeton' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;margin-right:0.25em;'></strong>"
+      year: "Aug ’24 - Present"
+      location: "<strong>Princeton, NJ <img src='/assets/img/flags/nj.png' alt='NJ' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;margin-right:0.25em;'></strong>"
       description:
         - "Energy and Commodities Markets, ORF 555 & ORF 455/ENE 455. (Fall 2025)"
         - "Computing and Optimization for Physical and Social Sciences, ORF 363/COS 323. (Fall 2024, Spring 2025)"
     - title: "Undergraduate Research Assistant"
-      institution: "Bogazici University Photonics and Optical Wireless Communication Laboratory"
-      year: "Sep 2022 - Jun 2023"
-      location: "<strong>Istanbul, Turkey</strong>"
+      institution: "Bogazici University Photonics and Optical Wireless Communication Laboratory <img src='/assets/img/flags/bogazici.svg' alt='Bogazici' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;margin-right:0.25em;'></strong>"
+      year: "Sep ’22 - Jun ’23"
+      location: "<strong>Istanbul, TR 🇹🇷</strong>"
       description:
         - "Senior design project on Vehicle-to-Vehicle Communication. Focusing on field-of-view limitations on curvy roads, worked on hardware and software aspects for the project, used MATLAB for modeling."
         - "Editor's Choice Award from Photonics journal."
     - title: "Undergraduate Research Intern at Physical Intelligence Department"  
-      institution: "Max Planck Institute for Intelligent Systems" 
-      year: "Jul 2022 - Sep 2022"
-      location: "<strong>Stuttgart, Germany</strong>"
+      institution: "Max Planck Institute for Intelligent Systems <img src='/assets/img/flags/maxplanck.jpg' alt='Max Planck' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;margin-right:0.25em;'></strong>"
+      year: "Jul ’22 - Sep ’22"
+      location: "<strong>Stuttgart, DE 🇩🇪</strong>"
       description:
         - "Utilized Python and Robot Operating System in order to construct a closed-loop controller with visual feedback, ran systematic experiments"
         - "Employed Machine Learning tools to achieve real-time data processing and decision making for robot motion."
 
     
-- title: Skills and Interests
+- title: Skills & Interests
   type: nested_list
   contents:
     - title: "Programming"
@@ -83,18 +82,15 @@
         - "Member of Carnegie Lake Rowing Association, Princeton Club Tennis."
 
 
-- title: Achievements and Scholarships
+- title: Achievements & Scholarships
   type: list
   contents:
-      - "Turkish University Entrance Exam 2019: 6th place in Quantitative & 1st in English sections, among 2,528,031 test takers."
+      - "Turkish University Entrance Exam 2019: <strong>6th</strong> place in Quantitative & <strong>1st</strong> in English sections, among 2,528,031 test takers."
       - "Recipient of Turkish Presidential Outstanding Success Scholarship, Bogazici University Outstanding Success Scholarship, Turkiye Is Bankasi Golden Youth Award during undergraduate education."
 
-- title: Talks and Publications
-  type: map
+- title: Talks & Publications
+  type: list
   contents:
-    - name: "[T]"
-      value: "October 2025 - Oxford-Princeton Workshop XIV on Financial Mathematics & Stochastic Analysis, University of Oxford."
-    - name: "[P]"
-      value: "May 2025 - Fare Game: A Mean Field Model of Stochastic Intensity Control in Dynamic Ticket Pricing, with E. Parmaksiz and R. Sircar"
-    - name: "[P]"
-      value: "May 2024 - An Empirical Approach to Rerouting Visible Light Pathways Using an Adjustable-Angle Mirror to Sustain Communication between Vehicles on Curvy Roads, with A. Deniz and H. Yuksel"
+    - "<span class='cv-tag'>[Talk]</span> October 2025 - Oxford-Princeton Workshop XIV on Financial Mathematics & Stochastic Analysis, University of Oxford."
+    - "<span class='cv-tag'>[Publication]</span> May 2025 - Fare Game: A Mean Field Model of Stochastic Intensity Control in Dynamic Ticket Pricing, with E. Parmaksiz and R. Sircar"
+    - "<span class='cv-tag'>[Publication]</span> May 2024 - An Empirical Approach to Rerouting Visible Light Pathways Using an Adjustable-Angle Mirror to Sustain Communication between Vehicles on Curvy Roads, with A. Deniz and H. Yuksel"

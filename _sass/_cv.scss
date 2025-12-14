@@ -105,12 +105,99 @@ i.icondepartment {
   margin-right: 0.3rem;
 }
 
+i.iconcourse {
+  color: var(--global-theme-color);
+  font-size: 0.8rem;
+  margin-right: 0.3rem;
+}
+
+i.iconinstructor {
+  color: var(--global-theme-color);
+  font-size: 0.8rem;
+  margin-right: 0.3rem;
+}
+
 table.institution {
   margin-bottom: 1rem;
 }
 
 td.department {
   font-size: 0.8rem;
+}
+
+td.course {
+  font-size: 0.95rem;
+}
+
+/*****************************
+ * CV TIME_TABLE instructor row
+ *****************************/
+td.instructor {
+  font-size: 0.85rem;
+}
+
+/*****************************
+ * CV TIME_TABLE description sizing
+ *****************************/
+.cv ul.items {
+  font-size: 0.9rem;
+}
+
+.cv ul.subitems {
+  font-size: 0.9rem;
+}
+
+
+/* Custom bullets for description items */
+.cv ul.items,
+.cv ul.subitems {
+  list-style: none;
+  margin: 0;
+  padding-left: 1.25rem; /* indent for custom marker */
+}
+
+.cv ul.items li,
+.cv ul.subitems li {
+  position: relative;
+}
+
+.cv ul.items li::before {
+  content: "•"; /* change to "–", "•", "▸", etc. */
+  position: absolute;
+  left: 0;
+  transform: translateX(-0.75rem) translateY(0.2rem);
+  color: var(--global-theme-color);
+  line-height: 1;
+}
+
+.cv ul.subitems li::before {
+  content: "•"; /* sub-bullet */
+  position: absolute;
+  left: 0;
+  transform: translateX(-1.25rem);
+  color: var(--global-text-color);
+  opacity: 0.8;
+  line-height: 1;
+}
+
+/* Toggle details: hidden by default; show on hover or when expanded */
+.cv .cv-details {
+  /* animated collapse/expand */
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 250ms ease, opacity 200ms ease;
+}
+.cv .cv-details-block {
+  margin-top: 0.5rem;
+}
+.cv .cv-toggle {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: var(--global-theme-color);
+  font-size: 0.8rem;
+  cursor: pointer;
 }
 
 div.container-links {
@@ -153,6 +240,34 @@ div.list-group {
   flex-direction: column;
   align-items: flex-start;
   margin-bottom: 2rem;
+}
+
+/* CV tag style for bracketed labels like [Talk], [Publication] */
+.cv .cv-tag {
+  font-weight: 700;
+  color: var(--cv-tag-color, #7a3c10);
+}
+:root {
+  --cv-tag-color: #7a3c10;
+}
+html[data-theme="dark"] {
+  --cv-tag-color: #d3b08a;
+}
+
+/* CV NESTED_LIST styles (for _includes/cv/nested_list.liquid) */
+.cv .list-group-item > h5 {
+  font-size: 1rem;
+}
+.cv .list-group-item > h5 + ul.subitems .subitem {
+  font-size: 1rem;
+}
+
+/* Suppress bullets for nested_list subitems only */
+.cv .list-group-item > h5 + ul.subitems {
+  padding-left: 0;
+}
+.cv .list-group-item > h5 + ul.subitems li::before {
+  content: none !important;
 }
 
 td.list-group-category {

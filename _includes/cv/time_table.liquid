@@ -31,7 +31,7 @@
           {% if content.title %}
             <h6 class="title font-weight-bold ml-1 ml-md-4">{{ content.title }}</h6>
           {% endif %}
-          {% if content.department or content.institution or content.company or content.organization or content.employer %}
+          {% if content.department or content.institution or content.company or content.organization or content.employer or content.course or content.instructor or content.professor %}
             <table class="table-cv ml-1 ml-md-4 institution">
               <tbody>
                 {% if content.company or content.employer %}
@@ -66,51 +66,120 @@
                     <td class="department">{{ content.department }}</td>
                   </tr>
                 {% endif %}
+                {% if content.course %}
+                  <tr>
+                    <td style="vertical-align: top; text-align: center" class="course">
+                      <i class="fa-solid fa-book iconcourse"></i>
+                    </td>
+                    <td class="course">{{ content.course }}</td>
+                  </tr>
+                {% endif %}
+                {% if content.instructor or content.professor %}
+                  <tr>
+                    <td style="vertical-align: top; text-align: center" class="instructor">
+                      <i class="fa-solid fa-chalkboard-user iconinstructor"></i>
+                    </td>
+                    <td class="instructor">{{ content.instructor | default: content.professor }}</td>
+                  </tr>
+                {% endif %}
               </tbody>
             </table>
           {% endif %}
-          {% if content.maindescription %}
-            <div class="ml-1 ml-md-4">{{ content.maindescription }}</div>
-          {% endif %}
-          {% if content.description %}
-            <ul class="items">
-              {% for item in content.description %}
-                <li>
-                  {% if item.contents %}
-                    <span class="item-title">{{ item.title }}</span>
-                    <ul class="subitems">
-                      {% for subitem in item.contents %}
+          {% if page.details_toggle %}
+            {% if content.maindescription or content.description or content.items %}
+              <div class="ml-1 ml-md-4 cv-details-block">
+                <button class="cv-toggle" type="button" aria-expanded="false">Expand</button>
+                <div class="cv-details">
+                  {% if content.maindescription %}
+                    <div class="maindescription">{{ content.maindescription }}</div>
+                  {% endif %}
+                  {% if content.description %}
+                    <ul class="items">
+                      {% for item in content.description %}
                         <li>
-                          <span class="subitem">{{ subitem }}</span>
+                          {% if item.contents %}
+                            <span class="item-title">{{ item.title }}</span>
+                            <ul class="subitems">
+                              {% for subitem in item.contents %}
+                                <li>
+                                  <span class="subitem">{{ subitem }}</span>
+                                </li>
+                              {% endfor %}
+                            </ul>
+                          {% else %}
+                            <span class="item">{{ item }}</span>
+                          {% endif %}
                         </li>
                       {% endfor %}
                     </ul>
-                  {% else %}
-                    <span class="item">{{ item }}</span>
                   {% endif %}
-                </li>
-              {% endfor %}
-            </ul>
-          {% endif %}
-          {% if content.items %}
-            <ul class="items">
-              {% for item in content.items %}
-                <li>
-                  {% if item.contents %}
-                    <span class="item-title">{{ item.title }}</span>
-                    <ul class="subitems">
-                      {% for subitem in item.contents %}
+                  {% if content.items %}
+                    <ul class="items">
+                      {% for item in content.items %}
                         <li>
-                          <span class="subitem">{{ subitem }}</span>
+                          {% if item.contents %}
+                            <span class="item-title">{{ item.title }}</span>
+                            <ul class="subitems">
+                              {% for subitem in item.contents %}
+                                <li>
+                                  <span class="subitem">{{ subitem }}</span>
+                                </li>
+                              {% endfor %}
+                            </ul>
+                          {% else %}
+                            <span class="item">{{ item }}</span>
+                          {% endif %}
                         </li>
                       {% endfor %}
                     </ul>
-                  {% else %}
-                    <span class="item">{{ item }}</span>
                   {% endif %}
-                </li>
-              {% endfor %}
-            </ul>
+                </div>
+              </div>
+            {% endif %}
+          {% else %}
+            {% if content.maindescription %}
+              <div class="ml-1 ml-md-4">{{ content.maindescription }}</div>
+            {% endif %}
+            {% if content.description %}
+              <ul class="items">
+                {% for item in content.description %}
+                  <li>
+                    {% if item.contents %}
+                      <span class="item-title">{{ item.title }}</span>
+                      <ul class="subitems">
+                        {% for subitem in item.contents %}
+                          <li>
+                            <span class="subitem">{{ subitem }}</span>
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    {% else %}
+                      <span class="item">{{ item }}</span>
+                    {% endif %}
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+            {% if content.items %}
+              <ul class="items">
+                {% for item in content.items %}
+                  <li>
+                    {% if item.contents %}
+                      <span class="item-title">{{ item.title }}</span>
+                      <ul class="subitems">
+                        {% for subitem in item.contents %}
+                          <li>
+                            <span class="subitem">{{ subitem }}</span>
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    {% else %}
+                      <span class="item">{{ item }}</span>
+                    {% endif %}
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
           {% endif %}
           {% if content.linkitems %}
             <div class="container-links ml-1 ml-md-4">

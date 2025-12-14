@@ -1,0 +1,24 @@
+---
+- title: 
+  type: time_table
+  contents:
+    - title: "Energy and Commodities Markets"
+      course: "ORF 455 / ENE 455 and ORF 555"
+      instructor: "Prof. Ronnie Sircar"
+      location: "<strong>Princeton</strong>"
+      year: "Fall 2025"
+      description: "This course is an introduction to commodities markets (energy, metals, agricultural products) and issues related to renewable energy sources such as solar and wind power, and carbon emissions. Energy and other commodities represent an increasingly important asset class, in addition to significantly impacting the economy and policy decisions. Emphasis will be on the term structure of commodity prices: behavior, models and empirical issues."
+    - title: "Computing and Optimization in Physical and Social Sciences"
+      course: "ORF 363 / COS 323"
+      instructor: "Dr. Ioannis Akrotirianakis"
+      location: "<strong>Princeton</strong>"
+      year: "Spring 2025"
+      description: "An introduction to several fundamental and practically-relevant areas of modern optimization and numerical computing. Topics include computational linear algebra, first and second order descent methods, convex sets and functions, basics of linear and semidefinite programming, optimization for statistical regression and classification, and techniques for dealing with uncertainty and intractability in optimization problems. Extensive hands-on experience with high-level optimization software. Applications drawn from operations research, statistics and machine learning, economics, control theory, and engineering."
+    - title: "Computing and Optimization in Physical and Social Sciences"
+      course: "ORF 363 / COS 323"
+      instructor: "Prof. Amir Ali Ahmadi"
+      location: "<strong>Princeton</strong>"
+      year: "Fall 2024"
+      description: "An introduction to several fundamental and practically-relevant areas of modern optimization and numerical computing. Topics include computational linear algebra, first and second order descent methods, convex sets and functions, basics of linear and semidefinite programming, optimization for statistical regression and classification, and techniques for dealing with uncertainty and intractability in optimization problems. Extensive hands-on experience with high-level optimization software. Applications drawn from operations research, statistics and machine learning, economics, control theory, and engineering."
+
+

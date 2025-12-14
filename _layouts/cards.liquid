@@ -1,0 +1,75 @@
+---
+layout: default
+---
+<div class="post">
+  <header class="post-header">
+    <h1 class="post-title">
+      {{ page.title }}
+    </h1>
+    {% if page.description %}
+      <p class="post-description">{{ page.description }}</p>
+    {% endif %}
+  </header>
+
+  <article>
+    <div class="cv">
+      {% assign dataset = site.data[page.data] | default: site.data.teaching %}
+      {% for entry in dataset %}
+        {% unless entry.title == blank %}
+          <a class="anchor" id="{{ entry.title }}"></a>
+        {% endunless %}
+        <div class="card mt-3 p-3">
+          {% unless entry.title == blank %}
+            <h3 class="card-title font-weight-medium">{{ entry.title }}</h3>
+          {% endunless %}
+          <div>
+            {% if entry.type == 'list' %}
+              {% include cv/list.liquid %}
+            {% elsif entry.type == 'map' %}
+              {% include cv/map.liquid %}
+            {% elsif entry.type == 'nested_list' %}
+              {% include cv/nested_list.liquid %}
+            {% elsif entry.type == 'time_table' %}
+              {% include cv/time_table.liquid %}
+            {% elsif entry.type == 'list_groups' %}
+              {% include cv/list_groups.liquid %}
+            {% else %}
+              {{ entry.contents }}
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </article>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.cv .cv-toggle').forEach(function (btn) {
+      // set initial label based on state
+      var isExpanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.textContent = isExpanded ? 'Collapse' : 'Expand';
+
+      btn.addEventListener('click', function () {
+        var expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!expanded));
+        // update label
+        btn.textContent = expanded ? 'Expand' : 'Collapse';
+        var details = btn.nextElementSibling;
+        if (details) {
+          if (expanded) {
+            // collapse
+            details.style.maxHeight = '0px';
+            details.style.opacity = '0';
+          } else {
+            // expand to natural height
+            details.style.maxHeight = details.scrollHeight + 'px';
+            details.style.opacity = '1';
+          }
+        }
+      });
+    });
+  });
+<!-- End cards toggle script -->
+</script>
+
