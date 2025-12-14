@@ -13,25 +13,26 @@
   type: time_table
   contents:
     - title: "Ph.D. in Operations Research and Financial Engineering"
-      institution: "Princeton University <img src='/assets/img/flags/princeton.svg' alt='Princeton' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;margin-right:0.25em;'></strong>"
+      princeton: "Princeton University"
       year: "Aug ’23 - Present"
-      location: "<strong>Princeton, NJ <img src='/assets/img/flags/nj.png' alt='NJ' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;margin-right:0.25em;'></strong>"
+      # location: "<strong>Princeton, NJ <img src='/assets/img/flags/nj.png' alt='NJ' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;margin-right:0.25em;'></strong>"
+      location: "<strong>Princeton, NJ </strong>"
       description: 
         - "Advised by Prof. Ronnie Sircar"
         - "GPA: 3.95 / 4.00" 
         - "Coursework in Optimization, Probability, Stochastic Calculus, Statistics, Computational Finance, Risk Management, Asset Pricing, PDE Methods for Financial Mathematics, Functional Analysis"
         - "Departmental Graduate Student Committee Member"
     - title: "B.S. in Electrical and Electronics Engineering"
-      institution: "Boğaziçi University <img src='/assets/img/flags/bogazici.svg' alt='Bogazici' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;margin-right:0.25em;'></strong>"
+      bogazici: "Boğaziçi University"
       year: "Aug ’19 - Jun ’23"
-      location: "<strong>Istanbul, TR 🇹🇷</strong>"
+      location: "<strong>Istanbul, TR </strong>"
       description:
         - "Graduated with High Honors (GPA: 3.90/4.00)"
         - "Minor in Economics (GPA: 4.00/4.00)"
-    - title: "High school diploma"
-      institution: "Kadıköy Anadolu Lisesi <i>(Lycée)</i> <img src='/assets/img/flags/kal.png' alt='Kadikoy' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;margin-right:0.25em;'></strong>"
+    - title: "High school (lycée) diploma"
+      kal: "Kadıköy Anadolu Lisesi"
       year: "Sep ’14 - Jun ’19"
-      location: "<strong>Istanbul, TR 🇹🇷</strong>"
+      location: "<strong>Istanbul, TR </strong>"
       description:
         - "Valedictorian (Class Rank: 1/333)"
   
@@ -39,30 +40,32 @@
   type: time_table
   contents:
     - title: "Quantitative Analytics Intern"
-      company: "Wells Fargo Bank, N.A." 
+      wellsfargo: "Wells Fargo Bank, N.A." 
       year: "Jun ’25 - Aug ’25"
-      location: "<strong>Charlotte, NC <img src='/assets/img/flags/nc.png' alt='NC' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;margin-right:0.25em;'></strong>"
+      # location: "<strong>Charlotte, NC <img src='/assets/img/flags/nc.png' alt='NC' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;margin-right:0.25em;'></strong>"
+      location: "<strong>Charlotte, NC </strong>"
       description:
         - "Member of the Rates team under Corporate & Investment Banking, Traded Products Model Development Center."
         - "Developed a C++ script for pricing of nonstandard European swaptions within bank's repository, worked on mathematical derivations of further functionalities."
     - title: "Teaching Assistant" 
-      institution: "Princeton University <img src='/assets/img/flags/princeton.svg' alt='Princeton' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;margin-right:0.25em;'></strong>"
+      princeton: "Princeton University"
       year: "Aug ’24 - Present"
-      location: "<strong>Princeton, NJ <img src='/assets/img/flags/nj.png' alt='NJ' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;margin-right:0.25em;'></strong>"
+      # location: "<strong>Princeton, NJ <img src='/assets/img/flags/nj.png' alt='NJ' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;margin-right:0.25em;'></strong>"
+      location: "<strong>Princeton, NJ </strong>"
       description:
         - "Energy and Commodities Markets, ORF 555 & ORF 455/ENE 455. (Fall 2025)"
         - "Computing and Optimization for Physical and Social Sciences, ORF 363/COS 323. (Fall 2024, Spring 2025)"
     - title: "Undergraduate Research Assistant"
-      institution: "Bogazici University Photonics and Optical Wireless Communication Laboratory <img src='/assets/img/flags/bogazici.svg' alt='Bogazici' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;margin-right:0.25em;'></strong>"
+      bogazici: "Bogazici University Photonics and Optical Wireless Communication Laboratory"
       year: "Sep ’22 - Jun ’23"
-      location: "<strong>Istanbul, TR 🇹🇷</strong>"
+      location: "<strong>Istanbul, TR </strong>"
       description:
         - "Senior design project on Vehicle-to-Vehicle Communication. Focusing on field-of-view limitations on curvy roads, worked on hardware and software aspects for the project, used MATLAB for modeling."
         - "Editor's Choice Award from Photonics journal."
     - title: "Undergraduate Research Intern at Physical Intelligence Department"  
-      institution: "Max Planck Institute for Intelligent Systems <img src='/assets/img/flags/maxplanck.jpg' alt='Max Planck' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;margin-right:0.25em;'></strong>"
+      maxplanck: "Max Planck Institute for Intelligent Systems"
       year: "Jul ’22 - Sep ’22"
-      location: "<strong>Stuttgart, DE 🇩🇪</strong>"
+      location: "<strong>Stuttgart, DE </strong>"
       description:
         - "Utilized Python and Robot Operating System in order to construct a closed-loop controller with visual feedback, ran systematic experiments"
         - "Employed Machine Learning tools to achieve real-time data processing and decision making for robot motion."
@@ -91,6 +94,6 @@
 - title: Talks & Publications
   type: list
   contents:
-    - "<span class='cv-tag'>[Talk]</span> October 2025 - Oxford-Princeton Workshop XIV on Financial Mathematics & Stochastic Analysis, University of Oxford."
+    - "<span class='cv-tag'>[Talk]</span> Oct 2025 - Oxford-Princeton Workshop XIV on Financial Mathematics & Stochastic Analysis, University of Oxford."
     - "<span class='cv-tag'>[Publication]</span> May 2025 - Fare Game: A Mean Field Model of Stochastic Intensity Control in Dynamic Ticket Pricing, with E. Parmaksiz and R. Sircar"
     - "<span class='cv-tag'>[Publication]</span> May 2024 - An Empirical Approach to Rerouting Visible Light Pathways Using an Adjustable-Angle Mirror to Sustain Communication between Vehicles on Curvy Roads, with A. Deniz and H. Yuksel"

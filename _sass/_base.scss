@@ -224,6 +224,46 @@ ul.task-list input[type="checkbox"] {
   }
 }
 
+// Profile image hover overlay
+.profile-image-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+
+  figure {
+    margin: 0;
+  }
+}
+
+.profile-image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 0.25rem;
+  pointer-events: none;
+
+  span {
+    color: #fff;
+    font-size: 0.85rem;
+    font-style: italic;
+    text-align: center;
+    padding: 1rem;
+    line-height: 1.4;
+  }
+}
+
+.profile-image-wrapper:hover .profile-image-overlay {
+  opacity: 1;
+}
+
 .profile.float-right {
   margin-left: 1rem;
 }

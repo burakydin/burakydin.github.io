@@ -31,7 +31,7 @@
           {% if content.title %}
             <h6 class="title font-weight-bold ml-1 ml-md-4">{{ content.title }}</h6>
           {% endif %}
-          {% if content.department or content.institution or content.company or content.organization or content.employer or content.course or content.instructor or content.professor %}
+          {% if content.department or content.institution or content.company or content.organization or content.employer or content.course or content.instructor or content.professor or content.princeton or content.bogazici or content.kal or content.maxplanck or content.wellsfargo %}
             <table class="table-cv ml-1 ml-md-4 institution">
               <tbody>
                 {% if content.company or content.employer %}
@@ -42,12 +42,52 @@
                     <td class="institution">{{ content.company | default: content.employer }}</td>
                   </tr>
                 {% endif %}
+                {% if content.wellsfargo %}
+                  <tr>
+                    <td style="vertical-align: top; text-align: center" class="institution">
+                      <img src="/assets/img/flags/wellsfargo.svg" alt="Wells Fargo" class="institution-logo">
+                    </td>
+                    <td class="institution">{{ content.wellsfargo }}</td>
+                  </tr>
+                {% endif %}
                 {% if content.organization %}
                   <tr>
                     <td style="vertical-align: top; text-align: center" class="institution">
                       <i class="fa-solid fa-building iconorganization"></i>
                     </td>
                     <td class="institution">{{ content.organization }}</td>
+                  </tr>
+                {% endif %}
+                {% if content.princeton %}
+                  <tr>
+                    <td style="vertical-align: top; text-align: center" class="institution">
+                      <img src="/assets/img/flags/princeton.svg" alt="Princeton" class="institution-logo">
+                    </td>
+                    <td class="institution">{{ content.princeton }}</td>
+                  </tr>
+                {% endif %}
+                {% if content.bogazici %}
+                  <tr>
+                    <td style="vertical-align: top; text-align: center" class="institution">
+                      <img src="/assets/img/flags/bogazici.svg" alt="Bogazici" class="institution-logo">
+                    </td>
+                    <td class="institution">{{ content.bogazici }}</td>
+                  </tr>
+                {% endif %}
+                {% if content.kal %}
+                  <tr>
+                    <td style="vertical-align: top; text-align: center" class="institution">
+                      <img src="/assets/img/flags/kal.png" alt="KAL" class="institution-logo">
+                    </td>
+                    <td class="institution">{{ content.kal }}</td>
+                  </tr>
+                {% endif %}
+                {% if content.maxplanck %}
+                  <tr>
+                    <td style="vertical-align: top; text-align: center" class="institution">
+                      <img src="/assets/img/flags/maxplanck.jpg" alt="Max Planck" class="institution-logo">
+                    </td>
+                    <td class="institution">{{ content.maxplanck }}</td>
                   </tr>
                 {% endif %}
                 {% if content.institution %}

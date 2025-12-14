@@ -121,6 +121,21 @@ table.institution {
   margin-bottom: 1rem;
 }
 
+/* Institution logo icons (used instead of font-awesome for custom institutions) */
+.institution-logo {
+  height: 1.1em;
+  width: auto;
+  vertical-align: middle;
+  border-radius: 2px;
+  transform: translateY(-0.1em);
+}
+
+/* Align all CV icon cells upward */
+.cv table.institution td:first-child {
+  transform: translateY(-0.05em);
+  padding-right: 0.40rem;
+}
+
 td.department {
   font-size: 0.8rem;
 }
@@ -245,13 +260,7 @@ div.list-group {
 /* CV tag style for bracketed labels like [Talk], [Publication] */
 .cv .cv-tag {
   font-weight: 700;
-  color: var(--cv-tag-color, #7a3c10);
-}
-:root {
-  --cv-tag-color: #7a3c10;
-}
-html[data-theme="dark"] {
-  --cv-tag-color: #d3b08a;
+  color: var(--global-theme-color);
 }
 
 /* CV NESTED_LIST styles (for _includes/cv/nested_list.liquid) */

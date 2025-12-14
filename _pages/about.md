@@ -8,10 +8,9 @@ profile:
   align: right
   image: burak-site.jpg
   image_circular: false # crops the image to make it circular
+  image_title: "self-portrait (2024)<br>phone camera on drywall"
   more_info: >
-    <p>224 Sherrerd Hall</p>
-    <p>Princeton University</p>
-    <p>Princeton, NJ 08540</p>
+
 
 selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
@@ -27,7 +26,7 @@ latest_posts:
   limit: 3 # leave blank to include all the blog posts
 ---
 
-I am a third-year Ph.D. candidate at Princeton University <img src='/assets/img/flags/princeton.svg' alt='Princeton' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;margin-right:0.25em;'>in Operations Research and Financial Engineering ([<strong>ORFE</strong>](https://orfe.princeton.edu)) department, advised by [<strong>Prof. Ronnie Sircar</strong>](https://sircar.princeton.edu). I did my undergrad in Electrical and Electronics Engineering at Boğaziçi University <img src='/assets/img/flags/bogazici.svg' alt='Bogazici' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;margin-right:0.25em;'>with a minor in Economics.
+I am a third-year Ph.D. candidate at  <img src='/assets/img/flags/princeton.svg' alt='Princeton' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;margin-right:0.25em;'>Princeton University in Operations Research and Financial Engineering ([<strong>ORFE</strong>](https://orfe.princeton.edu)) department, advised by [<strong>Prof. Ronnie Sircar</strong>](https://sircar.princeton.edu). I did my undergrad in Electrical and Electronics Engineering at <img src='/assets/img/flags/bogazici.svg' alt='Bogazici' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;margin-right:0.25em;'>Boğaziçi University with a minor in Economics.
 
 I have been working on mean-field approximations to tractibly analyze competition in markets of perishable goods such as airline ticket pricing (see below for the recent paper). I am also interested in investigating the consumer side of the markets and trying to model customer population. 
 
