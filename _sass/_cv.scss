@@ -130,6 +130,13 @@ table.institution {
   transform: translateY(-0.1em);
 }
 
+/* Smaller logos on mobile */
+@media (max-width: 575px) {
+  .institution-logo {
+    height: 0.9em;
+  }
+}
+
 /* Align all CV icon cells upward */
 .cv table.institution td:first-child {
   transform: translateY(-0.05em);
@@ -260,7 +267,7 @@ div.list-group {
 /* CV tag style for bracketed labels like [Talk], [Publication] */
 .cv .cv-tag {
   font-weight: 700;
-  color: var(--global-theme-color);
+  color: var(--global-theme-color) !important;
 }
 
 /* CV NESTED_LIST styles (for _includes/cv/nested_list.liquid) */

@@ -264,6 +264,13 @@ ul.task-list input[type="checkbox"] {
   opacity: 1;
 }
 
+/* Hide overlay on mobile (no hover support) */
+@media (max-width: 575px) {
+  .profile-image-overlay {
+    display: none;
+  }
+}
+
 .profile.float-right {
   margin-left: 1rem;
 }
