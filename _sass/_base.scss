@@ -571,9 +571,9 @@ footer.sticky-bottom {
 // Smaller footer on mobile
 @media (max-width: 575px) {
   footer.sticky-bottom {
-    padding-top: 20px;
-    padding-bottom: 20px;
-    font-size: 0.75rem;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 0.65rem;
   }
 }
 
@@ -737,6 +737,10 @@ footer.sticky-bottom {
         color: var(--global-theme-color);
       }
     }
+  }
+
+  .card-title {
+    font-size: 1.4rem;
   }
 
   .card {

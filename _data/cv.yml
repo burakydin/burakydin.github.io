@@ -5,9 +5,6 @@
       value: "burakaydin [at] princeton [dot] edu"
     - name: Find me on
       value: " <a href='https://linkedin.com/in/burakydin/'><strong>LinkedIn</strong></a> | <a href='https://github.com/burakydin/'><strong>GitHub</strong></a> | <a href='https://scholar.google.com/citations?user=H86pkZ4AAAAJ&hl=en'><strong>Scholar</strong></a> | <a href='https://letterboxd.com/burakydin/'><strong>Letterboxd</strong></a>"
-    - name: Born a
-      value: "Sagittarius"
-
 
 - title: Education
   type: time_table
