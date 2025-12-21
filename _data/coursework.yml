@@ -1,0 +1,101 @@
+---
+- title: <img src='/assets/img/flags/princeton.svg' alt='Princeton' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;margin-right:0.25em;'>Princeton University
+  type: time_table
+  contents:
+    - year: "Fall 2025"
+      description:
+        - "Functional Analysis (<strong>MAT 520</strong>)"
+    - year: "Spring 2025"
+      description:
+        - "PDE Methods for Financial Mathematics (<strong>ORF 538</strong>)"
+        - "Elegy: The Poetics of Love and Loss (<strong>COM 471</strong>)"
+        - "Responsible Conduct Research (<strong>EGR 501</strong>)"
+        - "Directed Research II (<strong>ORF 510</strong>)"
+    - year: "Fall 2024"
+      description:
+        - "Asset Pricing (<strong>ECO 525</strong>)"
+        - "Computational Finance in C++ (<strong>ORF 531</strong>)"
+        - "Financial Risk and Wealth Management (<strong>ORF 535</strong>)"
+    - year: "Spring 2024"
+      description:
+        - "Convex and Conic Optimization (<strong>ORF 523</strong>)"
+        - "Statistical Foundations of Data Science (<strong>ORF 525</strong>)"
+        - "Stochastic Calculus (<strong>ORF 527</strong>)"
+        - "Intermediate/Advanced Spanish (<strong>SPA 107</strong>)"
+        - "Directed Research I (<strong>ORF 509</strong>)"
+    - year: "Fall 2023"
+      description:
+        - "Linear and Nonlinear Optimization (<strong>ORF 522</strong>)"
+        - "Statistical Theory and Methods (<strong>ORF 524</strong>)"
+        - "Probability Theory (<strong>ORF 526</strong>)"
+
+- title: <img src='/assets/img/flags/bogazici.svg' alt='Bogazici' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;margin-right:0.25em;'>Boğaziçi University
+  type: time_table
+  contents:
+    - year: "Spring 2023"
+      description:
+        - "Economics of Industrial Organization (<strong>EC 301</strong>)"
+        - "Digital Electronics (<strong>EE 432</strong>)"
+        - "Design with Integrated Circuits (<strong>EE 438</strong>)"
+        - "Project (<strong>EE 492</strong>)"
+        - "Systems Science and Engineering (<strong>IE 350</strong>)"
+    - year: "Fall 2022"
+      description:
+        - "Introduction to Cell Biology (<strong>BIO 121</strong>)"
+        - "Game Theoretical Models of Political Economy (<strong>EC 442</strong>)"
+        - "System Dynamics and Control (<strong>EE 351</strong>)"
+        - "Communication Electronics (<strong>EE 433</strong>)"
+        - "Op. Amps & Applications (<strong>EE 437</strong>)"
+        - "Advanced Electronics Lab (<strong>EE 439</strong>)"
+        - "Special Topics: Health Effects of EM Fields on Humans (<strong>EE 489</strong>)"
+    - year: "Spring 2022"
+      description:
+        - "Macroeconomics II (<strong>EC 208</strong>)"
+        - "Energy Conversion (<strong>EE 304</strong>)"
+        - "Electronics II (<strong>EE 334</strong>)"
+        - "Electronics Laboratory II (<strong>EE 336</strong>)"
+        - "Communication Engineering (<strong>EE 374</strong>)"
+        - "History of the Turkish Republic II (<strong>HTR 312</strong>)"
+    - year: "Fall 2021"
+      description:
+        - "Macroeconomics I (<strong>EC 205</strong>)"
+        - "Probability for Electrical Engineers (<strong>EE 313</strong>)"
+        - "Electronics I (<strong>EE 333</strong>)"
+        - "Electronics Laboratory I (<strong>EE 335</strong>)"
+        - "Electromagnetic Field Theory (<strong>EE 363</strong>)"
+        - "Signals & Systems (<strong>EE 373</strong>)"
+        - "History of the Turkish Republic I (<strong>HTR 311</strong>)"
+    - year: "Spring 2021"
+      description:
+        - "Microeconomics II (<strong>EC 206</strong>)"
+        - "Electrical Circuits II (<strong>EE 202</strong>)"
+        - "Digital System Design (<strong>EE 240</strong>)"
+        - "Numerical Methods for Electrical Engineering (<strong>EE 242</strong>)"
+        - "Differential Equations (<strong>MATH 202</strong>)"
+        - "Physics IV (<strong>PHYS 202</strong>)"
+        - "Turkish for Native Speakers II (<strong>TK 222</strong>)"
+    - year: "Fall 2020"
+      description:
+        - "Microeconomics I (<strong>EC 203</strong>)"
+        - "Electrical Circuits I (<strong>EE 201</strong>)"
+        - "Computer Tools for Electrical Engineering (<strong>EE 241</strong>)"
+        - "Matrix Theory (<strong>MATH 201</strong>)"
+        - "Materials Science (<strong>ME 210</strong>)"
+        - "Physics III (<strong>PHYS 201</strong>)"
+        - "Turkish for Native Speakers I (<strong>TK 221</strong>)"
+    - year: "Spring 2020"
+      description:
+        - "Introduction to Computing (<strong>CMPE 150</strong>)"
+        - "Principles of Macroeconomics (<strong>EC 102</strong>)"
+        - "Digital Systems (<strong>EE 142</strong>)"
+        - "Cultural Encounters II (<strong>HUM 102</strong>)"
+        - "Calculus II (<strong>MATH 102</strong>)"
+        - "Introductory Mechanics & Thermodynamics (<strong>PHYS 121</strong>)"
+    - year: "Fall 2019"
+      description:
+        - "Fundamentals of Chemistry (<strong>CHEM 105</strong>)"
+        - "Principles of Microeconomics (<strong>EC 101</strong>)"
+        - "Orientation to Electrical Engineering (<strong>EE 101</strong>)"
+        - "Cultural Encounters I (<strong>HUM 101</strong>)"
+        - "Calculus I (<strong>MATH 101</strong>)"
+        - "Tennis I (<strong>PE 123</strong>)"

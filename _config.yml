@@ -7,11 +7,11 @@ first_name: Burak
 middle_name:
 last_name: Aydın
 contact_note: >
-  feel free to reach out to me via email or linkedin if you have any questions, proposals or just to say hi
+  please reach out to me via email or <a href='https://www.linkedin.com/in/burakydin/'>linkedin</a> if you have any questions, proposals or just to say hi
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
     My personal website. PhD candidate at Princeton ORFE. Bachelor's in EE, minor in Econ.
 footer_text: >
-   |     "Live life, breathe air, I know somehow we're gonna get there."
+   |     <i>"Live life, breathe air, I know somehow we're gonna get there."</i>
 keywords: jekyll, jekyll-theme, academic-website, portfolio-website # add your own keywords or leave empty
 lang: en # the language of your site (for example: en, fr, cn, ru, etc.)
 icon: 🤙 # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
@@ -48,7 +48,7 @@ repo_trophies:
 # -----------------------------------------------------------------------------
 
 navbar_fixed: true
-footer_fixed: true
+footer_fixed: false
 search_enabled: false
 socials_in_search: true
 posts_in_search: true

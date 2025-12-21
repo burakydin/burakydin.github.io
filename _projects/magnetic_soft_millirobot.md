@@ -3,7 +3,7 @@ layout: page
 title: Magnetic Soft Millirobots
 description: During my Undergraduate Research Internship at Physical Intelligence Department at MPI IS
 img: assets/img/eit.png
-importance: 3
+importance: 4
 category: work
 ---
 

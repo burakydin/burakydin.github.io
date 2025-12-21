@@ -2,8 +2,8 @@
 layout: page
 title: Vehicular Communication
 description: An Empirical Approach to Rerouting Visible Light Pathways Using an Adjustable-Angle Mirror to Sustain Communication between Vehicles on Curvy Roads
-img: assets/img/curvyroad.jpg
-importance: 2
+img: assets/img/curvyroads.jpg
+importance: 3
 category: work
 ---
 
