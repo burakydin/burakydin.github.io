@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Clash Royale
+title: 
 permalink: /clashroyale/
 description: 
 nav: false
@@ -87,12 +87,31 @@ nav: false
       padding: 8px 16px;
       font-size: 0.9rem;
     }
+    
+    .page-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    
+    .page-header img {
+      max-width: 200px;
+    }
+    
+    .page-header h1 {
+      font-size: 1.5rem;
+    }
   }
 </style>
 
+<div class="page-header" style="display: flex; align-items: center; gap: 20px; margin-bottom: 30px; margin-top: -20px;">
+  <img src="/assets/img/cr-banner.png" alt="Clash Royale" style="max-width: 400px; height: auto;">
+  <h1 style="margin: 0;">clash royale</h1>
+</div>
+
 <div class="player-stats" style="text-align: center; margin-bottom: 20px;">
   <p style="font-size: 1.2rem; margin: 0;">
-    <strong> Trophies: </strong> 🏆 9093 (PB: 9142) ·  <strong> Arena: </strong>  Valkalla
+    🏆 9093  ·  <strong> Favorite Card: </strong>  Musketeer 
   </p>
   <p style="font-size: 0.9rem; margin: 0;">
     mostly having fun 2v2ing with friends
