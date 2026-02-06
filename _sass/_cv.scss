@@ -3,9 +3,9 @@
  *****************************/
 
 // Editable CV card colors (light/dark). Change these to customize.
-$cv-card-bg-color-light: #fffaf0 !default; // matches --global-bg-color
+$cv-card-bg-color-light: #ffffff; //#fffaf0 !default; // matches --global-bg-color
 $cv-card-border-color-light: rgba(0, 0, 0, 0.1) !default; // matches --global-divider-color
-$cv-card-bg-color-dark: #212529 !default; // matches --global-card-bg-color
+$cv-card-bg-color-dark: #15171a !default; // matches --global-card-bg-color
 $cv-card-border-color-dark: #424246 !default; // matches dark --global-divider-color
 
 /* Card background for CV sections */

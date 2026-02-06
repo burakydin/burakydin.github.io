@@ -2,6 +2,10 @@
 - title: <img src='/assets/img/flags/princeton.svg' alt='Princeton' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;margin-right:0.25em;'>Princeton University
   type: time_table
   contents:
+    - year: "Spring 2026"
+      description:
+        - "Topics in Analysis: Probability in High Dimension (<strong>MAT 529</strong>)"
+        - "Behavioral Finance (<strong>FIN 568</strong>)"
     - year: "Fall 2025"
       description:
         - "Functional Analysis (<strong>MAT 520</strong>)"

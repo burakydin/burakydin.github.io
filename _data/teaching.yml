@@ -2,6 +2,12 @@
 - title: 
   type: time_table
   contents:
+    - title: "Computing and Optimization for Physical and Social Sciences"
+      course: "ORF 363 / COS 323"
+      instructor: "Dr. Ioannis Akrotirianakis"
+      location: "<strong>Princeton</strong>"
+      year: "Spring 2026"
+      description: "An introduction to several fundamental and practically-relevant areas of modern optimization and numerical computing. Topics include computational linear algebra, first and second order descent methods, convex sets and functions, basics of linear and semidefinite programming, optimization for statistical regression and classification, and techniques for dealing with uncertainty and intractability in optimization problems. Extensive hands-on experience with high-level optimization software. Applications drawn from operations research, statistics and machine learning, economics, control theory, and engineering."
     - title: "Energy and Commodities Markets"
       course: "ORF 455 / ENE 455 and ORF 555"
       instructor: "Prof. Ronnie Sircar"

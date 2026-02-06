@@ -6,9 +6,10 @@ subtitle: burakaydin [at] princeton [dot] edu # <a href='#'>Affiliations</a>. Ad
 
 profile:
   align: right
-  image: burak-site.jpg
+  image: burak-foto.png
   image_circular: false # crops the image to make it circular
-  image_title: "self-portrait (2024)<br>phone camera on drywall"
+  #image_title: "self-portrait (2024)<br>phone camera on drywall"
+  image_title: Thanksgiving 2025
   more_info: >
 
 
