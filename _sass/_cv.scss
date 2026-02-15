@@ -12,6 +12,7 @@ $cv-card-border-color-dark: #424246 !default; // matches dark --global-divider-c
 .cv .card {
   background-color: $cv-card-bg-color-light;
   border: 1px solid $cv-card-border-color-light;
+  border-radius: 12px;
 }
 
 /* Ensure list items inside cards don't reintroduce white backgrounds */

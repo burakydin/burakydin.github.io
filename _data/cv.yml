@@ -8,6 +8,7 @@
 
 - title: Education
   type: time_table
+  colored_badges: true
   contents:
     - title: "Ph.D. in Operations Research and Financial Engineering"
       princeton: "Princeton University"
@@ -35,6 +36,7 @@
   
 - title: Experience
   type: time_table
+  colored_badges: false
   contents:
     - title: "Quantitative Analytics Intern"
       wellsfargo: "Wells Fargo Bank, N.A." 

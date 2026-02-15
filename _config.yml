@@ -7,14 +7,14 @@ first_name: Burak
 middle_name:
 last_name: Aydın
 contact_note: >
-  please reach out to me via <a href='mailto:burakaydin@princeton.edu'>email</a> or <a href='https://www.linkedin.com/in/burakydin/'>linkedin</a> if you have any questions, proposals or just to say hi
+  please reach out to me via email or <a href='https://www.linkedin.com/in/burakydin/'>linkedin</a> if you have any questions, proposals or just to say hi
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
     My personal website. PhD candidate at Princeton ORFE. Bachelor's in EE, minor in Econ.
 footer_text: >
    |     <i>"Live life, breathe air, I know somehow we're gonna get there."</i>
 keywords: jekyll, jekyll-theme, academic-website, portfolio-website # add your own keywords or leave empty
 lang: en # the language of your site (for example: en, fr, cn, ru, etc.)
-icon: icon.png #🤙 🫡  # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
+icon: 𓃮 #icon.png #🤙 🫡  # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
 
 #   # Powered by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme.
   # Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.

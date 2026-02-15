@@ -16,9 +16,9 @@ horizontal: true
   {% for category in page.display_categories %}
   <a id="{{ category }}" href=".#{{ category }}">
     {% if category == "work" %}
-      <h2 class="category"><i class="fa-solid fa-briefcase"></i> Work</h2>
+      <h2 class="category"><i class="fa-solid fa-briefcase"></i> work</h2>
     {% elsif category == "personal" %}
-      <h2 class="category"><i class="fa-solid fa-user"></i> Personal</h2>
+      <h2 class="category"><i class="fa-solid fa-user"></i> personal</h2>
     {% else %}
       <h2 class="category">{{ category | capitalize }}</h2>
     {% endif %}

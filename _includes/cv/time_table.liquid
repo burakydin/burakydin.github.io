@@ -1,5 +1,25 @@
 <ul class="card-text font-weight-light list-group list-group-flush">
   {% for content in entry.contents %}
+    {% assign badge_color = "" %}
+    {% assign icon_color = "" %}
+    {% if entry.colored_badges %}
+      {% if content.princeton %}
+        {% assign badge_color = "background-color: #E77500 !important; color: white !important;" %}
+        {% assign icon_color = "color: #E77500 !important;" %}
+      {% elsif content.bogazici %}
+        {% assign badge_color = "background-color: #00adef !important; color: white !important;" %}
+        {% assign icon_color = "color: #00adef !important;" %}
+      {% elsif content.wellsfargo %}
+        {% assign badge_color = "background-color: #D71E28 !important; color: white !important;" %}
+        {% assign icon_color = "color: #D71E28 !important;" %}
+      {% elsif content.maxplanck %}
+        {% assign badge_color = "background-color: #006C66 !important; color: white !important;" %}
+        {% assign icon_color = "color: #006C66 !important;" %}
+      {% elsif content.kal %}
+        {% assign badge_color = "background-color: #2E8B2E !important; color: white !important;" %}
+        {% assign icon_color = "color: #2E8B2E !important;" %}
+      {% endif %}
+    {% endif %}
     <li class="list-group-item">
       <div class="row">
         {% if content.year %}
@@ -8,7 +28,7 @@
               <tbody>
                 <tr>
                   <td>
-                    <span class="badge font-weight-bold danger-color-dark text-uppercase align-middle" style="min-width: 75px">
+                    <span class="badge font-weight-bold text-uppercase align-middle" style="min-width: 75px; {{ badge_color }}">
                       {{- content.year -}}
                     </span>
                   </td>
@@ -17,7 +37,7 @@
                   <tr>
                     <td>
                       <p class="location">
-                        <i class="fa-solid fa-location-dot iconlocation"></i>
+                        <i class="fa-solid fa-location-dot iconlocation" style="{{ icon_color }}"></i>
                         {{ content.location }}
                       </p>
                     </td>
