@@ -5,6 +5,9 @@ description: An Empirical Approach to Rerouting Visible Light Pathways Using an 
 img: assets/img/curvyroads.jpg
 importance: 3
 category: work
+year: 2024
+status: published
+tags: [VLC, Image Processing, MATLAB]
 ---
 
 ## Abstract

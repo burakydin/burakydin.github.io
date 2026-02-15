@@ -5,6 +5,9 @@ description: A Mean Field Model of Stochastic Intensity Control in Dynamic Ticke
 img: assets/img/paperplane.jpg
 importance: 1
 category: work
+year: 2025
+status: published
+tags: [Mean Field Games, Dynamic Pricing, Python]
 ---
 
 ## Abstract

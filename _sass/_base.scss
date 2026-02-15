@@ -744,8 +744,44 @@ footer.sticky-bottom {
   }
 
   .card {
-    img {
+    figure {
+      margin: 0;
+    }
+    
+    img.card-img {
       width: 100%;
+      height: auto;
+      max-height: 200px;
+      object-fit: contain;
+      border-radius: 8px !important;
+      padding: 0 !important;
+    }
+    
+    .project-content {
+      margin-top: 0.75rem;
+      align-items: flex-start;
+    }
+    
+    .project-img-container {
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      padding-right: 1rem;
+      margin-bottom: 1rem;
+      
+      figure {
+        display: flex;
+        align-items: flex-start;
+      }
+    }
+    
+    .project-details {
+      display: flex;
+      flex-direction: column;
+      
+      .project-badges {
+        margin-bottom: 0.5rem;
+      }
     }
   }
 
@@ -760,12 +796,84 @@ footer.sticky-bottom {
   }
 
   h2.category {
-    color: var(--global-divider-color);
-    border-bottom: 1px solid var(--global-divider-color);
+    color: var(--global-theme-color);
+    border-bottom: 2px solid var(--global-theme-color);
     padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
     margin-top: 2rem;
-    margin-bottom: 1rem;
-    text-align: right;
+    margin-bottom: 1.5rem;
+    text-align: left;
+    font-weight: 600;
+    
+    i {
+      margin-right: 0.5rem;
+      opacity: 0.9;
+    }
+  }
+
+  // Project card header with badges
+  .project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .project-badges {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+
+  .badge-year {
+    background-color: var(--global-theme-color);
+    color: var(--global-bg-color);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .badge-status {
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: capitalize;
+  }
+
+  .badge-status-published {
+    background-color: #28a745;
+    color: white;
+  }
+
+  .badge-status-completed {
+    background-color: #6c757d;
+    color: white;
+  }
+
+  .badge-status-ongoing {
+    background-color: #007bff;
+    color: white;
+  }
+
+  // Project tags
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.25rem;
+  }
+
+  .project-tag {
+    background-color: var(--global-code-bg-color);
+    color: var(--global-text-color);
+    padding: 0.15rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 500;
   }
 }
 

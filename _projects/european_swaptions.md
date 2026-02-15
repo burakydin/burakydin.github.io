@@ -5,6 +5,9 @@ description: Quantitative Analytics Summer Internship project on pricing nonstan
 img: assets/img/charlotte.jpg
 importance: 2
 category: work
+year: 2024
+status: completed
+tags: [C++, Quantitative Finance, Interest Rates]
 ---
 
 ## Summary

@@ -5,6 +5,9 @@ description: During my Undergraduate Research Internship at Physical Intelligenc
 img: assets/img/eit.png
 importance: 4
 category: work
+year: 2022
+status: completed
+tags: [Robotics, Python, ROS]
 ---
 
 ## About
