@@ -255,21 +255,36 @@ function ImportPanel({setSentences,setVocab,setVerbs,eSentences,eVocab,eVerbs}){
 // ---- Sync Panel ----
 function SyncPanel({ghToken,setGhToken,gistId,setGistId,syncStatus,onPull,onPush,onDisconnect}){
   const [tokenInput,setTokenInput]=useState(ghToken);
+  const [gistInput,setGistInput]=useState("");
   const [setting,setSetting]=useState(false);
-  const connect=async()=>{
+  const connectNew=async()=>{
     setSetting(true);
     try{
       const token=tokenInput.trim();
       if(!token) throw new Error("Token required");
-      // test token
       const r=await fetch("https://api.github.com/user",{headers:{Authorization:`Bearer ${token}`}});
       if(!r.ok) throw new Error("Invalid token");
-      // create or use existing gist
-      let id=gistId;
-      if(!id){id=await gistCreate(token);}
+      const id=await gistCreate(token);
       setGhToken(token);setGistId(id);
       localStorage.setItem(KEYS.ghToken,token);localStorage.setItem(KEYS.gistId,id);
       onPush(token,id);
+    }catch(e){alert("Connection failed: "+e.message);}
+    setSetting(false);
+  };
+  const connectExisting=async()=>{
+    setSetting(true);
+    try{
+      const token=tokenInput.trim();
+      const id=gistInput.trim();
+      if(!token) throw new Error("Token required");
+      if(!id) throw new Error("Gist ID required");
+      const r=await fetch("https://api.github.com/user",{headers:{Authorization:`Bearer ${token}`}});
+      if(!r.ok) throw new Error("Invalid token");
+      const g=await fetch(`https://api.github.com/gists/${id}`,{headers:{Authorization:`Bearer ${token}`}});
+      if(!g.ok) throw new Error("Gist not found — check the ID");
+      setGhToken(token);setGistId(id);
+      localStorage.setItem(KEYS.ghToken,token);localStorage.setItem(KEYS.gistId,id);
+      onPull(token,id);
     }catch(e){alert("Connection failed: "+e.message);}
     setSetting(false);
   };
@@ -282,8 +297,8 @@ function SyncPanel({ghToken,setGhToken,gistId,setGistId,syncStatus,onPull,onPush
           <span style={{width:10,height:10,borderRadius:"50%",background:"#4caf50",display:"inline-block"}}></span>
           <span style={{fontWeight:600}}>Connected to GitHub Gist</span>
         </div>
-        <div style={{fontSize:12,color:"var(--text-dim)",marginBottom:4}}>Gist ID: <code style={{background:"var(--border)",padding:"2px 6px",borderRadius:4}}>{gistId}</code></div>
-        <div style={{fontSize:12,color:"var(--text-dim)"}}>Changes auto-save within a few seconds.</div>
+        <div style={{fontSize:12,color:"var(--text-dim)",marginBottom:4}}>Gist ID: <code style={{background:"var(--border)",padding:"2px 6px",borderRadius:4,userSelect:"all"}}>{gistId}</code></div>
+        <div style={{fontSize:12,color:"var(--text-dim)"}}>Changes auto-save within a few seconds. Copy the Gist ID above to connect other devices.</div>
       </div>
       <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
         <Btn onClick={()=>onPull(ghToken,gistId)} style={{background:"#5a7d6a"}}>↓ Pull from Gist</Btn>
@@ -293,7 +308,7 @@ function SyncPanel({ghToken,setGhToken,gistId,setGistId,syncStatus,onPull,onPush
       {syncStatus&&<div className="sync-pill" style={{marginTop:12,background:syncStatus.type==="ok"?"#d4edda":syncStatus.type==="saving"?"#fff3cd":"#f8d7da",color:syncStatus.type==="ok"?"#155724":syncStatus.type==="saving"?"#856404":"#721c24"}}>{syncStatus.msg}</div>}
     </div>:<div>
       <div style={{background:"var(--card-bg)",borderRadius:12,padding:"20px",border:"1px solid var(--border)",marginBottom:16}}>
-        <div style={{fontSize:14,fontWeight:600,marginBottom:12}}>Setup (one-time)</div>
+        <div style={{fontSize:14,fontWeight:600,marginBottom:12}}>Setup</div>
         <div style={{fontSize:13,color:"var(--text-dim)",marginBottom:12,lineHeight:1.6}}>
           1. Go to <a href="https://github.com/settings/tokens/new" target="_blank" rel="noopener" style={{color:"var(--accent)"}}>github.com/settings/tokens</a> → Generate a <strong>classic</strong> token<br/>
           2. Select only the <code style={{background:"var(--border)",padding:"1px 4px",borderRadius:3}}>gist</code> scope<br/>
@@ -302,7 +317,18 @@ function SyncPanel({ghToken,setGhToken,gistId,setGistId,syncStatus,onPull,onPush
         <Field label="GitHub Personal Access Token">
           <Input type="password" value={tokenInput} onChange={e=>setTokenInput(e.target.value)} placeholder="ghp_..." style={{fontFamily:"monospace",fontSize:12}} />
         </Field>
-        <Btn onClick={connect} disabled={setting} style={{marginTop:4}}>{setting?"Connecting...":"Connect & Create Gist"}</Btn>
+        <div style={{borderTop:"1px solid var(--border)",marginTop:16,paddingTop:16}}>
+          <div style={{fontSize:13,fontWeight:600,marginBottom:8}}>First time? Create a new Gist:</div>
+          <Btn onClick={connectNew} disabled={setting}>{setting?"Connecting...":"Create new Gist & push data"}</Btn>
+        </div>
+        <div style={{borderTop:"1px solid var(--border)",marginTop:16,paddingTop:16}}>
+          <div style={{fontSize:13,fontWeight:600,marginBottom:4}}>Connecting another device? Enter your existing Gist ID:</div>
+          <div style={{fontSize:12,color:"var(--text-dim)",marginBottom:8}}>You can find this on your first device under ⚙ Sync → Gist ID</div>
+          <Field label="Existing Gist ID">
+            <Input value={gistInput} onChange={e=>setGistInput(e.target.value)} placeholder="paste gist ID here..." style={{fontFamily:"monospace",fontSize:12}} />
+          </Field>
+          <Btn onClick={connectExisting} disabled={setting} style={{background:"#5a7d6a"}}>{setting?"Connecting...":"Connect & pull data from Gist"}</Btn>
+        </div>
       </div>
     </div>}
   </div>;
@@ -385,7 +411,7 @@ function App(){
         </div>
       </div>
       <div className="tab-bar" style={{display:"flex",borderBottom:"2px solid var(--border)",marginBottom:20,flexWrap:"wrap"}}>
-        {[["sentences","Sentences"],["vocab","Vocabulary"],["verbs","Verbs"],["quiz","Quiz"],["import","Import"],["sync","⚙ Sync"]].map(([k,l])=><Tab key={k} label={l} active={tab===k} onClick={()=>setTab(k)} accent={k==="import"?"#7a5fb0":k==="sync"?"#5a7d6a":undefined} />)}
+        {[["sentences","Sentences"],["vocab","Vocabulary"],["verbs","Verbs"],["quiz","Quiz"],["import","📸 Import"],["sync","⚙ Sync"]].map(([k,l])=><Tab key={k} label={l} active={tab===k} onClick={()=>setTab(k)} accent={k==="import"?"#7a5fb0":k==="sync"?"#5a7d6a":undefined} />)}
       </div>
       {tab==="sentences"&&<SentencePanel sentences={sentences} setSentences={setSentences} />}
       {tab==="vocab"&&<VocabPanel vocab={vocab} setVocab={setVocab} />}
