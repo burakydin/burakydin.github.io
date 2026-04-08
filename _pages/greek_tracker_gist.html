@@ -195,6 +195,63 @@ function VerbPanel({verbs,setVerbs}){const [search,setSearch]=useState("");const
 
 function QuizPanel({sentences,vocab}){const [mode,setMode]=useState("sentences");const [dir,setDir]=useState("gr2en");const [cur,setCur]=useState(null);const [ans,setAns]=useState("");const [res,setRes]=useState(null);const [score,setScore]=useState({c:0,t:0});const ref=useRef(null);const pool=mode==="sentences"?sentences:vocab;const next=useCallback(()=>{if(!pool.length)return;setCur(pool[Math.floor(Math.random()*pool.length)]);setAns("");setRes(null);setTimeout(()=>ref.current?.focus(),50);},[pool]);useEffect(()=>{next();},[mode,dir]);const check=()=>{if(!cur)return;const c=dir==="gr2en"?cur.english.toLowerCase().replace(/[.,;!?]/g,"").trim():cur.greek.toLowerCase().replace(/[.,;!?;]/g,"").trim();const g=ans.toLowerCase().replace(/[.,;!?;]/g,"").trim();const ok=g===c;setRes({ok,c:dir==="gr2en"?cur.english:cur.greek});setScore(s=>({c:s.c+(ok?1:0),t:s.t+1}));};const prompt=cur?(dir==="gr2en"?cur.greek:cur.english):"";return <div><div style={{display:"flex",gap:10,marginBottom:18,flexWrap:"wrap",alignItems:"center"}}><Select value={mode} onChange={setMode} options={[{value:"sentences",label:"Sentences"},{value:"vocab",label:"Vocabulary"}]} /><Select value={dir} onChange={setDir} options={[{value:"gr2en",label:"Greek → English"},{value:"en2gr",label:"English → Greek"}]} /><div style={{marginLeft:"auto",fontSize:14,color:"var(--text-dim)",fontWeight:600}}>{score.c}/{score.t}{score.t>0&&<span style={{color:"var(--accent)"}}> ({Math.round(score.c/score.t*100)}%)</span>}</div></div>{cur?<div style={{background:"var(--card-bg)",borderRadius:14,padding:"28px 24px",border:"1px solid var(--border)",textAlign:"center"}}><div style={{fontSize:11,textTransform:"uppercase",letterSpacing:"0.08em",color:"var(--text-dim)",marginBottom:10}}>{dir==="gr2en"?"Translate to English":"Translate to Greek"}</div><div style={{fontSize:22,fontFamily:"'Literata',serif",marginBottom:20,lineHeight:1.5}}>{prompt}</div><div style={{maxWidth:360,margin:"0 auto"}}><Input ref={ref} value={ans} onChange={e=>setAns(e.target.value)} placeholder="Your answer..." onKeyDown={e=>{if(e.key==="Enter"){res?next():check();}}} style={{textAlign:"center",fontSize:16}} /></div>{res&&<div style={{marginTop:16,padding:"12px 16px",borderRadius:8,background:res.ok?"#d4edda":"#f8d7da",color:res.ok?"#155724":"#721c24",fontSize:14}}>{res.ok?"Correct! 🎉":<span>Not quite — <strong style={{fontFamily:"'Literata',serif"}}>{res.c}</strong></span>}</div>}<div style={{marginTop:16}}>{res?<Btn onClick={next}>Next →</Btn>:<Btn onClick={check}>Check</Btn>}</div></div>:<div style={{textAlign:"center",color:"var(--text-dim)",padding:40}}>No items.</div>}</div>;}
 
+// ---- AI Import Panel ----
+const AI_PROMPT=`You are a Greek language teaching assistant. Analyze this image and return ONLY valid JSON (no markdown, no backticks) with: {"sentences":[{"greek":"...","english":"...","tags":["tag1"]}],"vocab":[{"greek":"...","english":"...","type":"noun|adjective|adverb|other","gender":"masculine|feminine|neuter|","plural":"...","notes":"..."}],"verbs":[{"lemma":"...","english":"...","group":"1st|2nd|irregular|deponent","forms":[{"form":"...","tense":"...","person":"..."}]}]}. Extract every sentence, noun (with article, gender, plural), adjective (3 forms in notes), verb (dictionary lemma + conjugated forms). Be thorough.`;
+
+function ImportPanel({setSentences,setVocab,setVerbs,eSentences,eVocab,eVerbs}){
+  const [apiKey,setApiKey]=useState(()=>localStorage.getItem(KEYS.apiKey)||"");
+  const [image,setImage]=useState(null);const [preview,setPreview]=useState(null);
+  const [loading,setLoading]=useState(false);const [error,setError]=useState(null);
+  const [parsed,setParsed]=useState(null);const [sel,setSel]=useState({s:{},v:{},vb:{},uv:{}});
+  const [done,setDone]=useState(false);
+  const fRef=useRef(null);
+  const saveKey=(k)=>{setApiKey(k);localStorage.setItem(KEYS.apiKey,k);};
+  const handleFile=(f)=>{if(!f||!f.type.startsWith("image/"))return;setImage(f);setError(null);setParsed(null);setDone(false);const r=new FileReader();r.onload=e=>setPreview(e.target.result);r.readAsDataURL(f);};
+  const analyze=async()=>{if(!image||!apiKey.trim())return;setLoading(true);setError(null);setParsed(null);setDone(false);
+    try{const b64=await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result.split(",")[1]);r.onerror=rej;r.readAsDataURL(image);});
+      const resp=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json","x-api-key":apiKey.trim(),"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:4000,messages:[{role:"user",content:[{type:"image",source:{type:"base64",media_type:image.type||"image/png",data:b64}},{type:"text",text:AI_PROMPT}]}]})});
+      if(!resp.ok){const err=await resp.text();throw new Error(err);}
+      const data=await resp.json();const text=data.content?.map(c=>c.text||"").join("")||"";const clean=text.replace(/```json\s*/g,"").replace(/```\s*/g,"").trim();const result=JSON.parse(clean);
+      const eG=new Set(eSentences.map(s=>s.greek.toLowerCase().trim()));const eV=new Set(eVocab.map(v=>v.greek.toLowerCase().trim()));const eL=new Set(eVerbs.map(v=>v.lemma.toLowerCase().trim()));
+      const nS=(result.sentences||[]).filter(s=>!eG.has(s.greek.toLowerCase().trim()));
+      const nV=(result.vocab||[]).filter(v=>!eV.has(v.greek.toLowerCase().trim()));
+      const nVb=(result.verbs||[]).filter(v=>!eL.has(v.lemma.toLowerCase().trim()));
+      const uV=(result.verbs||[]).filter(v=>{const ex=eVerbs.find(ev=>ev.lemma.toLowerCase().trim()===v.lemma.toLowerCase().trim());if(!ex)return false;const ef=new Set(ex.forms.map(f=>f.form.toLowerCase()));return v.forms?.some(f=>!ef.has(f.form.toLowerCase()));}).map(v=>{const ex=eVerbs.find(ev=>ev.lemma.toLowerCase().trim()===v.lemma.toLowerCase().trim());const ef=new Set(ex.forms.map(f=>f.form.toLowerCase()));return{...v,forms:v.forms.filter(f=>!ef.has(f.form.toLowerCase())),eid:ex.id};});
+      setParsed({s:nS,v:nV,vb:nVb,uv:uV});
+      const ss={};nS.forEach((_,i)=>ss[i]=true);const sv={};nV.forEach((_,i)=>sv[i]=true);const svb={};nVb.forEach((_,i)=>svb[i]=true);const suv={};uV.forEach((_,i)=>suv[i]=true);
+      setSel({s:ss,v:sv,vb:svb,uv:suv});
+    }catch(e){console.error(e);setError("Failed: "+e.message.slice(0,200));}setLoading(false);};
+  const doImport=()=>{if(!parsed)return;
+    const ns=parsed.s.filter((_,i)=>sel.s[i]).map(s=>({...s,id:uid()}));if(ns.length)setSentences(p=>[...p,...ns]);
+    const nv=parsed.v.filter((_,i)=>sel.v[i]).map(v=>({...v,id:uid()}));if(nv.length)setVocab(p=>[...p,...nv]);
+    const nvb=parsed.vb.filter((_,i)=>sel.vb[i]).map(v=>({...v,id:uid()}));if(nvb.length)setVerbs(p=>[...p,...nvb]);
+    const upd=parsed.uv.filter((_,i)=>sel.uv[i]);if(upd.length)setVerbs(p=>p.map(v=>{const u=upd.find(x=>x.eid===v.id);return u?{...v,forms:[...v.forms,...u.forms]}:v;}));
+    setDone(true);};
+  const total=parsed?(Object.values(sel.s).filter(Boolean).length+Object.values(sel.v).filter(Boolean).length+Object.values(sel.vb).filter(Boolean).length+Object.values(sel.uv).filter(Boolean).length):0;
+  return <div>
+    <div style={{fontSize:14,color:"var(--text-dim)",marginBottom:12,lineHeight:1.6}}>Upload a photo of Greek learning material. AI extracts sentences, vocabulary, and verbs.</div>
+    <Field label="Anthropic API Key (stored locally only)">
+      <Input type="password" value={apiKey} onChange={e=>saveKey(e.target.value)} placeholder="sk-ant-..." style={{fontFamily:"monospace",fontSize:12}} />
+    </Field>
+    <div onDrop={e=>{e.preventDefault();handleFile(e.dataTransfer.files[0]);}} onDragOver={e=>e.preventDefault()} onClick={()=>fRef.current?.click()} style={{border:"2px dashed var(--border)",borderRadius:14,padding:preview?0:"40px 20px",textAlign:"center",cursor:"pointer",background:"var(--card-bg)",overflow:"hidden",position:"relative",marginTop:8}}>
+      <input ref={fRef} type="file" accept="image/*" style={{display:"none"}} onChange={e=>handleFile(e.target.files[0])} />
+      {preview?<div style={{position:"relative"}}><img src={preview} alt="" style={{width:"100%",maxHeight:300,objectFit:"contain",display:"block"}} /><button onClick={e=>{e.stopPropagation();setImage(null);setPreview(null);setParsed(null);setDone(false);}} style={{position:"absolute",top:8,right:8,background:"rgba(0,0,0,0.6)",color:"#fff",border:"none",borderRadius:"50%",width:28,height:28,cursor:"pointer",fontSize:16}}>×</button></div>:<div><div style={{fontSize:32,marginBottom:8}}>📸</div><div style={{fontSize:15,fontWeight:600}}>Drop image or click to upload</div></div>}
+    </div>
+    {image&&!parsed&&!loading&&<div style={{marginTop:14,textAlign:"center"}}><Btn onClick={analyze} style={{padding:"12px 32px",fontSize:15,opacity:apiKey.trim()?"1":"0.4"}}>✨ Analyze with AI</Btn>{!apiKey.trim()&&<div style={{fontSize:12,color:"#c44",marginTop:6}}>Enter your API key above first</div>}</div>}
+    {loading&&<div style={{marginTop:20,textAlign:"center",color:"var(--text-dim)"}}><div className="sp" style={{width:32,height:32,border:"3px solid var(--border)",borderTopColor:"var(--accent)",borderRadius:"50%",margin:"0 auto 10px"}}></div><div>Analyzing image...</div></div>}
+    {error&&<div style={{marginTop:14,padding:"12px 16px",borderRadius:8,background:"#f8d7da",color:"#721c24",fontSize:13}}>{error}</div>}
+    {parsed&&!done&&<div style={{marginTop:16}}>
+      <div style={{fontSize:16,fontFamily:"'Literata',serif",fontWeight:700,marginBottom:14}}>New items found</div>
+      {parsed.s.length>0&&<div style={{marginBottom:16}}><div style={{fontSize:13,fontWeight:700,color:"var(--accent)",marginBottom:8,textTransform:"uppercase"}}>Sentences ({parsed.s.length})</div>{parsed.s.map((s,i)=><label key={i} style={{display:"flex",gap:10,padding:"8px 12px",background:"var(--card-bg)",borderRadius:8,border:"1px solid var(--border)",marginBottom:6,cursor:"pointer"}}><input type="checkbox" checked={!!sel.s[i]} onChange={()=>setSel(p=>({...p,s:{...p.s,[i]:!p.s[i]}}))} style={{marginTop:4}} /><div><div style={{fontSize:15,fontFamily:"'Literata',serif"}}>{s.greek}</div><div style={{fontSize:13,color:"var(--text-dim)"}}>{s.english}</div></div></label>)}</div>}
+      {parsed.v.length>0&&<div style={{marginBottom:16}}><div style={{fontSize:13,fontWeight:700,color:"#5a7d6a",marginBottom:8,textTransform:"uppercase"}}>Vocabulary ({parsed.v.length})</div>{parsed.v.map((v,i)=><label key={i} style={{display:"flex",gap:10,padding:"8px 12px",background:"var(--card-bg)",borderRadius:8,border:"1px solid var(--border)",marginBottom:6,cursor:"pointer"}}><input type="checkbox" checked={!!sel.v[i]} onChange={()=>setSel(p=>({...p,v:{...p.v,[i]:!p.v[i]}}))} style={{marginTop:4}} /><div><span style={{fontSize:15,fontFamily:"'Literata',serif"}}>{v.greek}</span> <span style={{fontSize:13,color:"var(--text-dim)"}}>{v.english}</span></div></label>)}</div>}
+      {parsed.vb.length>0&&<div style={{marginBottom:16}}><div style={{fontSize:13,fontWeight:700,color:"#b07a2e",marginBottom:8,textTransform:"uppercase"}}>New Verbs ({parsed.vb.length})</div>{parsed.vb.map((v,i)=><label key={i} style={{display:"flex",gap:10,padding:"8px 12px",background:"var(--card-bg)",borderRadius:8,border:"1px solid var(--border)",marginBottom:6,cursor:"pointer"}}><input type="checkbox" checked={!!sel.vb[i]} onChange={()=>setSel(p=>({...p,vb:{...p.vb,[i]:!p.vb[i]}}))} style={{marginTop:4}} /><div><span style={{fontFamily:"'Literata',serif",fontWeight:600}}>{v.lemma}</span> <span style={{fontSize:13,color:"var(--text-dim)"}}>{v.english}</span></div></label>)}</div>}
+      {parsed.uv.length>0&&<div style={{marginBottom:16}}><div style={{fontSize:13,fontWeight:700,color:"#7a5fb0",marginBottom:8,textTransform:"uppercase"}}>New forms ({parsed.uv.length})</div>{parsed.uv.map((v,i)=><label key={i} style={{display:"flex",gap:10,padding:"8px 12px",background:"var(--card-bg)",borderRadius:8,border:"1px solid var(--border)",marginBottom:6,cursor:"pointer"}}><input type="checkbox" checked={!!sel.uv[i]} onChange={()=>setSel(p=>({...p,uv:{...p.uv,[i]:!p.uv[i]}}))} style={{marginTop:4}} /><div><span style={{fontFamily:"'Literata',serif",fontWeight:600}}>{v.lemma}</span><span style={{fontSize:12,color:"#7a5fb0",marginLeft:6}}>+{v.forms.length}</span></div></label>)}</div>}
+      {total>0&&<div style={{display:"flex",gap:10,justifyContent:"flex-end"}}><Btn variant="secondary" onClick={()=>{setParsed(null);setImage(null);setPreview(null);}}>Cancel</Btn><Btn onClick={doImport}>Import {total}</Btn></div>}
+    </div>}
+    {done&&<div style={{textAlign:"center",padding:30}}><div style={{fontSize:40,marginBottom:12}}>✅</div><div style={{fontSize:18,fontFamily:"'Literata',serif",marginBottom:8}}>Import complete!</div><Btn onClick={()=>{setImage(null);setPreview(null);setParsed(null);setDone(false);}}>Import another</Btn></div>}
+  </div>;
+}
+
 // ---- Sync Panel ----
 function SyncPanel({ghToken,setGhToken,gistId,setGistId,syncStatus,onPull,onPush,onDisconnect}){
   const [tokenInput,setTokenInput]=useState(ghToken);
@@ -328,12 +385,13 @@ function App(){
         </div>
       </div>
       <div className="tab-bar" style={{display:"flex",borderBottom:"2px solid var(--border)",marginBottom:20,flexWrap:"wrap"}}>
-        {[["sentences","Sentences"],["vocab","Vocabulary"],["verbs","Verbs"],["quiz","Quiz"],["sync","⚙ Sync"]].map(([k,l])=><Tab key={k} label={l} active={tab===k} onClick={()=>setTab(k)} accent={k==="sync"?"#5a7d6a":undefined} />)}
+        {[["sentences","Sentences"],["vocab","Vocabulary"],["verbs","Verbs"],["quiz","Quiz"],["import","Import"],["sync","⚙ Sync"]].map(([k,l])=><Tab key={k} label={l} active={tab===k} onClick={()=>setTab(k)} accent={k==="import"?"#7a5fb0":k==="sync"?"#5a7d6a":undefined} />)}
       </div>
       {tab==="sentences"&&<SentencePanel sentences={sentences} setSentences={setSentences} />}
       {tab==="vocab"&&<VocabPanel vocab={vocab} setVocab={setVocab} />}
       {tab==="verbs"&&<VerbPanel verbs={verbs} setVerbs={setVerbs} />}
       {tab==="quiz"&&<QuizPanel sentences={sentences} vocab={vocab} />}
+      {tab==="import"&&<ImportPanel setSentences={setSentences} setVocab={setVocab} setVerbs={setVerbs} eSentences={sentences} eVocab={vocab} eVerbs={verbs} />}
       {tab==="sync"&&<SyncPanel ghToken={ghToken} setGhToken={setGhToken} gistId={gistId} setGistId={setGistId} syncStatus={syncStatus} onPull={onPull} onPush={onPush} onDisconnect={onDisconnect} />}
     </div>
   </div>;
