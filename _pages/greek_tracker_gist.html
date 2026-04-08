@@ -1,0 +1,346 @@
+---
+layout: null
+permalink: /greek/
+nav: false
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Ελληνικά — Greek Learning Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Literata:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
+<style>
+:root{--bg:#f5f0e8;--card-bg:#fffdf8;--text:#2a2520;--text-dim:#8a8078;--accent:#3a6ea5;--accent2:#5a7d6a;--border:#e0d8cc}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+input,select,button{font-family:inherit}
+@keyframes sp{to{transform:rotate(360deg)}}
+.sp{animation:sp .8s linear infinite}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+.sync-pill{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;animation:fadeIn .2s}
+@media(max-width:500px){.stat-bar{gap:8px !important;font-size:11px !important}.tab-bar button{padding:8px 10px !important;font-size:12px !important}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+{% raw %}
+<script type="text/babel">
+const {useState,useEffect,useCallback,useRef,forwardRef}=React;
+
+const DATA_VERSION=2;
+const KEYS={sentences:"greek-sentences",vocab:"greek-vocab",verbs:"greek-verbs",version:"greek-data-version",apiKey:"greek-api-key",ghToken:"greek-gh-token",gistId:"greek-gist-id"};
+
+function loadLS(key,fallback){try{const v=localStorage.getItem(key);return v?JSON.parse(v):fallback;}catch{return fallback;}}
+function saveLS(key,data){try{localStorage.setItem(key,JSON.stringify(data));}catch(e){console.error(e);}}
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+
+// ---- Gist sync ----
+async function gistRead(token,gistId){
+  const r=await fetch(`https://api.github.com/gists/${gistId}`,{headers:{Authorization:`Bearer ${token}`,Accept:"application/vnd.github+json"}});
+  if(!r.ok) throw new Error(`Gist read failed: ${r.status}`);
+  const g=await r.json();
+  const f=g.files?.["greek_tracker_data.json"];
+  if(!f||!f.content) return null;
+  return JSON.parse(f.content);
+}
+
+async function gistWrite(token,gistId,data){
+  const body={files:{"greek_tracker_data.json":{content:JSON.stringify(data)}}};
+  const r=await fetch(`https://api.github.com/gists/${gistId}`,{method:"PATCH",headers:{Authorization:`Bearer ${token}`,Accept:"application/vnd.github+json","Content-Type":"application/json"},body:JSON.stringify(body)});
+  if(!r.ok) throw new Error(`Gist write failed: ${r.status}`);
+  return await r.json();
+}
+
+async function gistCreate(token){
+  const body={description:"Greek Learning Tracker — auto-synced data","public":false,files:{"greek_tracker_data.json":{content:"{}"}}};
+  const r=await fetch("https://api.github.com/gists",{method:"POST",headers:{Authorization:`Bearer ${token}`,Accept:"application/vnd.github+json","Content-Type":"application/json"},body:JSON.stringify(body)});
+  if(!r.ok) throw new Error(`Gist create failed: ${r.status}`);
+  const g=await r.json();
+  return g.id;
+}
+
+// ---- Initial data ----
+const INITIAL_SENTENCES=[
+{id:"s1",greek:"Ήμουν στο νοσοκομείο.",english:"I was in the hospital.",tags:["past","location"]},
+{id:"s2",greek:"Θέλω να γίνω συγγραφέας.",english:"I want to be a writer.",tags:["desire","profession"]},
+{id:"s3",greek:"Ξέρω τον αδελφό σου.",english:"I know your brother.",tags:["people","knowledge"]},
+{id:"s4",greek:"Όχι, δεν θέλω μπανάνες.",english:"No, I do not want bananas.",tags:["negation","food"]},
+{id:"s5",greek:"Είναι στο κατάστημα.",english:"He is in the store.",tags:["location","present"]},
+{id:"s6",greek:"Έχασα το αγαπημένο μου βιβλίο.",english:"I lost my favorite book.",tags:["past","possession"]},
+{id:"s7",greek:"Έχω ένα πουκάμισο.",english:"I have a shirt.",tags:["possession","clothing"]},
+{id:"s8",greek:"Πού είναι ο σκύλος σας;",english:"Where is your dog?",tags:["question","animals"]},
+{id:"s9",greek:"Η γάτα κάθισε στο τραπέζι.",english:"The cat sat on the table.",tags:["past","animals"]},
+{id:"s10",greek:"Κάνω γιόγκα.",english:"I do yoga.",tags:["activity","present"]},
+{id:"s11",greek:"Είναι απλώς ένα μικρό πρόβλημα.",english:"It's just a small problem.",tags:["description"]},
+{id:"s12",greek:"Ψηλά τα χέρια.",english:"Put your hands up.",tags:["command","body"]},
+{id:"s13",greek:"Θα φύγω, αν δεν σας πειράζει.",english:"I'll leave, if you don't mind.",tags:["future","polite"]},
+{id:"s14",greek:"Θα έρθεις στο πάρτι μου;",english:"Will you come to my party?",tags:["future","question","social"]},
+{id:"s15",greek:"Ξεκινήστε τη συνάντηση τώρα.",english:"Start the meeting now.",tags:["command","work"]},
+{id:"s16",greek:"Συμφωνώ μαζί του.",english:"I agree with him.",tags:["opinion","present"]},
+{id:"s17",greek:"Ας μιλήσουμε για τα σχέδιά μας.",english:"Let's talk about our plans.",tags:["suggestion","social"]},
+{id:"s18",greek:"Κοίταξε προς τα δεξιά.",english:"He looked to the right.",tags:["past","direction"]},
+{id:"s19",greek:"Θέλω ένα σάντουιτς.",english:"I want one sandwich.",tags:["desire","food"]},
+{id:"s20",greek:"Πώς το λέτε αυτό;",english:"How do you say this?",tags:["question","learning"]},
+{id:"s21",greek:"Μπορείτε να πάτε στο κατάστημα;",english:"Can you go to the store?",tags:["question","request","location"]},
+{id:"s22",greek:"Αφήστε με να μιλήσω, παρακαλώ.",english:"Let me speak, please.",tags:["command","polite"]},
+{id:"s23",greek:"Αυτό είναι το αγαπημένο του βιβλίο.",english:"This is his favorite book.",tags:["description","possession"]},
+{id:"s24",greek:"Κατάγεται από την Ιρλανδία.",english:"He comes from Ireland.",tags:["present","origin"]},
+{id:"s25",greek:"Θέλω να πάω σπίτι.",english:"I want to go home.",tags:["desire","location"]},
+{id:"s26",greek:"Μπορείτε να δείτε το πουλί;",english:"Can you see the bird?",tags:["question","animals"]},
+{id:"s27",greek:"Είναι καλή φίλη.",english:"She is a good friend.",tags:["description","people"]},
+{id:"s28",greek:"Ποιος άφησε την πόρτα ανοιχτή;",english:"Who left the door open?",tags:["question","past"]},
+{id:"s29",greek:"Έχω δύο εισιτήρια για τη συναυλία.",english:"I've got two tickets for the concert.",tags:["possession","social"]},
+{id:"s30",greek:"Γιατί το κάνετε αυτό;",english:"Why are you doing this?",tags:["question","present"]},
+{id:"s31",greek:"Πιστεύουμε ότι θα βρέξει.",english:"We think it's going to rain.",tags:["opinion","future","weather"]},
+{id:"s32",greek:"Τι θα θέλατε να πιείτε;",english:"What would you like to drink?",tags:["question","polite","food"]},
+{id:"s33",greek:"Θα πας στη συναυλία;",english:"Are you going to the concert?",tags:["question","future","social"]},
+{id:"s34",greek:"Πού είναι το τηλέφωνό μου;",english:"Where is my phone?",tags:["question","possession"]},
+{id:"s35",greek:"Ο χρόνος μου είναι πολύτιμος.",english:"My time is valuable.",tags:["description","present"]},
+{id:"s36",greek:"Κοιτάξτε αυτό το όμορφο ηλιοβασίλεμα!",english:"Look at that beautiful sunset!",tags:["command","nature"]},
+{id:"s37",greek:"Τους έδωσα τα παλιά μου ρούχα.",english:"I gave them my old clothes.",tags:["past","giving"]},
+{id:"s38",greek:"Ναι, μπορώ να σας βοηθήσω.",english:"Yes, I can help you.",tags:["polite","offer"]},
+{id:"s39",greek:"Παρακαλώ πάρτε το φαγητό μου.",english:"Please take my food.",tags:["command","polite","food"]},
+{id:"s40",greek:"Πότε αρχίζει η ταινία;",english:"When does the movie start?",tags:["question","entertainment"]},
+{id:"s41",greek:"Ήμασταν στο σπίτι.",english:"We were at home.",tags:["past","location"]},
+{id:"s42",greek:"Παρακαλώ πείτε μου την ιστορία σας.",english:"Please tell me your story.",tags:["command","polite"]},
+{id:"s43",greek:"Χρειάζεται λίγη βοήθεια.",english:"He needs some help.",tags:["present","request"]},
+{id:"s44",greek:"Μπορούσε να παίξει πιάνο.",english:"She could play the piano.",tags:["past","ability"]},
+{id:"s45",greek:"Στη συνέχεια, πήγαμε στο πάρκο.",english:"Then, we went to the park.",tags:["past","location","narrative"]},
+{id:"s46",greek:"Σας αρέσει ο καφές ή το τσάι;",english:"Do you like coffee or tea?",tags:["question","food","polite"]},
+{id:"s47",greek:"Είχε ένα όμορφο χαμόγελο.",english:"She had a beautiful smile.",tags:["past","description"]},
+{id:"s48",greek:"Αυτό είναι το σπίτι μας.",english:"This is our home.",tags:["present","possession"]},
+{id:"s49",greek:"Είναι μια όμορφη γυναίκα.",english:"She is a beautiful woman.",tags:["description","people"]},
+{id:"s50",greek:"Συχνά χαιρετούν.",english:"They often say hello.",tags:["present","social","habit"]},
+{id:"s51",greek:"Είναι ευγενικός άνθρωπος.",english:"He is a kind man.",tags:["description","people"]},
+{id:"s52",greek:"Της αρέσει να φτιάχνει ψωμί.",english:"She likes to make bread.",tags:["present","food","hobby"]},
+{id:"s53",greek:"Είναι ο μόνος.",english:"He is the only one.",tags:["description"]},
+{id:"s54",greek:"Αυτό είναι ένα πολύ μεγάλο σπίτι.",english:"That's a very big house.",tags:["description","location"]},
+{id:"s55",greek:"Θέλω να φάω κάτι γλυκό.",english:"I want to eat something sweet.",tags:["desire","food"]},
+{id:"s56",greek:"Τι σημαίνει αυτή η λέξη;",english:"What does this word mean?",tags:["question","learning"]},
+{id:"s57",greek:"Μην κοιτάτε προς τα κάτω.",english:"Don't look down.",tags:["command","negation"]},
+{id:"s58",greek:"Αυτή είναι η καλύτερή μου φίλη.",english:"She is my best friend.",tags:["description","people"]},
+{id:"s59",greek:"Κλαίει επειδή έχασε.",english:"He is crying because he lost.",tags:["present","past","emotion"]},
+{id:"s60",greek:"Κάνει πολλή ζέστη για να βγούμε έξω.",english:"It's too hot to go outside.",tags:["weather","description"]},
+{id:"s61",greek:"Πρέπει να φύγουμε πριν βρέξει.",english:"We should leave before it rains.",tags:["obligation","weather","future"]},
+];
+
+const INITIAL_VOCAB=[
+{id:"v1",greek:"το νοσοκομείο",english:"hospital",type:"noun",gender:"neuter",plural:"τα νοσοκομεία",notes:""},{id:"v2",greek:"ο συγγραφέας",english:"writer",type:"noun",gender:"masculine",plural:"οι συγγραφείς",notes:""},{id:"v3",greek:"ο αδελφός",english:"brother",type:"noun",gender:"masculine",plural:"οι αδελφοί",notes:""},{id:"v4",greek:"η μπανάνα",english:"banana",type:"noun",gender:"feminine",plural:"οι μπανάνες",notes:""},{id:"v5",greek:"το κατάστημα",english:"store",type:"noun",gender:"neuter",plural:"τα καταστήματα",notes:""},{id:"v6",greek:"το βιβλίο",english:"book",type:"noun",gender:"neuter",plural:"τα βιβλία",notes:""},{id:"v7",greek:"το πουκάμισο",english:"shirt",type:"noun",gender:"neuter",plural:"τα πουκάμισα",notes:""},{id:"v8",greek:"ο σκύλος",english:"dog",type:"noun",gender:"masculine",plural:"οι σκύλοι",notes:""},{id:"v9",greek:"η γάτα",english:"cat",type:"noun",gender:"feminine",plural:"οι γάτες",notes:""},{id:"v10",greek:"το τραπέζι",english:"table",type:"noun",gender:"neuter",plural:"τα τραπέζια",notes:""},{id:"v11",greek:"η γιόγκα",english:"yoga",type:"noun",gender:"feminine",plural:"",notes:""},{id:"v12",greek:"το πρόβλημα",english:"problem",type:"noun",gender:"neuter",plural:"τα προβλήματα",notes:""},{id:"v13",greek:"το χέρι",english:"hand",type:"noun",gender:"neuter",plural:"τα χέρια",notes:""},{id:"v14",greek:"το πάρτι",english:"party",type:"noun",gender:"neuter",plural:"τα πάρτι",notes:"indeclinable"},{id:"v15",greek:"η συνάντηση",english:"meeting",type:"noun",gender:"feminine",plural:"οι συναντήσεις",notes:""},{id:"v16",greek:"το σχέδιο",english:"plan",type:"noun",gender:"neuter",plural:"τα σχέδια",notes:""},{id:"v17",greek:"το σάντουιτς",english:"sandwich",type:"noun",gender:"neuter",plural:"τα σάντουιτς",notes:"indeclinable"},{id:"v18",greek:"η Ιρλανδία",english:"Ireland",type:"noun",gender:"feminine",plural:"",notes:"proper noun"},{id:"v19",greek:"το σπίτι",english:"home / house",type:"noun",gender:"neuter",plural:"τα σπίτια",notes:""},{id:"v20",greek:"το πουλί",english:"bird",type:"noun",gender:"neuter",plural:"τα πουλιά",notes:""},{id:"v21",greek:"η φίλη",english:"female friend",type:"noun",gender:"feminine",plural:"οι φίλες",notes:""},{id:"v22",greek:"η πόρτα",english:"door",type:"noun",gender:"feminine",plural:"οι πόρτες",notes:""},{id:"v23",greek:"το εισιτήριο",english:"ticket",type:"noun",gender:"neuter",plural:"τα εισιτήρια",notes:""},{id:"v24",greek:"η συναυλία",english:"concert",type:"noun",gender:"feminine",plural:"οι συναυλίες",notes:""},{id:"v25",greek:"το τηλέφωνο",english:"phone",type:"noun",gender:"neuter",plural:"τα τηλέφωνα",notes:""},{id:"v26",greek:"ο χρόνος",english:"time",type:"noun",gender:"masculine",plural:"οι χρόνοι",notes:""},{id:"v27",greek:"το ηλιοβασίλεμα",english:"sunset",type:"noun",gender:"neuter",plural:"τα ηλιοβασιλέματα",notes:""},{id:"v28",greek:"το ρούχο",english:"clothing",type:"noun",gender:"neuter",plural:"τα ρούχα",notes:""},{id:"v29",greek:"το φαγητό",english:"food",type:"noun",gender:"neuter",plural:"τα φαγητά",notes:""},{id:"v30",greek:"η ταινία",english:"movie / film",type:"noun",gender:"feminine",plural:"οι ταινίες",notes:""},{id:"v31",greek:"η ιστορία",english:"story",type:"noun",gender:"feminine",plural:"οι ιστορίες",notes:""},{id:"v32",greek:"το ψωμί",english:"bread",type:"noun",gender:"neuter",plural:"τα ψωμιά",notes:""},{id:"v33",greek:"η λέξη",english:"word",type:"noun",gender:"feminine",plural:"οι λέξεις",notes:""},{id:"v34",greek:"η ζέστη",english:"heat",type:"noun",gender:"feminine",plural:"",notes:""},{id:"v35",greek:"η βοήθεια",english:"help",type:"noun",gender:"feminine",plural:"",notes:""},{id:"v36",greek:"το πιάνο",english:"piano",type:"noun",gender:"neuter",plural:"τα πιάνα",notes:""},{id:"v37",greek:"το πάρκο",english:"park",type:"noun",gender:"neuter",plural:"τα πάρκα",notes:""},{id:"v38",greek:"ο καφές",english:"coffee",type:"noun",gender:"masculine",plural:"οι καφέδες",notes:""},{id:"v39",greek:"το τσάι",english:"tea",type:"noun",gender:"neuter",plural:"τα τσάγια",notes:""},{id:"v40",greek:"το χαμόγελο",english:"smile",type:"noun",gender:"neuter",plural:"τα χαμόγελα",notes:""},{id:"v41",greek:"η γυναίκα",english:"woman",type:"noun",gender:"feminine",plural:"οι γυναίκες",notes:""},{id:"v42",greek:"ο άνθρωπος",english:"person / man",type:"noun",gender:"masculine",plural:"οι άνθρωποι",notes:""},
+{id:"a1",greek:"αγαπημένος",english:"favorite / beloved",type:"adjective",gender:"",plural:"",notes:"αγαπημένος, αγαπημένη, αγαπημένο"},{id:"a2",greek:"μικρός",english:"small",type:"adjective",gender:"",plural:"",notes:"μικρός, μικρή, μικρό"},{id:"a3",greek:"ψηλός",english:"high / tall",type:"adjective",gender:"",plural:"",notes:"ψηλός, ψηλή, ψηλό — adverb: ψηλά"},{id:"a4",greek:"δεξιός",english:"right",type:"adjective",gender:"",plural:"",notes:"δεξιός, δεξιά, δεξί"},{id:"a5",greek:"καλός",english:"good",type:"adjective",gender:"",plural:"",notes:"καλός, καλή, καλό"},{id:"a6",greek:"ανοιχτός",english:"open",type:"adjective",gender:"",plural:"",notes:"ανοιχτός, ανοιχτή, ανοιχτό"},{id:"a7",greek:"πολύτιμος",english:"valuable",type:"adjective",gender:"",plural:"",notes:"πολύτιμος, πολύτιμη, πολύτιμο"},{id:"a8",greek:"παλιός",english:"old",type:"adjective",gender:"",plural:"",notes:"παλιός, παλιά, παλιό"},{id:"a9",greek:"λίγος",english:"little / some",type:"adjective",gender:"",plural:"",notes:"λίγος, λίγη, λίγο"},{id:"a10",greek:"μόνος",english:"only / alone",type:"adjective",gender:"",plural:"",notes:"μόνος, μόνη, μόνο"},{id:"a11",greek:"μεγάλος",english:"big",type:"adjective",gender:"",plural:"",notes:"μεγάλος, μεγάλη, μεγάλο"},{id:"a12",greek:"γλυκός",english:"sweet",type:"adjective",gender:"",plural:"",notes:"γλυκός, γλυκιά, γλυκό"},{id:"a13",greek:"καλύτερος",english:"better / best",type:"adjective",gender:"",plural:"",notes:"καλύτερος, καλύτερη, καλύτερο"},{id:"a14",greek:"πολύς",english:"much / a lot of",type:"adjective",gender:"",plural:"",notes:"πολύς, πολλή, πολύ"},{id:"a15",greek:"όμορφος",english:"beautiful",type:"adjective",gender:"",plural:"",notes:"όμορφος, όμορφη, όμορφο"},{id:"a16",greek:"ευγενικός",english:"kind / polite",type:"adjective",gender:"",plural:"",notes:"ευγενικός, ευγενική, ευγενικό"},
+{id:"o1",greek:"απλώς",english:"just, simply",type:"other",gender:"",plural:"",notes:"adverb"},{id:"o2",greek:"αν",english:"if",type:"other",gender:"",plural:"",notes:"conjunction"},{id:"o3",greek:"θα",english:"will (future)",type:"other",gender:"",plural:"",notes:"future particle"},{id:"o4",greek:"ας",english:"let's",type:"other",gender:"",plural:"",notes:"exhortation particle"},{id:"o5",greek:"για",english:"for / about",type:"other",gender:"",plural:"",notes:"preposition"},{id:"o6",greek:"προς",english:"toward / to",type:"other",gender:"",plural:"",notes:"preposition"},{id:"o7",greek:"πώς",english:"how",type:"other",gender:"",plural:"",notes:"interrogative"},{id:"o8",greek:"παρακαλώ",english:"please",type:"other",gender:"",plural:"",notes:""},{id:"o9",greek:"τι",english:"what",type:"other",gender:"",plural:"",notes:"interrogative"},{id:"o10",greek:"πού",english:"where",type:"other",gender:"",plural:"",notes:"interrogative"},{id:"o11",greek:"ναι",english:"yes",type:"other",gender:"",plural:"",notes:""},{id:"o12",greek:"πότε",english:"when",type:"other",gender:"",plural:"",notes:"interrogative"},{id:"o13",greek:"κάτι",english:"something",type:"other",gender:"",plural:"",notes:"indefinite pronoun"},{id:"o14",greek:"επειδή",english:"because",type:"other",gender:"",plural:"",notes:"conjunction"},{id:"o15",greek:"πριν",english:"before",type:"other",gender:"",plural:"",notes:"conjunction / preposition"},{id:"o16",greek:"κάτω",english:"down",type:"other",gender:"",plural:"",notes:"adverb"},{id:"o17",greek:"έξω",english:"outside",type:"other",gender:"",plural:"",notes:"adverb"},{id:"o18",greek:"ή",english:"or",type:"other",gender:"",plural:"",notes:"conjunction"},{id:"o19",greek:"συχνά",english:"often",type:"other",gender:"",plural:"",notes:"adverb"},{id:"o20",greek:"από",english:"from",type:"other",gender:"",plural:"",notes:"preposition"},{id:"o21",greek:"ποιος",english:"who",type:"other",gender:"",plural:"",notes:"interrogative pronoun"},{id:"o22",greek:"δύο",english:"two",type:"other",gender:"",plural:"",notes:"number"},{id:"o23",greek:"ότι",english:"that",type:"other",gender:"",plural:"",notes:"conjunction"},{id:"o24",greek:"γιατί",english:"why",type:"other",gender:"",plural:"",notes:"interrogative"},{id:"o25",greek:"μην",english:"don't",type:"other",gender:"",plural:"",notes:"negation particle"},{id:"o26",greek:"πολύ",english:"very / much",type:"other",gender:"",plural:"",notes:"adverb"},
+];
+
+const INITIAL_VERBS=[
+{id:"vb1",lemma:"είμαι",english:"to be",group:"irregular",forms:[{form:"ήμουν",tense:"Imperfect",person:"1st sing."},{form:"ήμασταν",tense:"Imperfect",person:"1st pl."},{form:"είναι",tense:"Present",person:"3rd sing."}]},
+{id:"vb2",lemma:"θέλω",english:"to want",group:"1st",forms:[{form:"θέλω",tense:"Present",person:"1st sing."},{form:"θέλατε",tense:"Imperfect",person:"2nd pl."}]},
+{id:"vb3",lemma:"γίνομαι",english:"to become",group:"deponent",forms:[{form:"γίνω",tense:"Aorist Subj.",person:"1st sing."}]},
+{id:"vb4",lemma:"ξέρω",english:"to know",group:"1st",forms:[{form:"ξέρω",tense:"Present",person:"1st sing."}]},
+{id:"vb5",lemma:"χάνω",english:"to lose",group:"1st",forms:[{form:"έχασα",tense:"Aorist",person:"1st sing."},{form:"έχασε",tense:"Aorist",person:"3rd sing."}]},
+{id:"vb6",lemma:"έχω",english:"to have",group:"1st",forms:[{form:"έχω",tense:"Present",person:"1st sing."},{form:"είχε",tense:"Imperfect",person:"3rd sing."}]},
+{id:"vb7",lemma:"κάθομαι",english:"to sit",group:"deponent",forms:[{form:"κάθισε",tense:"Aorist",person:"3rd sing."}]},
+{id:"vb8",lemma:"κάνω",english:"to do / make",group:"1st",forms:[{form:"κάνω",tense:"Present",person:"1st sing."},{form:"κάνετε",tense:"Present",person:"2nd pl."},{form:"κάνει",tense:"Present",person:"3rd sing."}]},
+{id:"vb9",lemma:"φεύγω",english:"to leave",group:"1st",forms:[{form:"φύγω",tense:"Aorist Subj.",person:"1st sing."},{form:"φύγουμε",tense:"Aorist Subj.",person:"1st pl."}]},
+{id:"vb10",lemma:"πειράζω",english:"to bother / mind",group:"1st",forms:[{form:"πειράζει",tense:"Present",person:"3rd sing."}]},
+{id:"vb11",lemma:"έρχομαι",english:"to come",group:"deponent",forms:[{form:"έρθεις",tense:"Aorist Subj.",person:"2nd sing."}]},
+{id:"vb12",lemma:"ξεκινώ",english:"to start",group:"2nd",forms:[{form:"ξεκινήστε",tense:"Aorist Imper.",person:"2nd pl."}]},
+{id:"vb13",lemma:"συμφωνώ",english:"to agree",group:"2nd",forms:[{form:"συμφωνώ",tense:"Present",person:"1st sing."}]},
+{id:"vb14",lemma:"μιλάω",english:"to speak / talk",group:"2nd",forms:[{form:"μιλήσω",tense:"Aorist Subj.",person:"1st sing."},{form:"μιλήσουμε",tense:"Aorist Subj.",person:"1st pl."}]},
+{id:"vb15",lemma:"κοιτάζω",english:"to look",group:"1st",forms:[{form:"κοίταξε",tense:"Aorist",person:"3rd sing."},{form:"κοιτάξτε",tense:"Aorist Imper.",person:"2nd pl."},{form:"κοιτάτε",tense:"Present",person:"2nd pl."}]},
+{id:"vb16",lemma:"λέω",english:"to say / tell",group:"irregular",forms:[{form:"λέτε",tense:"Present",person:"2nd pl."},{form:"πείτε",tense:"Aorist Imper.",person:"2nd pl."}]},
+{id:"vb17",lemma:"μπορώ",english:"can / to be able to",group:"2nd",forms:[{form:"μπορώ",tense:"Present",person:"1st sing."},{form:"μπορείτε",tense:"Present",person:"2nd pl."},{form:"μπορούσε",tense:"Imperfect",person:"3rd sing."}]},
+{id:"vb18",lemma:"πηγαίνω",english:"to go",group:"1st",forms:[{form:"πάω",tense:"Aorist Subj.",person:"1st sing."},{form:"πας",tense:"Present",person:"2nd sing."},{form:"πάτε",tense:"Aorist Subj.",person:"2nd pl."},{form:"πήγαμε",tense:"Aorist",person:"1st pl."}]},
+{id:"vb19",lemma:"αφήνω",english:"to let / leave",group:"1st",forms:[{form:"αφήστε",tense:"Aorist Imper.",person:"2nd pl."},{form:"άφησε",tense:"Aorist",person:"3rd sing."}]},
+{id:"vb20",lemma:"κατάγομαι",english:"to come from",group:"deponent",forms:[{form:"κατάγεται",tense:"Present",person:"3rd sing."}]},
+{id:"vb21",lemma:"βλέπω",english:"to see",group:"1st",forms:[{form:"δείτε",tense:"Aorist Subj.",person:"2nd pl."}]},
+{id:"vb22",lemma:"παίζω",english:"to play",group:"1st",forms:[{form:"παίξει",tense:"Aorist Subj.",person:"3rd sing."}]},
+{id:"vb23",lemma:"αρέσω",english:"to please / be liked",group:"1st",forms:[{form:"αρέσει",tense:"Present",person:"3rd sing."}]},
+{id:"vb24",lemma:"πίνω",english:"to drink",group:"1st",forms:[{form:"πιείτε",tense:"Aorist Subj.",person:"2nd pl."}]},
+{id:"vb25",lemma:"τρώω",english:"to eat",group:"irregular",forms:[{form:"φάω",tense:"Aorist Subj.",person:"1st sing."}]},
+{id:"vb26",lemma:"σημαίνω",english:"to mean",group:"1st",forms:[{form:"σημαίνει",tense:"Present",person:"3rd sing."}]},
+{id:"vb27",lemma:"δίνω",english:"to give",group:"1st",forms:[{form:"έδωσα",tense:"Aorist",person:"1st sing."}]},
+{id:"vb28",lemma:"βοηθάω",english:"to help",group:"2nd",forms:[{form:"βοηθήσω",tense:"Aorist Subj.",person:"1st sing."}]},
+{id:"vb29",lemma:"παίρνω",english:"to take",group:"1st",forms:[{form:"πάρτε",tense:"Aorist Imper.",person:"2nd pl."}]},
+{id:"vb30",lemma:"αρχίζω",english:"to begin / start",group:"1st",forms:[{form:"αρχίζει",tense:"Present",person:"3rd sing."}]},
+{id:"vb31",lemma:"χαιρετώ",english:"to greet",group:"2nd",forms:[{form:"χαιρετούν",tense:"Present",person:"3rd pl."}]},
+{id:"vb32",lemma:"φτιάχνω",english:"to make",group:"1st",forms:[{form:"φτιάχνει",tense:"Present",person:"3rd sing."}]},
+{id:"vb33",lemma:"κλαίω",english:"to cry",group:"irregular",forms:[{form:"κλαίει",tense:"Present",person:"3rd sing."}]},
+{id:"vb34",lemma:"βγαίνω",english:"to go out",group:"1st",forms:[{form:"βγούμε",tense:"Aorist Subj.",person:"1st pl."}]},
+{id:"vb35",lemma:"πρέπει",english:"must / should",group:"irregular",forms:[{form:"πρέπει",tense:"Present",person:"impersonal"}]},
+{id:"vb36",lemma:"πιστεύω",english:"to believe / think",group:"1st",forms:[{form:"πιστεύουμε",tense:"Present",person:"1st pl."}]},
+{id:"vb37",lemma:"βρέχω",english:"to rain",group:"1st",forms:[{form:"βρέξει",tense:"Aorist Subj.",person:"3rd sing."}]},
+{id:"vb38",lemma:"χρειάζομαι",english:"to need",group:"deponent",forms:[{form:"χρειάζεται",tense:"Present",person:"3rd sing."}]},
+];
+
+// ---- UI Components ----
+function Badge({children,color="#5a7d6a"}){return <span style={{display:"inline-block",padding:"2px 8px",borderRadius:4,fontSize:11,fontWeight:600,background:color+"18",color,marginRight:4,marginBottom:2}}>{children}</span>;}
+function Tab({label,active,onClick,accent}){return <button onClick={onClick} style={{padding:"10px 18px",border:"none",cursor:"pointer",fontSize:14,fontWeight:active?700:500,background:active?(accent||"var(--accent)"):"transparent",color:active?"#fff":"var(--text-dim)",borderRadius:"8px 8px 0 0",transition:"all 0.2s"}}>{label}</button>;}
+function SearchBar({value,onChange,placeholder}){return <input value={value} onChange={e=>onChange(e.target.value)} placeholder={placeholder} style={{width:"100%",padding:"10px 14px",border:"1px solid var(--border)",borderRadius:8,fontSize:14,background:"var(--card-bg)",color:"var(--text)",outline:"none",boxSizing:"border-box"}} />;}
+function Modal({open,onClose,title,children}){if(!open)return null;return <div style={{position:"fixed",inset:0,zIndex:1000,display:"flex",alignItems:"center",justifyContent:"center",background:"rgba(0,0,0,0.45)"}} onClick={onClose}><div onClick={e=>e.stopPropagation()} style={{background:"var(--bg)",borderRadius:14,padding:"28px",width:"92%",maxWidth:500,maxHeight:"85vh",overflow:"auto",boxShadow:"0 20px 60px rgba(0,0,0,0.3)"}}><div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:18}}><h3 style={{margin:0,fontSize:18,fontFamily:"'Literata',serif"}}>{title}</h3><button onClick={onClose} style={{background:"none",border:"none",fontSize:22,cursor:"pointer",color:"var(--text-dim)"}}>×</button></div>{children}</div></div>;}
+function Field({label,children}){return <div style={{marginBottom:12}}><label style={{display:"block",fontSize:12,fontWeight:600,color:"var(--text-dim)",marginBottom:4}}>{label}</label>{children}</div>;}
+const Input=forwardRef((props,ref)=><input ref={ref} {...props} style={{width:"100%",padding:"8px 12px",border:"1px solid var(--border)",borderRadius:6,fontSize:14,background:"var(--card-bg)",color:"var(--text)",outline:"none",boxSizing:"border-box",...(props.style||{})}} />);
+function Select({value,onChange,options}){return <select value={value} onChange={e=>onChange(e.target.value)} style={{width:"100%",padding:"8px 12px",border:"1px solid var(--border)",borderRadius:6,fontSize:14,background:"var(--card-bg)",color:"var(--text)",outline:"none"}}>{options.map(o=><option key={o.value} value={o.value}>{o.label}</option>)}</select>;}
+function Btn({children,onClick,variant="primary",style:s={}}){const base={padding:"8px 18px",border:"none",borderRadius:7,cursor:"pointer",fontSize:13,fontWeight:600,transition:"all 0.15s"};const st=variant==="primary"?{...base,background:"var(--accent)",color:"#fff",...s}:{...base,background:"var(--border)",color:"var(--text)",...s};return <button onClick={onClick} style={st}>{children}</button>;}
+
+// ---- Panels (compact) ----
+function SentencePanel({sentences,setSentences}){const [search,setSearch]=useState("");const [adding,setAdding]=useState(false);const [nG,sNG]=useState("");const [nE,sNE]=useState("");const [nT,sNT]=useState("");const [reveal,setReveal]=useState({});const f=sentences.filter(s=>s.greek.toLowerCase().includes(search.toLowerCase())||s.english.toLowerCase().includes(search.toLowerCase())||s.tags.some(t=>t.toLowerCase().includes(search.toLowerCase())));const add=()=>{if(!nG.trim()||!nE.trim())return;setSentences(p=>[...p,{id:uid(),greek:nG.trim(),english:nE.trim(),tags:nT.split(",").map(t=>t.trim()).filter(Boolean)}]);sNG("");sNE("");sNT("");setAdding(false);};return <div><div style={{display:"flex",gap:10,marginBottom:16,alignItems:"center"}}><div style={{flex:1}}><SearchBar value={search} onChange={setSearch} placeholder="Search sentences..." /></div><Btn onClick={()=>setAdding(true)}>+ Add</Btn></div><div style={{fontSize:12,color:"var(--text-dim)",marginBottom:12}}>{f.length} sentence{f.length!==1?"s":""} — click to reveal</div><div style={{display:"flex",flexDirection:"column",gap:8}}>{f.map(s=><div key={s.id} onClick={()=>setReveal(r=>({...r,[s.id]:!r[s.id]}))} style={{background:"var(--card-bg)",borderRadius:10,padding:"14px 16px",cursor:"pointer",border:"1px solid var(--border)"}}><div style={{fontSize:17,fontFamily:"'Literata',serif",marginBottom:4,lineHeight:1.5}}>{s.greek}</div><div style={{fontSize:14,color:reveal[s.id]?"var(--text-dim)":"transparent",background:reveal[s.id]?"none":"var(--border)",borderRadius:4,display:"inline-block",padding:reveal[s.id]?0:"2px 60px",transition:"all 0.2s"}}>{reveal[s.id]?s.english:"\u00A0"}</div><div style={{marginTop:6}}>{s.tags.map(t=><Badge key={t}>{t}</Badge>)}<button onClick={e=>{e.stopPropagation();setSentences(p=>p.filter(x=>x.id!==s.id));}} style={{float:"right",background:"none",border:"none",color:"var(--text-dim)",cursor:"pointer",fontSize:16,opacity:0.5}}>×</button></div></div>)}</div><Modal open={adding} onClose={()=>setAdding(false)} title="Add Sentence"><Field label="Greek"><Input value={nG} onChange={e=>sNG(e.target.value)} /></Field><Field label="English"><Input value={nE} onChange={e=>sNE(e.target.value)} /></Field><Field label="Tags"><Input value={nT} onChange={e=>sNT(e.target.value)} placeholder="comma-separated" /></Field><div style={{display:"flex",gap:8,justifyContent:"flex-end",marginTop:12}}><Btn variant="secondary" onClick={()=>setAdding(false)}>Cancel</Btn><Btn onClick={add}>Add</Btn></div></Modal></div>;}
+
+function VocabPanel({vocab,setVocab}){const [search,setSearch]=useState("");const [filter,setFilter]=useState("all");const [adding,setAdding]=useState(false);const [form,setForm]=useState({greek:"",english:"",type:"noun",gender:"",plural:"",notes:""});const f=vocab.filter(v=>{const q=search.toLowerCase();return(v.greek.toLowerCase().includes(q)||v.english.toLowerCase().includes(q))&&(filter==="all"||v.type===filter);});const add=()=>{if(!form.greek.trim())return;setVocab(p=>[...p,{...form,id:uid()}]);setForm({greek:"",english:"",type:"noun",gender:"",plural:"",notes:""});setAdding(false);};const gc={masculine:"#3a6ea5",feminine:"#a5496b",neuter:"#5a7d6a"};return <div><div style={{display:"flex",gap:10,marginBottom:10,alignItems:"center",flexWrap:"wrap"}}><div style={{flex:1,minWidth:180}}><SearchBar value={search} onChange={setSearch} placeholder="Search vocabulary..." /></div><div style={{width:130}}><Select value={filter} onChange={setFilter} options={[{value:"all",label:"All"},{value:"noun",label:"Nouns"},{value:"adjective",label:"Adj."},{value:"other",label:"Other"}]} /></div><Btn onClick={()=>setAdding(true)}>+ Add</Btn></div><div style={{fontSize:12,color:"var(--text-dim)",marginBottom:12}}>{f.length} word{f.length!==1?"s":""}</div><div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(220px,1fr))",gap:8}}>{f.map(v=><div key={v.id} style={{background:"var(--card-bg)",borderRadius:10,padding:"12px 14px",border:"1px solid var(--border)",position:"relative"}}><div style={{fontSize:16,fontFamily:"'Literata',serif",marginBottom:2}}>{v.greek}</div><div style={{fontSize:13,color:"var(--text-dim)",marginBottom:6}}>{v.english}</div><Badge color={v.type==="noun"?"#3a6ea5":v.type==="adjective"?"#b07a2e":"#888"}>{v.type}</Badge>{v.gender&&<Badge color={gc[v.gender]||"#888"}>{v.gender}</Badge>}{v.plural&&<div style={{fontSize:11,color:"var(--text-dim)",marginTop:4}}>pl: {v.plural}</div>}{v.notes&&<div style={{fontSize:11,color:"var(--text-dim)",marginTop:2,fontStyle:"italic"}}>{v.notes}</div>}<button onClick={()=>setVocab(p=>p.filter(x=>x.id!==v.id))} style={{position:"absolute",top:8,right:10,background:"none",border:"none",color:"var(--text-dim)",cursor:"pointer",fontSize:16,opacity:0.4}}>×</button></div>)}</div><Modal open={adding} onClose={()=>setAdding(false)} title="Add Word"><Field label="Greek"><Input value={form.greek} onChange={e=>setForm(f=>({...f,greek:e.target.value}))} /></Field><Field label="English"><Input value={form.english} onChange={e=>setForm(f=>({...f,english:e.target.value}))} /></Field><Field label="Type"><Select value={form.type} onChange={v=>setForm(f=>({...f,type:v}))} options={[{value:"noun",label:"Noun"},{value:"adjective",label:"Adjective"},{value:"adverb",label:"Adverb"},{value:"other",label:"Other"}]} /></Field><Field label="Gender"><Select value={form.gender} onChange={v=>setForm(f=>({...f,gender:v}))} options={[{value:"",label:"—"},{value:"masculine",label:"ο"},{value:"feminine",label:"η"},{value:"neuter",label:"το"}]} /></Field><Field label="Plural"><Input value={form.plural} onChange={e=>setForm(f=>({...f,plural:e.target.value}))} /></Field><Field label="Notes"><Input value={form.notes} onChange={e=>setForm(f=>({...f,notes:e.target.value}))} /></Field><div style={{display:"flex",gap:8,justifyContent:"flex-end",marginTop:12}}><Btn variant="secondary" onClick={()=>setAdding(false)}>Cancel</Btn><Btn onClick={add}>Add</Btn></div></Modal></div>;}
+
+function VerbPanel({verbs,setVerbs}){const [search,setSearch]=useState("");const [exp,setExp]=useState({});const [adding,setAdding]=useState(false);const [form,setForm]=useState({lemma:"",english:"",group:"1st",forms:[]});const [nf,setNf]=useState({form:"",tense:"",person:""});const f=verbs.filter(v=>v.lemma.toLowerCase().includes(search.toLowerCase())||v.english.toLowerCase().includes(search.toLowerCase()));const gc={"1st":"#5a7d6a","2nd":"#3a6ea5",irregular:"#a5496b",deponent:"#b07a2e"};return <div><div style={{display:"flex",gap:10,marginBottom:16,alignItems:"center"}}><div style={{flex:1}}><SearchBar value={search} onChange={setSearch} placeholder="Search verbs..." /></div><Btn onClick={()=>setAdding(true)}>+ Add</Btn></div><div style={{fontSize:12,color:"var(--text-dim)",marginBottom:12}}>{f.length} verb{f.length!==1?"s":""}</div><div style={{display:"flex",flexDirection:"column",gap:8}}>{f.map(v=>{const o=exp[v.id];return <div key={v.id} style={{background:"var(--card-bg)",borderRadius:10,border:"1px solid var(--border)",overflow:"hidden"}}><div onClick={()=>setExp(e=>({...e,[v.id]:!e[v.id]}))} style={{padding:"12px 16px",cursor:"pointer",display:"flex",justifyContent:"space-between",alignItems:"center"}}><div><span style={{fontSize:17,fontFamily:"'Literata',serif"}}>{v.lemma}</span><span style={{fontSize:13,color:"var(--text-dim)",marginLeft:10}}>{v.english}</span></div><div style={{display:"flex",alignItems:"center",gap:8}}><Badge color={gc[v.group]||"#888"}>{v.group}</Badge><span style={{fontSize:12,color:"var(--text-dim)"}}>{v.forms.length}</span><span style={{transform:o?"rotate(90deg)":"none",transition:"0.15s",color:"var(--text-dim)"}}>▸</span></div></div>{o&&<div style={{padding:"0 16px 14px",borderTop:"1px solid var(--border)"}}>{v.forms.length>0&&<table style={{width:"100%",borderCollapse:"collapse",marginTop:10,fontSize:13}}><thead><tr style={{textAlign:"left",color:"var(--text-dim)",fontSize:11,textTransform:"uppercase"}}><th style={{padding:"6px 8px"}}>Form</th><th style={{padding:"6px 8px"}}>Tense</th><th style={{padding:"6px 8px"}}>Person</th><th style={{width:30}}></th></tr></thead><tbody>{v.forms.map((fm,i)=><tr key={i} style={{borderTop:"1px solid var(--border)"}}><td style={{padding:"6px 8px",fontFamily:"'Literata',serif",fontWeight:600}}>{fm.form}</td><td style={{padding:"6px 8px"}}>{fm.tense}</td><td style={{padding:"6px 8px"}}>{fm.person}</td><td><button onClick={()=>setVerbs(p=>p.map(x=>x.id===v.id?{...x,forms:x.forms.filter((_,j)=>j!==i)}:x))} style={{background:"none",border:"none",color:"var(--text-dim)",cursor:"pointer",opacity:0.4}}>×</button></td></tr>)}</tbody></table>}<div style={{display:"flex",gap:6,marginTop:10,flexWrap:"wrap"}}><Input value={nf.form} onChange={e=>setNf(f=>({...f,form:e.target.value}))} placeholder="Form" style={{flex:1,minWidth:90}} /><Input value={nf.tense} onChange={e=>setNf(f=>({...f,tense:e.target.value}))} placeholder="Tense" style={{flex:1,minWidth:90}} /><Input value={nf.person} onChange={e=>setNf(f=>({...f,person:e.target.value}))} placeholder="Person" style={{flex:1,minWidth:80}} /><Btn onClick={()=>{if(!nf.form.trim())return;setVerbs(p=>p.map(x=>x.id===v.id?{...x,forms:[...x.forms,{...nf}]}:x));setNf({form:"",tense:"",person:""});}}>+</Btn></div><div style={{marginTop:8,textAlign:"right"}}><button onClick={()=>setVerbs(p=>p.filter(x=>x.id!==v.id))} style={{background:"none",border:"none",color:"#c44",cursor:"pointer",fontSize:12}}>Delete</button></div></div>}</div>;})}</div><Modal open={adding} onClose={()=>setAdding(false)} title="Add Verb"><Field label="Lemma"><Input value={form.lemma} onChange={e=>setForm(f=>({...f,lemma:e.target.value}))} /></Field><Field label="English"><Input value={form.english} onChange={e=>setForm(f=>({...f,english:e.target.value}))} /></Field><Field label="Group"><Select value={form.group} onChange={v=>setForm(f=>({...f,group:v}))} options={[{value:"1st",label:"1st"},{value:"2nd",label:"2nd"},{value:"irregular",label:"Irregular"},{value:"deponent",label:"Deponent"}]} /></Field><div style={{display:"flex",gap:8,justifyContent:"flex-end",marginTop:12}}><Btn variant="secondary" onClick={()=>setAdding(false)}>Cancel</Btn><Btn onClick={()=>{if(!form.lemma.trim())return;setVerbs(p=>[...p,{...form,id:uid()}]);setForm({lemma:"",english:"",group:"1st",forms:[]});setAdding(false);}}>Add</Btn></div></Modal></div>;}
+
+function QuizPanel({sentences,vocab}){const [mode,setMode]=useState("sentences");const [dir,setDir]=useState("gr2en");const [cur,setCur]=useState(null);const [ans,setAns]=useState("");const [res,setRes]=useState(null);const [score,setScore]=useState({c:0,t:0});const ref=useRef(null);const pool=mode==="sentences"?sentences:vocab;const next=useCallback(()=>{if(!pool.length)return;setCur(pool[Math.floor(Math.random()*pool.length)]);setAns("");setRes(null);setTimeout(()=>ref.current?.focus(),50);},[pool]);useEffect(()=>{next();},[mode,dir]);const check=()=>{if(!cur)return;const c=dir==="gr2en"?cur.english.toLowerCase().replace(/[.,;!?]/g,"").trim():cur.greek.toLowerCase().replace(/[.,;!?;]/g,"").trim();const g=ans.toLowerCase().replace(/[.,;!?;]/g,"").trim();const ok=g===c;setRes({ok,c:dir==="gr2en"?cur.english:cur.greek});setScore(s=>({c:s.c+(ok?1:0),t:s.t+1}));};const prompt=cur?(dir==="gr2en"?cur.greek:cur.english):"";return <div><div style={{display:"flex",gap:10,marginBottom:18,flexWrap:"wrap",alignItems:"center"}}><Select value={mode} onChange={setMode} options={[{value:"sentences",label:"Sentences"},{value:"vocab",label:"Vocabulary"}]} /><Select value={dir} onChange={setDir} options={[{value:"gr2en",label:"Greek → English"},{value:"en2gr",label:"English → Greek"}]} /><div style={{marginLeft:"auto",fontSize:14,color:"var(--text-dim)",fontWeight:600}}>{score.c}/{score.t}{score.t>0&&<span style={{color:"var(--accent)"}}> ({Math.round(score.c/score.t*100)}%)</span>}</div></div>{cur?<div style={{background:"var(--card-bg)",borderRadius:14,padding:"28px 24px",border:"1px solid var(--border)",textAlign:"center"}}><div style={{fontSize:11,textTransform:"uppercase",letterSpacing:"0.08em",color:"var(--text-dim)",marginBottom:10}}>{dir==="gr2en"?"Translate to English":"Translate to Greek"}</div><div style={{fontSize:22,fontFamily:"'Literata',serif",marginBottom:20,lineHeight:1.5}}>{prompt}</div><div style={{maxWidth:360,margin:"0 auto"}}><Input ref={ref} value={ans} onChange={e=>setAns(e.target.value)} placeholder="Your answer..." onKeyDown={e=>{if(e.key==="Enter"){res?next():check();}}} style={{textAlign:"center",fontSize:16}} /></div>{res&&<div style={{marginTop:16,padding:"12px 16px",borderRadius:8,background:res.ok?"#d4edda":"#f8d7da",color:res.ok?"#155724":"#721c24",fontSize:14}}>{res.ok?"Correct! 🎉":<span>Not quite — <strong style={{fontFamily:"'Literata',serif"}}>{res.c}</strong></span>}</div>}<div style={{marginTop:16}}>{res?<Btn onClick={next}>Next →</Btn>:<Btn onClick={check}>Check</Btn>}</div></div>:<div style={{textAlign:"center",color:"var(--text-dim)",padding:40}}>No items.</div>}</div>;}
+
+// ---- Sync Panel ----
+function SyncPanel({ghToken,setGhToken,gistId,setGistId,syncStatus,onPull,onPush,onDisconnect}){
+  const [tokenInput,setTokenInput]=useState(ghToken);
+  const [setting,setSetting]=useState(false);
+  const connect=async()=>{
+    setSetting(true);
+    try{
+      const token=tokenInput.trim();
+      if(!token) throw new Error("Token required");
+      // test token
+      const r=await fetch("https://api.github.com/user",{headers:{Authorization:`Bearer ${token}`}});
+      if(!r.ok) throw new Error("Invalid token");
+      // create or use existing gist
+      let id=gistId;
+      if(!id){id=await gistCreate(token);}
+      setGhToken(token);setGistId(id);
+      localStorage.setItem(KEYS.ghToken,token);localStorage.setItem(KEYS.gistId,id);
+      onPush(token,id);
+    }catch(e){alert("Connection failed: "+e.message);}
+    setSetting(false);
+  };
+  const connected=!!(ghToken&&gistId);
+  return <div>
+    <div style={{fontSize:14,color:"var(--text-dim)",marginBottom:16,lineHeight:1.6}}>Sync your database to a private GitHub Gist so it works across all your devices.</div>
+    {connected?<div>
+      <div style={{background:"var(--card-bg)",borderRadius:12,padding:"20px",border:"1px solid var(--border)",marginBottom:16}}>
+        <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:12}}>
+          <span style={{width:10,height:10,borderRadius:"50%",background:"#4caf50",display:"inline-block"}}></span>
+          <span style={{fontWeight:600}}>Connected to GitHub Gist</span>
+        </div>
+        <div style={{fontSize:12,color:"var(--text-dim)",marginBottom:4}}>Gist ID: <code style={{background:"var(--border)",padding:"2px 6px",borderRadius:4}}>{gistId}</code></div>
+        <div style={{fontSize:12,color:"var(--text-dim)"}}>Changes auto-save within a few seconds.</div>
+      </div>
+      <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
+        <Btn onClick={()=>onPull(ghToken,gistId)} style={{background:"#5a7d6a"}}>↓ Pull from Gist</Btn>
+        <Btn onClick={()=>onPush(ghToken,gistId)}>↑ Push to Gist</Btn>
+        <Btn variant="secondary" onClick={()=>{if(confirm("Disconnect? Your local data stays, but syncing stops.")){onDisconnect();}}}>Disconnect</Btn>
+      </div>
+      {syncStatus&&<div className="sync-pill" style={{marginTop:12,background:syncStatus.type==="ok"?"#d4edda":syncStatus.type==="saving"?"#fff3cd":"#f8d7da",color:syncStatus.type==="ok"?"#155724":syncStatus.type==="saving"?"#856404":"#721c24"}}>{syncStatus.msg}</div>}
+    </div>:<div>
+      <div style={{background:"var(--card-bg)",borderRadius:12,padding:"20px",border:"1px solid var(--border)",marginBottom:16}}>
+        <div style={{fontSize:14,fontWeight:600,marginBottom:12}}>Setup (one-time)</div>
+        <div style={{fontSize:13,color:"var(--text-dim)",marginBottom:12,lineHeight:1.6}}>
+          1. Go to <a href="https://github.com/settings/tokens/new" target="_blank" rel="noopener" style={{color:"var(--accent)"}}>github.com/settings/tokens</a> → Generate a <strong>classic</strong> token<br/>
+          2. Select only the <code style={{background:"var(--border)",padding:"1px 4px",borderRadius:3}}>gist</code> scope<br/>
+          3. Paste the token below
+        </div>
+        <Field label="GitHub Personal Access Token">
+          <Input type="password" value={tokenInput} onChange={e=>setTokenInput(e.target.value)} placeholder="ghp_..." style={{fontFamily:"monospace",fontSize:12}} />
+        </Field>
+        <Btn onClick={connect} disabled={setting} style={{marginTop:4}}>{setting?"Connecting...":"Connect & Create Gist"}</Btn>
+      </div>
+    </div>}
+  </div>;
+}
+
+// ---- Main App ----
+function App(){
+  const [tab,setTab]=useState("sentences");
+  const [sentences,setSentences]=useState(()=>{const v=loadLS(KEYS.version,0);if(v<DATA_VERSION){saveLS(KEYS.version,DATA_VERSION);saveLS(KEYS.sentences,INITIAL_SENTENCES);return INITIAL_SENTENCES;}return loadLS(KEYS.sentences,INITIAL_SENTENCES);});
+  const [vocab,setVocab]=useState(()=>{const v=loadLS(KEYS.version,0);if(v<DATA_VERSION){saveLS(KEYS.vocab,INITIAL_VOCAB);return INITIAL_VOCAB;}return loadLS(KEYS.vocab,INITIAL_VOCAB);});
+  const [verbs,setVerbs]=useState(()=>{const v=loadLS(KEYS.version,0);if(v<DATA_VERSION){saveLS(KEYS.verbs,INITIAL_VERBS);return INITIAL_VERBS;}return loadLS(KEYS.verbs,INITIAL_VERBS);});
+
+  const [ghToken,setGhToken]=useState(()=>localStorage.getItem(KEYS.ghToken)||"");
+  const [gistId,setGistId]=useState(()=>localStorage.getItem(KEYS.gistId)||"");
+  const [syncStatus,setSyncStatus]=useState(null);
+  const saveTimer=useRef(null);
+  const dataRef=useRef({sentences,vocab,verbs});
+
+  // Keep ref in sync
+  useEffect(()=>{dataRef.current={sentences,vocab,verbs};},[sentences,vocab,verbs]);
+
+  // Save to localStorage on change
+  useEffect(()=>{saveLS(KEYS.sentences,sentences);},[sentences]);
+  useEffect(()=>{saveLS(KEYS.vocab,vocab);},[vocab]);
+  useEffect(()=>{saveLS(KEYS.verbs,verbs);},[verbs]);
+
+  // Debounced gist save
+  useEffect(()=>{
+    if(!ghToken||!gistId) return;
+    clearTimeout(saveTimer.current);
+    saveTimer.current=setTimeout(async()=>{
+      setSyncStatus({type:"saving",msg:"Saving..."});
+      try{
+        await gistWrite(ghToken,gistId,{sentences:dataRef.current.sentences,vocab:dataRef.current.vocab,verbs:dataRef.current.verbs,version:DATA_VERSION});
+        setSyncStatus({type:"ok",msg:"Saved ✓"});
+        setTimeout(()=>setSyncStatus(null),3000);
+      }catch(e){setSyncStatus({type:"err",msg:"Save failed"});}
+    },2000);
+    return ()=>clearTimeout(saveTimer.current);
+  },[sentences,vocab,verbs,ghToken,gistId]);
+
+  // Pull from gist on first load if connected
+  useEffect(()=>{
+    if(!ghToken||!gistId) return;
+    (async()=>{
+      try{
+        const data=await gistRead(ghToken,gistId);
+        if(data&&data.sentences){
+          setSentences(data.sentences);setVocab(data.vocab);setVerbs(data.verbs);
+          setSyncStatus({type:"ok",msg:"Loaded from Gist ✓"});
+          setTimeout(()=>setSyncStatus(null),3000);
+        }
+      }catch(e){console.error("Gist pull failed",e);}
+    })();
+  },[]);
+
+  const onPull=async(t,g)=>{
+    setSyncStatus({type:"saving",msg:"Pulling..."});
+    try{const data=await gistRead(t,g);if(data&&data.sentences){setSentences(data.sentences);setVocab(data.vocab);setVerbs(data.verbs);setSyncStatus({type:"ok",msg:"Pulled ✓"});setTimeout(()=>setSyncStatus(null),3000);}else{setSyncStatus({type:"err",msg:"Gist is empty"});}}catch(e){setSyncStatus({type:"err",msg:"Pull failed"});}
+  };
+  const onPush=async(t,g)=>{
+    setSyncStatus({type:"saving",msg:"Pushing..."});
+    try{await gistWrite(t,g,{sentences,vocab,verbs,version:DATA_VERSION});setSyncStatus({type:"ok",msg:"Pushed ✓"});setTimeout(()=>setSyncStatus(null),3000);}catch(e){setSyncStatus({type:"err",msg:"Push failed"});}
+  };
+  const onDisconnect=()=>{setGhToken("");setGistId("");localStorage.removeItem(KEYS.ghToken);localStorage.removeItem(KEYS.gistId);setSyncStatus(null);};
+
+  const stats={s:sentences.length,v:vocab.length,vb:verbs.length};
+  const connected=!!(ghToken&&gistId);
+
+  return <div style={{minHeight:"100vh",background:"var(--bg)",padding:"24px 16px"}}>
+    <div style={{maxWidth:720,margin:"0 auto"}}>
+      <div style={{marginBottom:24,display:"flex",justifyContent:"space-between",alignItems:"flex-end",flexWrap:"wrap",gap:8}}>
+        <h1 style={{fontFamily:"'Literata',serif",fontSize:28,fontWeight:700,margin:0,lineHeight:1.2}}>Ελληνικά <span style={{fontSize:16,fontWeight:400,color:"var(--text-dim)"}}>learning tracker</span></h1>
+        <div className="stat-bar" style={{display:"flex",gap:14,fontSize:12,color:"var(--text-dim)",alignItems:"center"}}>
+          {connected&&syncStatus&&<span className="sync-pill" style={{background:syncStatus.type==="ok"?"#d4edda":syncStatus.type==="saving"?"#fff3cd":"#f8d7da",color:syncStatus.type==="ok"?"#155724":syncStatus.type==="saving"?"#856404":"#721c24"}}>{syncStatus.msg}</span>}
+          {connected&&!syncStatus&&<span className="sync-pill" style={{background:"#d4edda",color:"#155724"}}>synced</span>}
+          <span><strong style={{color:"var(--accent)",fontSize:16}}>{stats.s}</strong> sentences</span>
+          <span><strong style={{color:"var(--accent2)",fontSize:16}}>{stats.v}</strong> words</span>
+          <span><strong style={{color:"#b07a2e",fontSize:16}}>{stats.vb}</strong> verbs</span>
+        </div>
+      </div>
+      <div className="tab-bar" style={{display:"flex",borderBottom:"2px solid var(--border)",marginBottom:20,flexWrap:"wrap"}}>
+        {[["sentences","Sentences"],["vocab","Vocabulary"],["verbs","Verbs"],["quiz","Quiz"],["sync","⚙ Sync"]].map(([k,l])=><Tab key={k} label={l} active={tab===k} onClick={()=>setTab(k)} accent={k==="sync"?"#5a7d6a":undefined} />)}
+      </div>
+      {tab==="sentences"&&<SentencePanel sentences={sentences} setSentences={setSentences} />}
+      {tab==="vocab"&&<VocabPanel vocab={vocab} setVocab={setVocab} />}
+      {tab==="verbs"&&<VerbPanel verbs={verbs} setVerbs={setVerbs} />}
+      {tab==="quiz"&&<QuizPanel sentences={sentences} vocab={vocab} />}
+      {tab==="sync"&&<SyncPanel ghToken={ghToken} setGhToken={setGhToken} gistId={gistId} setGistId={setGistId} syncStatus={syncStatus} onPull={onPull} onPush={onPush} onDisconnect={onDisconnect} />}
+    </div>
+  </div>;
+}
+
+ReactDOM.render(<App />,document.getElementById("root"));
+</script>
+{% endraw %}
+</body>
+</html>
