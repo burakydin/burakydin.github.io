@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600">
+<title>Connected communities in a social-learning network</title>
+<rect width="900" height="600" fill="#e8e3d7"/>
+<g stroke="#303b34" stroke-width="2.5" stroke-opacity=".42">
+<path d="M200 315L310 315"/>
+<path d="M200 315L273 376"/>
+<path d="M200 315L223 443"/>
+<path d="M200 315L150 402"/>
+<path d="M200 315L87 356"/>
+<path d="M200 315L101 279"/>
+<path d="M200 315L137 207"/>
+<path d="M200 315L216 221"/>
+<path d="M200 315L288 241"/>
+<path d="M200 315L465 195"/>
+<path d="M310 315L273 376"/>
+<path d="M310 315L223 443"/>
+<path d="M310 315L288 241"/>
+<path d="M310 315L346 208"/>
+<path d="M310 315L639 268"/>
+<path d="M273 376L223 443"/>
+<path d="M273 376L288 241"/>
+<path d="M273 376L396 267"/>
+<path d="M223 443L150 402"/>
+<path d="M223 443L87 356"/>
+<path d="M223 443L378 137"/>
+<path d="M150 402L87 356"/>
+<path d="M87 356L101 279"/>
+<path d="M87 356L137 207"/>
+<path d="M101 279L137 207"/>
+<path d="M137 207L216 221"/>
+<path d="M137 207L288 241"/>
+<path d="M137 207L568 144"/>
+<path d="M216 221L288 241"/>
+<path d="M465 195L572 221"/>
+<path d="M465 195L521 272"/>
+<path d="M465 195L456 325"/>
+<path d="M465 195L396 267"/>
+<path d="M465 195L346 208"/>
+<path d="M465 195L378 137"/>
+<path d="M465 195L430 75"/>
+<path d="M465 195L503 108"/>
+<path d="M465 195L568 144"/>
+<path d="M465 195L710 345"/>
+<path d="M572 221L521 272"/>
+<path d="M572 221L456 325"/>
+<path d="M572 221L568 144"/>
+<path d="M572 221L591 329"/>
+<path d="M521 272L456 325"/>
+<path d="M521 272L568 144"/>
+<path d="M521 272L626 399"/>
+<path d="M456 325L396 267"/>
+<path d="M456 325L346 208"/>
+<path d="M396 267L346 208"/>
+<path d="M346 208L378 137"/>
+<path d="M346 208L430 75"/>
+<path d="M378 137L430 75"/>
+<path d="M430 75L503 108"/>
+<path d="M430 75L568 144"/>
+<path d="M430 75L705 220"/>
+<path d="M503 108L568 144"/>
+<path d="M503 108L768 270"/>
+<path d="M710 345L808 396"/>
+<path d="M710 345L746 433"/>
+<path d="M710 345L671 469"/>
+<path d="M710 345L626 399"/>
+<path d="M710 345L591 329"/>
+<path d="M710 345L639 268"/>
+<path d="M710 345L705 220"/>
+<path d="M710 345L768 270"/>
+<path d="M710 345L822 320"/>
+<path d="M808 396L746 433"/>
+<path d="M808 396L671 469"/>
+<path d="M808 396L822 320"/>
+<path d="M746 433L671 469"/>
+<path d="M746 433L822 320"/>
+<path d="M671 469L626 399"/>
+<path d="M671 469L591 329"/>
+<path d="M626 399L591 329"/>
+<path d="M591 329L639 268"/>
+<path d="M591 329L705 220"/>
+<path d="M639 268L705 220"/>
+<path d="M705 220L768 270"/>
+<path d="M705 220L822 320"/>
+<path d="M768 270L822 320"/>
+</g>
+<circle cx="200" cy="315" r="20" fill="#ff671f" stroke="#e8e3d7" stroke-width="4"/>
+<circle cx="200" cy="315" r="31" fill="none" stroke="#ff671f" stroke-width="3"/>
+<circle cx="310" cy="315" r="12" fill="#303b34" stroke="#e8e3d7" stroke-width="4"/>
+<circle cx="273" cy="376" r="12" fill="#ff671f" stroke="#e8e3d7" stroke-width="4"/>
+<circle cx="223" cy="443" r="15" fill="#ff671f" stroke="#e8e3d7" stroke-width="4"/>
+<circle cx="150" cy="402" r="12" fill="#303b34" stroke="#e8e3d7" stroke-width="4"/>
+<circle cx="87" cy="356" r="12" fill="#ff671f" stroke="#e8e3d7" stroke-width="4"/>
+<circle cx="101" cy="279" r="15" fill="#ff671f" stroke="#e8e3d7" stroke-width="4"/>
+<circle cx="137" cy="207" r="12" fill="#303b34" stroke="#e8e3d7" stroke-width="4"/>
+<circle cx="216" cy="221" r="12" fill="#ff671f" stroke="#e8e3d7" stroke-width="4"/>
+<circle cx="288" cy="241" r="15" fill="#ff671f" stroke="#e8e3d7" stroke-width="4"/>
+<circle cx="465" cy="195" r="20" fill="#303b34" stroke="#e8e3d7" stroke-width="4"/>
+<circle cx="465" cy="195" r="31" fill="none" stroke="#eb79b0" stroke-width="3"/>
+<circle cx="572" cy="221" r="12" fill="#eb79b0" stroke="#e8e3d7" stroke-width="4"/>
+<circle cx="521" cy="272" r="15" fill="#eb79b0" stroke="#e8e3d7" stroke-width="4"/>
+<circle cx="456" cy="325" r="12" fill="#303b34" stroke="#e8e3d7" stroke-width="4"/>
+<circle cx="396" cy="267" r="12" fill="#eb79b0" stroke="#e8e3d7" stroke-width="4"/>
+<circle cx="346" cy="208" r="15" fill="#eb79b0" stroke="#e8e3d7" stroke-width="4"/>
+<circle cx="378" cy="137" r="12" fill="#303b34" stroke="#e8e3d7" stroke-width="4"/>
+<circle cx="430" cy="75" r="12" fill="#eb79b0" stroke="#e8e3d7" stroke-width="4"/>
+<circle cx="503" cy="108" r="15" fill="#eb79b0" stroke="#e8e3d7" stroke-width="4"/>
+<circle cx="568" cy="144" r="12" fill="#303b34" stroke="#e8e3d7" stroke-width="4"/>
+<circle cx="710" cy="345" r="20" fill="#b5c92b" stroke="#e8e3d7" stroke-width="4"/>
+<circle cx="710" cy="345" r="31" fill="none" stroke="#b5c92b" stroke-width="3"/>
+<circle cx="808" cy="396" r="15" fill="#b5c92b" stroke="#e8e3d7" stroke-width="4"/>
+<circle cx="746" cy="433" r="12" fill="#303b34" stroke="#e8e3d7" stroke-width="4"/>
+<circle cx="671" cy="469" r="12" fill="#b5c92b" stroke="#e8e3d7" stroke-width="4"/>
+<circle cx="626" cy="399" r="15" fill="#b5c92b" stroke="#e8e3d7" stroke-width="4"/>
+<circle cx="591" cy="329" r="12" fill="#303b34" stroke="#e8e3d7" stroke-width="4"/>
+<circle cx="639" cy="268" r="12" fill="#b5c92b" stroke="#e8e3d7" stroke-width="4"/>
+<circle cx="705" cy="220" r="15" fill="#b5c92b" stroke="#e8e3d7" stroke-width="4"/>
+<circle cx="768" cy="270" r="12" fill="#303b34" stroke="#e8e3d7" stroke-width="4"/>
+<circle cx="822" cy="320" r="12" fill="#b5c92b" stroke="#e8e3d7" stroke-width="4"/>
+</svg>

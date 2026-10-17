@@ -1,11 +1,13 @@
 ---
 layout: page
-title: European Swaptions
+title: "Pricing Nonstandard European Swaptions: Mathematical Derivations and C++ Implementation"
 description: Quantitative Analytics Summer Internship project on pricing nonstandard European swaptions
 img: assets/img/charlotte.jpg
-importance: 2
+tile_color: "#e2e2e0"
+tile_color_dark: "#353237"
+importance: 4
 category: work
-year: 2024
+year: 2025
 status: completed
 tags: [C++, Quantitative Finance, Interest Rates]
 ---

@@ -8,10 +8,11 @@
   color-scheme: light;
   --global-bg-color: #fbfbfb; //#fffaf0;
   --global-code-bg-color: #{$code-bg-color-light};
-  --global-text-color: #2d2d2d;
-  --global-text-color-light: #{$grey-color};
-  --global-theme-color: #7D936B; //#ED6B2C; //#{$brown-color};
-  --global-hover-color: #7D936B; //#ED6B2C; //#{$brown-color};
+  --global-text-color: #{$black-color};
+  --global-text-color-light: #{$black-color};
+  --global-theme-color: #{$princeton-athletics-orange};
+  --global-hover-color: #{$princeton-athletics-orange};
+  --global-accent-text-color: #{$white-color};
   --global-hover-text-color: #{$white-color};
   --global-footer-bg-color: #{$grey-color-dark};
   --global-footer-text-color: #{$grey-color-light};
@@ -82,8 +83,8 @@ html[data-theme="dark"] {
   --global-code-bg-color: #{$code-bg-color-dark};
   --global-text-color: #{$grey-color-light};
   --global-text-color-light: #{$grey-color};
-  --global-theme-color: #7D936B; //#ED6B2C; //#{$green-color-lime}; //#cfc8a5;
-  --global-hover-color: #7D936B; //#ED6B2C; //#{$green-color-lime}; //#cfc8a5;
+  --global-theme-color: #{$princeton-athletics-orange};
+  --global-hover-color: #{$princeton-athletics-orange};
   --global-hover-text-color: #{$white-color};
   --global-footer-bg-color: #{$grey-color-light};
   --global-footer-text-color: #{$grey-color-dark};

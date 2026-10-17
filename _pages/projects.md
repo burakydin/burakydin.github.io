@@ -2,70 +2,38 @@
 layout: page
 title: projects
 permalink: /projects/
-description:
+description: My projects throughout the years.
 nav: true
 nav_order: 4
 display_categories: [work, personal]
-horizontal: true
 ---
 
-<!-- pages/projects.md -->
-<div class="projects">
+<div class="projects projects-gallery">
 {% if site.enable_project_categories and page.display_categories %}
-  <!-- Display categorized projects -->
   {% for category in page.display_categories %}
-  <a id="{{ category }}" href=".#{{ category }}">
-    {% if category == "work" %}
-      <h2 class="category"><i class="fa-solid fa-briefcase"></i> work</h2>
-    {% elsif category == "personal" %}
-      <h2 class="category"><i class="fa-solid fa-user"></i> personal</h2>
-    {% else %}
-      <h2 class="category">{{ category | capitalize }}</h2>
-    {% endif %}
-  </a>
-  {% assign categorized_projects = site.projects | where: "category", category %}
-  {% assign sorted_projects = categorized_projects | sort: "importance" %}
-  <!-- Generate cards for each project -->
-  {% if page.horizontal %}
-  <div class="container">
-    <div class="row row-cols-1 row-cols-md-2">
-    {% for project in sorted_projects %}
-      {% include projects_horizontal.liquid %}
-    {% endfor %}
-    </div>
-  </div>
-  {% else %}
-  <div class="row row-cols-1 row-cols-md-3">
-    {% for project in sorted_projects %}
-      {% include projects.liquid %}
-    {% endfor %}
-  </div>
-  {% endif %}
+    {% assign sorted_projects = site.projects | where: "category", category | sort: "importance" %}
+    {% unless sorted_projects == empty %}
+      <section class="project-category" aria-label="{{ category | capitalize }} projects">
+        {% unless category == "work" %}
+          <h2 class="category" id="{{ category }}">
+            {% if category == "personal" %}<i class="fa-solid fa-user" aria-hidden="true"></i>{% endif %}
+            {{ category | capitalize }}
+          </h2>
+        {% endunless %}
+        <div class="project-gallery-grid">
+          {% for project in sorted_projects %}
+            {% include project_tile.liquid %}
+          {% endfor %}
+        </div>
+      </section>
+    {% endunless %}
   {% endfor %}
-
 {% else %}
-
-<!-- Display projects without categories -->
-
-{% assign sorted_projects = site.projects | sort: "importance" %}
-
-  <!-- Generate cards for each project -->
-
-{% if page.horizontal %}
-
-  <div class="container">
-    <div class="row row-cols-1 row-cols-md-2">
+  {% assign sorted_projects = site.projects | sort: "importance" %}
+  <div class="project-gallery-grid">
     {% for project in sorted_projects %}
-      {% include projects_horizontal.liquid %}
-    {% endfor %}
-    </div>
-  </div>
-  {% else %}
-  <div class="row row-cols-1 row-cols-md-3">
-    {% for project in sorted_projects %}
-      {% include projects.liquid %}
+      {% include project_tile.liquid %}
     {% endfor %}
   </div>
-  {% endif %}
 {% endif %}
 </div>

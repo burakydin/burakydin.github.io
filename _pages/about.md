@@ -3,13 +3,16 @@ layout: about
 title: home
 permalink: /
 subtitle: burakaydin [at] princeton [dot] edu # <a href='#'>Affiliations</a>. Address. Contacts. Motto. Etc.
+section_backgrounds: true
+contact_note: >-
+  Reach out to me via email or [<strong>LinkedIn</strong>](https://www.linkedin.com/in/burakydin/) if you have any ideas, questions or to say hi!
 
 profile:
   align: right
-  image: burak-foto.png
+  image: rio_conference.png
   image_circular: false # crops the image to make it circular
   #image_title: "self-portrait (2024)<br>phone camera on drywall"
-  image_title: Thanksgiving 2025
+  image_title: CogSci2026, Rio de Janeiro
   more_info: >
 
 
@@ -27,11 +30,16 @@ latest_posts:
   limit: 3 # leave blank to include all the blog posts
 ---
 
-I am a third-year Ph.D. candidate at  <img src='/assets/img/flags/princeton.svg' alt='Princeton' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;margin-right:0.25em;'>Princeton University in Operations Research and Financial Engineering ([<strong>ORFE</strong>](https://orfe.princeton.edu)) department, advised by [<strong>Prof. Ronnie Sircar</strong>](https://sircar.princeton.edu). I did my undergrad in Electrical and Electronics Engineering at <img src='/assets/img/flags/bogazici.svg' alt='Bogazici' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;margin-right:0.25em;'>Boğaziçi University with a minor in Economics.
+I am a fourth-year Ph.D. candidate at <img src='/assets/img/flags/princeton.svg' alt='Princeton' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;margin-left:0.25em;margin-right:0.25em;'>Princeton University in Operations Research and Financial Engineering ([<strong>ORFE</strong>](https://orfe.princeton.edu)) department, advised by [<strong>Prof. Ronnie Sircar</strong>](https://sircar.princeton.edu). I did my undergrad in Electrical and Electronics Engineering at <img src='/assets/img/flags/bogazici.svg' alt='Bogazici' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;margin-right:0.25em;'>Boğaziçi University with a minor in Economics.
 
-I have been working on mean-field approximations to tractibly analyze competition in markets of perishable goods such as airline ticket pricing (see below for the recent paper). I am also interested in investigating the consumer side of the markets and trying to model customer population. 
+My research is in financial and applied mathematics, with a focus on markets and learning. I use tools from applied probability, stochastic control, and game theory to study <strong class="research-emphasis">price formation, strategic competition, and how information and individual behavior shape collective outcomes</strong>. My interests include:
 
-You can find my resume [<strong>here</strong>]({{ '/assets/pdf/resume.pdf' | relative_url }}).
+- Prediction-market microstructure and mechanisms
+- Mean field games for competitive dynamic pricing
+- Social learning on networks
+{: .research-interests}
+
+You can find my resume <a href="{{ '/assets/pdf/burak_aydin_resume.pdf' | relative_url }}" target="_blank" rel="noopener noreferrer"><strong>here</strong></a>.
 
 
 

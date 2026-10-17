@@ -2,9 +2,10 @@
 layout: cards
 permalink: /teaching/
 title: teaching
-description: 
+description: Courses I have TA'ed at Princeton University.
 nav: true
 nav_order: 3
-details_toggle: true
+show_cards: false
+section_backgrounds: true
 data: teaching
 ---

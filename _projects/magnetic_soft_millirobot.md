@@ -1,9 +1,11 @@
 ---
 layout: page
-title: Magnetic Soft Millirobots
+title: "Magnetic Soft Millirobots with Electrical Impedance Tomography and Closed-Loop Visual Feedback Control"
 description: During my Undergraduate Research Internship at Physical Intelligence Department at MPI IS
 img: assets/img/eit.png
-importance: 4
+tile_color: "#e0e4e1"
+tile_color_dark: "#303637"
+importance: 6
 category: work
 year: 2022
 status: completed

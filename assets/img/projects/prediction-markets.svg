@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600">
+  <title>Abstract prediction-market order book</title>
+  <rect width="900" height="600" fill="#14191f"/>
+  <g fill="none" stroke="#ffffff" stroke-opacity=".08">
+    <path d="M0 100H900M0 200H900M0 300H900M0 400H900M0 500H900"/>
+    <path d="M100 0V600M200 0V600M300 0V600M400 0V600M500 0V600M600 0V600M700 0V600M800 0V600"/>
+  </g>
+  <path d="M0 600V302H95V330H170V365H250V399H315V434H375V469H425V510H450V600Z" fill="#79b9dc" fill-opacity=".22"/>
+  <path d="M450 600V510H475V464H525V418H590V380H665V340H745V295H825V250H900V600Z" fill="#ff671f" fill-opacity=".22"/>
+  <path d="M0 302H95V330H170V365H250V399H315V434H375V469H425V510" fill="none" stroke="#79b9dc" stroke-width="5"/>
+  <path d="M475 510V464H525V418H590V380H665V340H745V295H825V250H900" fill="none" stroke="#ff671f" stroke-width="5"/>
+  <path d="M45 226L101 214L149 237L198 193L250 205L286 173L331 189L370 138L420 162L466 127L509 150L552 109L602 133L652 91L697 112L746 75L796 94L855 56" fill="none" stroke="#f5f1e8" stroke-width="5" stroke-linejoin="round"/>
+  <g fill="#f5f1e8">
+    <circle cx="198" cy="193" r="7"/><circle cx="370" cy="138" r="7"/>
+    <circle cx="552" cy="109" r="7"/><circle cx="746" cy="75" r="7"/>
+  </g>
+  <path d="M450 288V555" stroke="#f5f1e8" stroke-opacity=".5" stroke-dasharray="6 10" stroke-width="2"/>
+  <circle cx="450" cy="510" r="10" fill="#f5f1e8"/>
+</svg>

@@ -1,11 +1,11 @@
-<ul class="card-text font-weight-light list-group list-group-flush">
+<ul class="card-text font-weight-light list-group list-group-flush cv-timeline{% if entry.colored_badges %} cv-timeline-colored{% endif %}">
   {% for content in entry.contents %}
     {% assign badge_color = "" %}
     {% assign icon_color = "" %}
     {% if entry.colored_badges %}
       {% if content.princeton %}
-        {% assign badge_color = "background-color: #E77500 !important; color: white !important;" %}
-        {% assign icon_color = "color: #E77500 !important;" %}
+        {% assign badge_color = "background-color: var(--global-theme-color) !important; color: white !important;" %}
+        {% assign icon_color = "color: var(--global-theme-color) !important;" %}
       {% elsif content.bogazici %}
         {% assign badge_color = "background-color: #00adef !important; color: white !important;" %}
         {% assign icon_color = "color: #00adef !important;" %}
@@ -23,7 +23,7 @@
     <li class="list-group-item">
       <div class="row">
         {% if content.year %}
-          <div class="col-12 col-md-2 mb-2 mb-md-0" style="max-width: 120px; text-align: left;">
+          <div class="col-12 col-md-auto mb-2 mb-md-0 cv-entry-meta">
             <table class="table-cv">
               <tbody>
                 <tr>
@@ -47,12 +47,12 @@
             </table>
           </div>
         {% endif %}
-        <div class="col-12 col-md-10 mt-2 mt-md-0">
+        <div class="col-12 col-md mt-2 mt-md-0 cv-entry-details">
           {% if content.title %}
-            <h6 class="title font-weight-bold ml-1 ml-md-4">{{ content.title }}</h6>
+            <h6 class="title font-weight-bold">{{ content.title }}</h6>
           {% endif %}
           {% if content.department or content.institution or content.company or content.organization or content.employer or content.course or content.instructor or content.professor or content.princeton or content.bogazici or content.kal or content.maxplanck or content.wellsfargo %}
-            <table class="table-cv ml-1 ml-md-4 institution">
+            <table class="table-cv institution">
               <tbody>
                 {% if content.company or content.employer %}
                   <tr>
@@ -145,9 +145,13 @@
               </tbody>
             </table>
           {% endif %}
+          {% if page.show_cards == false %}
+        </div>
+        <div class="col-12 cv-entry-body">
+          {% endif %}
           {% if page.details_toggle %}
             {% if content.maindescription or content.description or content.items %}
-              <div class="ml-1 ml-md-4 cv-details-block">
+              <div class="cv-details-block">
                 <button class="cv-toggle" type="button" aria-expanded="false">Expand</button>
                 <div class="cv-details">
                   {% if content.maindescription %}
@@ -198,7 +202,7 @@
             {% endif %}
           {% else %}
             {% if content.maindescription %}
-              <div class="ml-1 ml-md-4">{{ content.maindescription }}</div>
+              <div>{{ content.maindescription }}</div>
             {% endif %}
             {% if content.description %}
               <ul class="items">
@@ -242,7 +246,7 @@
             {% endif %}
           {% endif %}
           {% if content.linkitems %}
-            <div class="container-links ml-1 ml-md-4">
+            <div class="container-links">
               {% for item in content.linkitems %}
                 {% if item.link %}
                   <div class="container-link-button">

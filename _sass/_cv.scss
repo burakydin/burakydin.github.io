@@ -8,17 +8,257 @@ $cv-card-border-color-light: rgba(0, 0, 0, 0.1) !default; // matches --global-di
 $cv-card-bg-color-dark: #15171a !default; // matches --global-card-bg-color
 $cv-card-border-color-dark: #424246 !default; // matches dark --global-divider-color
 
+.cv {
+  --cv-body-emphasis-weight: 450;
+
+  strong,
+  b,
+  .cv-award {
+    font-weight: var(--cv-body-emphasis-weight);
+  }
+
+  a strong,
+  a b {
+    font-weight: 400;
+  }
+}
+
 /* Card background for CV sections */
 .cv .card {
   background-color: $cv-card-bg-color-light;
   border: 1px solid $cv-card-border-color-light;
-  border-radius: 12px;
+  border-radius: 0;
+}
+
+.cv .badge {
+  border-radius: 0;
+}
+
+.cv .card-title {
+  font-size: 1.25rem;
+  font-weight: 400;
+  text-transform: capitalize;
+}
+
+.cv-flat .cv-section {
+  margin-bottom: 2.5rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+body.section-backgrounds {
+  overflow-x: clip;
+}
+
+.cv-banded {
+  --cv-band-bg-color: #f0f0f0;
+
+  .cv-section {
+    position: relative;
+    isolation: isolate;
+    padding: 2rem 0;
+    margin-bottom: 0;
+
+    &:nth-of-type(odd)::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 100vw;
+      transform: translateX(-50%);
+      background-color: var(--cv-band-bg-color);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    > .cv-section-content > :last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+html[data-theme="dark"] .cv-banded {
+  --cv-band-bg-color: #191b1d;
+}
+
+.cv-download {
+  margin-top: 0;
+
+  a {
+    display: inline-block;
+    margin-left: 0.35rem;
+    font-size: 1.15rem;
+    vertical-align: -0.1em;
+    color: #888888;
+
+    &:hover {
+      color: #666666;
+    }
+  }
+}
+
+.cv-flat .cv-timeline:not(.cv-timeline-colored) {
+  .badge {
+    background-color: #888888 !important;
+    color: #ffffff !important;
+  }
+
+  .iconlocation {
+    color: #888888;
+  }
+}
+
+html[data-theme="dark"] .cv-flat .cv-timeline:not(.cv-timeline-colored) .iconlocation {
+  color: #b0b0b0;
+}
+
+.cv-flat .cv-entry-details > .title,
+.cv-flat .list-group-item > h5 {
+  font-size: 1rem;
+  line-height: 1.4;
+  margin-bottom: 0.25rem;
+}
+
+.cv-flat .cv-entry-details > table.institution {
+  margin-bottom: 0.35rem;
+}
+
+.cv-coursework .cv-entry-details {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .cv-flat .cv-entry-meta {
+    order: 2;
+    text-align: right;
+
+    .table-cv {
+      margin-left: auto;
+    }
+
+    td {
+      padding-right: 0;
+    }
+
+    p.location {
+      margin-bottom: 0;
+    }
+  }
+
+  .cv-flat .cv-entry-details {
+    min-width: 0;
+  }
+
+  .cv-flat .cv-entry-body {
+    order: 3;
+  }
+
+  .cv-flat.cv-coursework .cv-entry-body {
+    flex: 1;
+    max-width: none;
+    width: auto;
+    order: 0;
+  }
+}
+
+@media (min-width: 992px) {
+  .cv-flat .cv-section {
+    display: grid;
+    grid-template-columns: minmax(9rem, 1fr) minmax(0, 4fr);
+    column-gap: 1.5rem;
+    align-items: start;
+
+    > .card-title {
+      font-size: 1.5rem;
+      line-height: 1.25;
+      margin-bottom: 0;
+    }
+
+    > .cv-section-content {
+      min-width: 0;
+
+      > .list-group > .list-group-item:first-child {
+        padding-top: 0;
+      }
+    }
+  }
 }
 
 /* Ensure list items inside cards don't reintroduce white backgrounds */
 .cv .list-group-item {
   background-color: transparent;
   border-color: $cv-card-border-color-light;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.cv .table-cv td:first-child {
+  padding-left: 0;
+}
+
+/* Repeated teaching terms share one course entry. */
+.teaching-course-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin-bottom: 0.75rem;
+
+  p {
+    margin-bottom: 0;
+  }
+}
+
+.teaching-course-code {
+  font-size: 1rem;
+  font-weight: var(--cv-body-emphasis-weight);
+}
+
+.teaching-offerings {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+
+  li {
+    display: grid;
+    grid-template-columns: 6rem minmax(0, 1fr);
+    align-items: baseline;
+    gap: 0.75rem;
+    padding: 0.3rem 0;
+  }
+
+  .badge {
+    justify-self: start;
+    font-size: 0.75rem;
+  }
+}
+
+.teaching-instructor,
+.teaching-description {
+  font-size: 0.95rem;
+}
+
+.teaching-description {
+  summary {
+    cursor: pointer;
+    font-weight: var(--cv-body-emphasis-weight);
+  }
+
+  p {
+    margin: 0.5rem 0 0;
+    line-height: 1.6;
+  }
+}
+
+@media (min-width: 992px) {
+  .cv-flat.cv-teaching .cv-section {
+    grid-template-columns: minmax(14rem, 2fr) minmax(0, 3fr);
+    column-gap: 4rem;
+  }
 }
 
 // Dark theme overrides
@@ -73,13 +313,14 @@ a.btncv:hover {
  *****************************/
 
 p.location {
-  font-size: 0.85rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
   white-space: nowrap;
 }
 
 i.iconlocation {
   color: var(--global-theme-color);
-  font-size: 0.95rem;
+  font-size: 0.85rem;
 }
 
 i.iconinstitution {
@@ -163,11 +404,11 @@ td.instructor {
  * CV TIME_TABLE description sizing
  *****************************/
 .cv ul.items {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
 }
 
 .cv ul.subitems {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
 }
 
 
@@ -189,7 +430,8 @@ td.instructor {
   position: absolute;
   left: 0;
   transform: translateX(-0.75rem) translateY(0.2rem);
-  color: var(--global-theme-color);
+  color: var(--global-text-color);
+  font-size: 1.15em;
   line-height: 1;
 }
 
@@ -199,7 +441,7 @@ td.instructor {
   left: 0;
   transform: translateX(-1.25rem);
   color: var(--global-text-color);
-  opacity: 0.8;
+  font-size: 1.15em;
   line-height: 1;
 }
 
@@ -267,8 +509,8 @@ div.list-group {
 
 /* CV tag style for bracketed labels like [Talk], [Publication] */
 .cv .cv-tag {
-  font-weight: 700;
-  color: var(--global-theme-color) !important;
+  font-weight: var(--cv-body-emphasis-weight);
+  color: var(--global-text-color) !important;
 }
 
 /* CV NESTED_LIST styles (for _includes/cv/nested_list.liquid) */
@@ -276,7 +518,7 @@ div.list-group {
   font-size: 1rem;
 }
 .cv .list-group-item > h5 + ul.subitems .subitem {
-  font-size: 1rem;
+  font-size: 0.95rem;
 }
 
 /* Suppress bullets for nested_list subitems only */
@@ -347,7 +589,7 @@ ul.timeline li {
 }
 
 span.badge-toc {
-  color: var(--global-bg-color);
+  color: var(--global-accent-text-color);
   background-color: var(--global-theme-color);
   border-radius: 0.125rem;
   padding: 0.125rem 0.5rem 0.125rem 0.5rem;

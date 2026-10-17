@@ -16,10 +16,8 @@
       # location: "<strong>Princeton, NJ <img src='/assets/img/flags/nj.png' alt='NJ' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;margin-right:0.25em;'></strong>"
       location: "<strong>Princeton, NJ </strong>"
       description: 
-        - "Advised by Prof. Ronnie Sircar"
-        - "GPA: 3.95 / 4.00" 
-        - "Coursework in Optimization, Probability, Stochastic Calculus, Statistics, Computational Finance, Risk Management, Asset Pricing, PDE Methods for Financial Mathematics, Functional Analysis"
-        - "Departmental Graduate Student Committee Member"
+        - "Advised by <strong>Prof. Ronnie Sircar</strong>. GPA: <strong>3.95</strong> / 4.00."
+        - "Coursework in Optimization, Probability, Stochastic Calculus, Statistics, Computational Finance, Risk Management, Asset Pricing, PDE Methods, Functional Analysis."
     - title: "B.S. in Electrical and Electronics Engineering"
       bogazici: "Boğaziçi University"
       year: "Aug ’19 - Jun ’23"
@@ -38,22 +36,23 @@
   type: time_table
   colored_badges: false
   contents:
-    - title: "Quantitative Analytics Intern"
+    - title: "Quantitative Researcher PhD Intern"
       wellsfargo: "Wells Fargo Bank, N.A." 
       year: "Jun ’25 - Aug ’25"
       # location: "<strong>Charlotte, NC <img src='/assets/img/flags/nc.png' alt='NC' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;margin-right:0.25em;'></strong>"
       location: "<strong>Charlotte, NC </strong>"
       description:
         - "Member of the Rates team under Corporate & Investment Banking, Traded Products Model Development Center."
-        - "Developed a C++ script for pricing of nonstandard European swaptions within bank's repository, worked on mathematical derivations of further functionalities."
-    - title: "Teaching Assistant" 
+        - "Developed mathematical derivations and the C++ implementation for pricing of nonstandard European swaptions within the bank's fixed income repository."
+    - title: "Assistant in Instruction"
       princeton: "Princeton University"
       year: "Aug ’24 - Present"
       # location: "<strong>Princeton, NJ <img src='/assets/img/flags/nj.png' alt='NJ' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;margin-right:0.25em;'></strong>"
       location: "<strong>Princeton, NJ </strong>"
       description:
-        - "Energy and Commodities Markets, ORF 555 & ORF 455/ENE 455. (Fall 2025)"
-        - "Computing and Optimization for Physical and Social Sciences, ORF 363/COS 323. (Fall 2024, Spring 2025)"
+        - "<strong class='cv-award'>Excellence in Teaching Award</strong> for the School of Engineering and Applied Sciences, awarded April 2026."
+        - "Energy and Commodities Markets, ORF 555 & ORF 455/ENE 455. (Fall 2025, Fall 2026)"
+        - "Computing and Optimization for Physical and Social Sciences, ORF 363/COS 323. (Fall 2024, Spring 2025, Spring 2026)"
     - title: "Undergraduate Research Assistant"
       bogazici: "Bogazici University Photonics and Optical Wireless Communication Laboratory"
       year: "Sep ’22 - Jun ’23"
@@ -79,20 +78,28 @@
     - title: "Languages"
       items:
         - "Turkish (●●●●●), English (●●●●●), Spanish (●●●○○), German (●●○○○), Greek (●○○○○)"
-    - title: "Hobbies"
+    - title: "Clubs"
       items:
         - "Member of Carnegie Lake Rowing Association, Princeton Club Tennis."
 
 
-- title: Achievements & Scholarships
+- title: Publications & Talks
   type: list
   contents:
+    - "<span class='cv-tag'>[Publication]</span> Fare Game: A Mean Field Model of Stochastic Intensity Control in Dynamic Ticket Pricing, with E. Parmaksiz and R. Sircar. <em>Mathematics and Financial Economics</em>. Published: 22 January 2026."
+    - "<span class='cv-tag'>[Working Paper]</span> Settlement Risk Analysis of Prediction Markets with Hidden Event Regimes, with R. Sircar. 2026."
+    - "<span class='cv-tag'>[Working Paper]</span> An Event-Driven Limit-Order-Book Model for a Binary Prediction Market, with M. Fabi and R. Sircar. 2026."
+    - "<span class='cv-tag'>[Working Paper]</span> A Two-Population Mean Field Game for Dynamic Ticket Pricing with Forward-Looking Consumers. 2026."
+    - "<span class='cv-tag'>[Submitted]</span> Nonlinear Social Learning and Cultural Evolution on Networks: A Perturbative Analysis, with R. Marjieh and T. Griffiths. 2026."
+    - "<span class='cv-tag'>[Poster]</span> 10th Eastern Conference on Mathematical Finance (ECMF-10), Johns Hopkins University, Oct 2026."
+    - "<span class='cv-tag'>[Poster]</span> 48th Annual Meeting of the Cognitive Science Society (CogSci 2026), Rio de Janeiro, Brazil, Jul 2026."
+    - "<span class='cv-tag'>[Talk]</span> Oxford-Princeton Workshop XIV on Financial Mathematics & Stochastic Analysis, University of Oxford, Oct 2025."
+
+- title: Achievements, Scholarships & Service
+  type: list
+  contents:
+      - "Princeton University <strong class='cv-award'>Excellence in Teaching Award</strong> for the School of Engineering and Applied Sciences, awarded April 2026."
       - "Turkish University Entrance Exam 2019: <strong>6th</strong> place in Quantitative & <strong>1st</strong> in English sections, among 2,528,031 test takers."
       - "Recipient of Turkish Presidential Outstanding Success Scholarship, Bogazici University Outstanding Success Scholarship, Turkiye Is Bankasi Golden Youth Award during undergraduate education."
-
-- title: Talks & Publications
-  type: list
-  contents:
-    - "<span class='cv-tag'>[Talk]</span> Oct 2025 - Oxford-Princeton Workshop XIV on Financial Mathematics & Stochastic Analysis, University of Oxford."
-    - "<span class='cv-tag'>[Publication]</span> May 2025 - Fare Game: A Mean Field Model of Stochastic Intensity Control in Dynamic Ticket Pricing, with E. Parmaksiz and R. Sircar"
-    - "<span class='cv-tag'>[Publication]</span> May 2024 - An Empirical Approach to Rerouting Visible Light Pathways Using an Adjustable-Angle Mirror to Sustain Communication between Vehicles on Curvy Roads, with A. Deniz and H. Yuksel"
+      - "Department Representative, Princeton University Graduate Student Government, 2026-2027."
+      - "Graduate Student Committee Member, Operations Research and Financial Engineering Department, 2025-2026."

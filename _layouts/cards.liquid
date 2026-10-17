@@ -12,17 +12,21 @@ layout: default
   </header>
 
   <article>
-    <div class="cv">
+    <div class="cv{% if page.show_cards == false %} cv-flat{% endif %}{% if page.section_backgrounds %} cv-banded{% endif %}{% if page.data == 'teaching' %} cv-teaching{% elsif page.data == 'coursework' %} cv-coursework{% endif %}">
       {% assign dataset = site.data[page.data] | default: site.data.teaching %}
       {% for entry in dataset %}
         {% unless entry.title == blank %}
-          <a class="anchor" id="{{ entry.title }}"></a>
+          <a class="anchor" id="{{ entry.title | strip_html | slugify }}"></a>
         {% endunless %}
-        <div class="card mt-3 p-3">
+        <div class="{% if page.show_cards == false %}cv-section{% else %}card mt-3 p-3{% endif %}">
           {% unless entry.title == blank %}
-            <h3 class="card-title font-weight-medium">{{ entry.title }}</h3>
+            {% if page.show_cards == false %}
+              <h2 class="card-title font-weight-normal">{{ entry.title }}</h2>
+            {% else %}
+              <h3 class="card-title font-weight-normal">{{ entry.title }}</h3>
+            {% endif %}
           {% endunless %}
-          <div>
+          <div class="cv-section-content">
             {% if entry.type == 'list' %}
               {% include cv/list.liquid %}
             {% elsif entry.type == 'map' %}
@@ -31,6 +35,8 @@ layout: default
               {% include cv/nested_list.liquid %}
             {% elsif entry.type == 'time_table' %}
               {% include cv/time_table.liquid %}
+            {% elsif entry.type == 'teaching_course' %}
+              {% include cv/teaching_course.liquid %}
             {% elsif entry.type == 'list_groups' %}
               {% include cv/list_groups.liquid %}
             {% else %}

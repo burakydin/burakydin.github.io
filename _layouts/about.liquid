@@ -3,16 +3,25 @@ layout: default
 ---
 <div class="post">
   <header class="post-header">
-    <h1 class="post-title">
+    <h1 class="post-title profile-name">
       {% if site.title == 'blank' %}
-        <span class="font-weight-bold">{{ site.first_name }}</span> {{ site.middle_name }}
-        {{ site.last_name }}
+        <span class="font-weight-bold">
+          {% if page.display_name or site.display_name %}
+            {{ page.display_name | default: site.display_name }}
+          {% else %}
+            {{ site.first_name }} {{ site.middle_name }} {{ site.last_name }}
+          {% endif %}
+        </span>
       {% else %}
         {{ site.title }}
       {% endif %}
     </h1>
     <p class="desc">{{ page.subtitle }}</p>
   </header>
+
+  {% if page.contact_note %}
+    <div class="home-contact-band">{{ page.contact_note | markdownify }}</div>
+  {% endif %}
 
   <article>
     {% if page.profile %}
@@ -22,7 +31,7 @@ layout: default
           {% if page.profile.image_circular %}
             {% assign profile_image_class = 'img-fluid z-depth-1 rounded-circle' %}
           {% else %}
-            {% assign profile_image_class = 'img-fluid z-depth-1 rounded' %}
+            {% assign profile_image_class = 'img-fluid z-depth-1 rounded-0' %}
           {% endif %}
           {% capture sizes %}(min-width: {{ site.max_width }}) {{ site.max_width | minus: 30 | times: 0.3}}px, (min-width: 576px) 30vw, 95vw"{% endcapture %}
           <div class="profile-image-wrapper">
@@ -43,7 +52,7 @@ layout: default
       </div>
     {% endif %}
 
-    <div class="clearfix">{{ content }}</div>
+    <div class="clearfix home-intro">{{ content }}</div>
 
     <!-- News -->
     {% if page.announcements and page.announcements.enabled %}
@@ -63,10 +72,10 @@ layout: default
 
     <!-- Selected papers -->
     {% if page.selected_papers %}
-      <h2>
-        <a  style="color: inherit">recent work</a>
-      </h2>
-      {% include selected_papers.liquid %}
+      <section class="recent-work" aria-labelledby="recent-work-title">
+        <h2 id="recent-work-title" class="recent-work-title">Recent Work</h2>
+        {% include selected_papers.liquid %}
+      </section>
     {% endif %}
 
     <!-- Social -->
@@ -74,7 +83,6 @@ layout: default
       <div class="social">
         <div class="contact-icons">{% include social.liquid %}</div>
 
-        <div class="contact-note">{{ site.contact_note }}</div>
       </div>
     {% endif %}
 

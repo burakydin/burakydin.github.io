@@ -1,0 +1,51 @@
+.theme-bats {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  overflow: hidden;
+  pointer-events: none;
+
+  // The theme's global color transition must not delay flight or wing beats.
+  &,
+  * {
+    transition: none !important;
+    pointer-events: none;
+  }
+}
+
+.theme-bat {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform, opacity;
+
+  svg {
+    display: block;
+    width: 100%;
+    overflow: visible;
+    fill: #62666e;
+    stroke: #92969e;
+    stroke-width: 0.5;
+    stroke-linejoin: round;
+  }
+}
+
+.theme-bat-wing {
+  transform-origin: 50px 28px;
+  animation: theme-bat-flap var(--bat-flap-duration) ease-in-out var(--bat-flap-delay) infinite alternate;
+}
+
+@keyframes theme-bat-flap {
+  from {
+    transform: scale(1, 1);
+  }
+  to {
+    transform: scale(0.4, 0.7);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-bats {
+    display: none;
+  }
+}

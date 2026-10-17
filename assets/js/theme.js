@@ -24,6 +24,7 @@ let setThemeSetting = (themeSetting) => {
 // Apply the computed dark or light theme to the website.
 let applyTheme = () => {
   let theme = determineComputedTheme();
+  const previousTheme = document.documentElement.getAttribute("data-theme");
 
   transTheme();
   setHighlight(theme);
@@ -56,6 +57,11 @@ let applyTheme = () => {
   }
 
   document.documentElement.setAttribute("data-theme", theme);
+
+  // Announce actual switches, without playing effects on the initial page load.
+  if (previousTheme && previousTheme !== theme) {
+    document.dispatchEvent(new CustomEvent("theme-changed", { detail: { theme, previousTheme } }));
+  }
 
   // Add class to tables.
   let tables = document.getElementsByTagName("table");

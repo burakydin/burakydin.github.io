@@ -1,11 +1,13 @@
 ---
 layout: page
-title: Vehicular Communication
+title: "Rerouting Visible Light Pathways Using an Adjustable-Angle Mirror to Sustain Vehicular Communication on Curvy Roads"
 description: An Empirical Approach to Rerouting Visible Light Pathways Using an Adjustable-Angle Mirror to Sustain Communication between Vehicles on Curvy Roads
 img: assets/img/curvyroads.jpg
-importance: 3
+tile_color: "#ece9e3"
+tile_color_dark: "#393335"
+importance: 5
 category: work
-year: 2024
+year: 2023
 status: published
 tags: [VLC, Image Processing, MATLAB]
 ---

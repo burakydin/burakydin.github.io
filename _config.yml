@@ -5,7 +5,8 @@
 title: blank # the website title (if blank, full name will be used instead)
 first_name: Burak
 middle_name:
-last_name: Aydın
+last_name: Aydin
+display_name: Burak Aydın # visible name; titles and metadata use first_name/last_name
 contact_note: >
   please reach out to me via email or <a href='https://www.linkedin.com/in/burakydin/'>linkedin</a> if you have any questions, proposals or just to say hi
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
@@ -14,7 +15,8 @@ footer_text: >
    |     <i>"Live life, breathe air, I know somehow we're gonna get there."</i>
 keywords: jekyll, jekyll-theme, academic-website, portfolio-website # add your own keywords or leave empty
 lang: en # the language of your site (for example: en, fr, cn, ru, etc.)
-icon: 𓃮 #icon.png #🤙 🫡  # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
+icon: favicon.svg # standalone 𓃮 glyph in /assets/img/
+icon_fallback: favicon.png # same glyph for Google Search and touch icons
 
 #   # Powered by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme.
   # Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
@@ -28,6 +30,8 @@ back_to_top: true # set to false to disable the back to top button
 # -----------------------------------------------------------------------------
 # Theme
 # -----------------------------------------------------------------------------
+
+enable_shadows: false # set to true to restore shadows throughout the site
 
 # repo color theme
 repo_theme_light: default # https://github.com/anuraghazra/github-readme-stats/blob/master/themes/README.md
@@ -447,7 +451,7 @@ third_party_libraries:
     version: "5.5.0"
   google_fonts:
     url:
-      fonts: "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&display=swap"
+      fonts: "https://fonts.googleapis.com/css2?family=Material+Icons&family=Roboto:wght@300..700&family=Roboto+Slab:wght@100;300;400;500;700&display=swap"
   highlightjs:
     integrity:
       css:

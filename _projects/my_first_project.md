@@ -1,9 +1,12 @@
 ---
 layout: page
-title: Fare Game
+title: "Fare Game: A Mean Field Model of Stochastic Intensity Control in Dynamic Ticket Pricing"
 description: A Mean Field Model of Stochastic Intensity Control in Dynamic Ticket Pricing
-img: assets/img/paperplane.jpg
-importance: 1
+img: assets/img/projects/fare-game.jpg
+img_position: "50% 30%"
+tile_color: "#e8e3dc"
+tile_color_dark: "#393531"
+importance: 3
 category: work
 year: 2025
 status: published

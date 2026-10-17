@@ -1,8 +1,10 @@
 ---
 layout: page
-title: Personal Webpage
+title: "Personal Academic Website: Resume, Research, Teaching, and Projects"
 description: This website that we currently are on
-img: assets/img/homepage.png
+img: assets/img/projects/personal-website.png
+tile_color: "#ededed"
+tile_color_dark: "#343436"
 importance: 1
 category: personal
 year: 2025

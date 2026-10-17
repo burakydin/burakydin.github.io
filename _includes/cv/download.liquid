@@ -1,0 +1,15 @@
+{% if page.cv_pdf %}
+  <p class="cv-download post-description">
+    {% if page.description %}
+      {{ page.description }}
+    {% endif %}
+    <a
+      href="{% if page.cv_pdf contains '://' %}{{ page.cv_pdf }}{% else %}{{ page.cv_pdf | prepend: '/assets/pdf/' | relative_url }}{% endif %}"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Open resume PDF in a new tab"
+    >
+      <i class="fa-solid fa-file-pdf" aria-hidden="true"></i>
+    </a>
+  </p>
+{% endif %}

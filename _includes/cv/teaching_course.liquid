@@ -1,0 +1,21 @@
+<div class="cv-timeline teaching-course">
+  <div class="teaching-course-meta">
+    <p class="teaching-course-code">{{ entry.course }}</p>
+  </div>
+
+  <ul class="teaching-offerings" aria-label="Terms and instructors">
+    {% for offering in entry.offerings %}
+      <li>
+        <span class="badge text-uppercase">{{ offering.term }}</span>
+        <span class="teaching-instructor">{{ offering.instructor }}</span>
+      </li>
+    {% endfor %}
+  </ul>
+
+  {% if entry.description %}
+    <details class="teaching-description">
+      <summary>Course description</summary>
+      <p>{{ entry.description }}</p>
+    </details>
+  {% endif %}
+</div>

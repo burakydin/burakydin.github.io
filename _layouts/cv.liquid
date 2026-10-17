@@ -3,36 +3,21 @@ layout: default
 ---
 {% unless site.data.resume %}
   <div class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        {{ page.title }}
-        {% if page.cv_pdf %}
-          <a
-            {% if page.cv_pdf contains '://' %}
-              href="{{ page.cv_pdf }}"
-            {% else %}
-              href="{{ page.cv_pdf | prepend: 'assets/pdf/' | relative_url }}"
-            {% endif %}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="float-right"
-          >
-            <i class="fa-solid fa-file-pdf"></i>
-          </a>
-        {% endif %}
-      </h1>
-      {% if page.description %}
-        <p class="post-description">{{ page.description }}</p>
-      {% endif %}
-    </header>
+    {% unless page.intro_in_first_section %}
+    {% include cv/header.liquid %}
+    {% endunless %}
 
     <article>
-      <div class="cv">
+      <div class="cv{% if page.show_cards == false %} cv-flat{% endif %}{% if page.section_backgrounds %} cv-banded{% endif %}">
         {% for entry in site.data.cv %}
           <a class="anchor" id="{{ entry.title }}"></a>
-          <div class="card mt-3 p-3">
-            <h3 class="card-title font-weight-medium">{{ entry.title }}</h3>
-            <div>
+          <div class="{% if page.show_cards == false %}cv-section{% else %}card mt-3 p-3{% endif %}{% if page.intro_in_first_section and forloop.first %} cv-intro{% endif %}">
+            {% if page.intro_in_first_section and forloop.first %}
+              <h1 class="card-title font-weight-normal">{{ entry.title }}</h1>
+            {% else %}
+              <h3 class="card-title font-weight-normal">{{ entry.title }}</h3>
+            {% endif %}
+            <div class="cv-section-content">
               {% if entry.type == 'list' %}
                 {% include cv/list.liquid %}
               {% elsif entry.type == 'map' %}
@@ -46,6 +31,9 @@ layout: default
               {% else %}
                 {{ entry.contents }}
               {% endif %}
+              {% if page.intro_in_first_section and forloop.first %}
+                {% include cv/download.liquid %}
+              {% endif %}
             </div>
           </div>
         {% endfor %}
@@ -54,31 +42,12 @@ layout: default
   </div>
 {% else %}
   <div class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        {{ page.title }}
-        {% if page.cv_pdf %}
-          <a
-            {% if page.cv_pdf contains '://' %}
-              href="{{ page.cv_pdf }}"
-            {% else %}
-              href="{{ page.cv_pdf | prepend: 'assets/pdf/' | relative_url }}"
-            {% endif %}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="float-right"
-          >
-            <i class="fa-solid fa-file-pdf"></i>
-          </a>
-        {% endif %}
-      </h1>
-      {% if page.description %}
-        <p class="post-description">{{ page.description }}</p>
-      {% endif %}
-    </header>
+    {% unless page.intro_in_first_section %}
+    {% include cv/header.liquid %}
+    {% endunless %}
 
     <article>
-      <div class="cv">
+      <div class="cv{% if page.show_cards == false %} cv-flat{% endif %}{% if page.section_backgrounds %} cv-banded{% endif %}">
         {% for data in site.data.resume %}
           {% if site.jsonresume and site.jsonresume.size > 0 %}
             {% unless site.jsonresume contains data[0] %}
@@ -87,12 +56,19 @@ layout: default
           {% endif %}
           {% if data[0] == 'meta' or data[1].size == 0 %} {% continue %} {% endif %}
           <a class="anchor" id="{{ data[0] }}"></a>
-          <div class="card mt-3 p-3">
-            <h3 class="card-title font-weight-medium">{{ data[0] | capitalize }}</h3>
-            <div>
+          <div class="{% if page.show_cards == false %}cv-section{% else %}card mt-3 p-3{% endif %}{% if page.intro_in_first_section and data[0] == 'basics' %} cv-intro{% endif %}">
+            {% if page.intro_in_first_section and data[0] == 'basics' %}
+              <h1 class="card-title font-weight-normal">Resume</h1>
+            {% else %}
+              <h3 class="card-title font-weight-normal">{{ data[0] | capitalize }}</h3>
+            {% endif %}
+            <div class="cv-section-content">
               {% case data[0] %}
                 {% when 'basics' %}
                   {% include resume/basics.liquid %}
+                  {% if page.intro_in_first_section %}
+                    {% include cv/download.liquid %}
+                  {% endif %}
                 {% when 'education' %}
                   {% include resume/education.liquid %}
                 {% when 'work' %}

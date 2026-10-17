@@ -9,6 +9,7 @@ $max-content-width: {{ site.max_width }};
 @import
   "variables",
   "themes",
+  "theme-bats",
   "layout",
   "base",
   "distill",
@@ -23,3 +24,26 @@ $max-content-width: {{ site.max_width }};
   "tabler-icons/tabler-icons-filled.scss",
   "tabler-icons/tabler-icons-outline.scss"
 ;
+
+{% unless site.enable_shadows %}
+// Keep existing shadow styles available when enable_shadows is switched on.
+:root {
+  &,
+  *,
+  *::before,
+  *::after {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  // Preserve a visible keyboard focus indicator without a shadow ring.
+  :focus-visible {
+    outline: 2px solid var(--global-theme-color);
+    outline-offset: 3px;
+  }
+}
+
+ninja-keys {
+  --ninja-modal-shadow: none;
+}
+{% endunless %}
