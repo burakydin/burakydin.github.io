@@ -15,7 +15,7 @@
       year: "Aug ’23 - Present"
       # location: "<strong>Princeton, NJ <img src='/assets/img/flags/nj.png' alt='NJ' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;margin-right:0.25em;'></strong>"
       location: "<strong>Princeton, NJ </strong>"
-      description: 
+      description:
         - "Advised by <strong>Prof. Ronnie Sircar</strong>. GPA: <strong>3.95</strong> / 4.00."
         - "Coursework in Optimization, Probability, Stochastic Calculus, Statistics, Computational Finance, Risk Management, Asset Pricing, PDE Methods, Functional Analysis."
     - title: "B.S. in Electrical and Electronics Engineering"
@@ -31,13 +31,13 @@
       location: "<strong>Istanbul, TR </strong>"
       description:
         - "Valedictorian (Class Rank: 1/333)"
-  
+
 - title: Experience
   type: time_table
   colored_badges: false
   contents:
     - title: "Quantitative Researcher PhD Intern"
-      wellsfargo: "Wells Fargo Bank, N.A." 
+      wellsfargo: "Wells Fargo Bank, N.A."
       year: "Jun ’25 - Aug ’25"
       # location: "<strong>Charlotte, NC <img src='/assets/img/flags/nc.png' alt='NC' style='height:1em;width:auto;vertical-align:-0.15em;border-radius:2px;margin-right:0.25em;'></strong>"
       location: "<strong>Charlotte, NC </strong>"
@@ -60,7 +60,7 @@
       description:
         - "Senior design project on Vehicle-to-Vehicle Communication. Focusing on field-of-view limitations on curvy roads, worked on hardware and software aspects for the project, used MATLAB for modeling."
         - "Editor's Choice Award from Photonics journal."
-    - title: "Undergraduate Research Intern at Physical Intelligence Department"  
+    - title: "Undergraduate Research Intern at Physical Intelligence Department"
       maxplanck: "Max Planck Institute for Intelligent Systems"
       year: "Jul ’22 - Sep ’22"
       location: "<strong>Stuttgart, DE </strong>"
@@ -68,7 +68,6 @@
         - "Utilized Python and Robot Operating System in order to construct a closed-loop controller with visual feedback, ran systematic experiments"
         - "Employed Machine Learning tools to achieve real-time data processing and decision making for robot motion."
 
-    
 - title: Skills & Interests
   type: nested_list
   contents:
@@ -81,7 +80,6 @@
     - title: "Clubs"
       items:
         - "Member of Carnegie Lake Rowing Association, Princeton Club Tennis."
-
 
 - title: Publications & Talks
   type: list
@@ -98,8 +96,8 @@
 - title: Achievements, Scholarships & Service
   type: list
   contents:
-      - "Princeton University <strong class='cv-award'>Excellence in Teaching Award</strong> for the School of Engineering and Applied Sciences, awarded April 2026."
-      - "Turkish University Entrance Exam 2019: <strong>6th</strong> place in Quantitative & <strong>1st</strong> in English sections, among 2,528,031 test takers."
-      - "Recipient of Turkish Presidential Outstanding Success Scholarship, Bogazici University Outstanding Success Scholarship, Turkiye Is Bankasi Golden Youth Award during undergraduate education."
-      - "Department Representative, Princeton University Graduate Student Government, 2026-2027."
-      - "Graduate Student Committee Member, Operations Research and Financial Engineering Department, 2025-2026."
+    - "Princeton University <strong class='cv-award'>Excellence in Teaching Award</strong> for the School of Engineering and Applied Sciences, awarded April 2026."
+    - "Turkish University Entrance Exam 2019: <strong>6th</strong> place in Quantitative & <strong>1st</strong> in English sections, among 2,528,031 test takers."
+    - "Recipient of Turkish Presidential Outstanding Success Scholarship, Bogazici University Outstanding Success Scholarship, Turkiye Is Bankasi Golden Youth Award during undergraduate education."
+    - "Department Representative, Princeton University Graduate Student Government, 2026-2027."
+    - "Graduate Student Committee Member, Operations Research and Financial Engineering Department, 2025-2026."

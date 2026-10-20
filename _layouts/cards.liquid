@@ -50,32 +50,31 @@ layout: default
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('.cv .cv-toggle').forEach(function (btn) {
-      // set initial label based on state
-      var isExpanded = btn.getAttribute('aria-expanded') === 'true';
-      btn.textContent = isExpanded ? 'Collapse' : 'Expand';
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('.cv .cv-toggle').forEach(function (btn) {
+        // set initial label based on state
+        var isExpanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.textContent = isExpanded ? 'Collapse' : 'Expand';
 
-      btn.addEventListener('click', function () {
-        var expanded = btn.getAttribute('aria-expanded') === 'true';
-        btn.setAttribute('aria-expanded', String(!expanded));
-        // update label
-        btn.textContent = expanded ? 'Expand' : 'Collapse';
-        var details = btn.nextElementSibling;
-        if (details) {
-          if (expanded) {
-            // collapse
-            details.style.maxHeight = '0px';
-            details.style.opacity = '0';
-          } else {
-            // expand to natural height
-            details.style.maxHeight = details.scrollHeight + 'px';
-            details.style.opacity = '1';
+        btn.addEventListener('click', function () {
+          var expanded = btn.getAttribute('aria-expanded') === 'true';
+          btn.setAttribute('aria-expanded', String(!expanded));
+          // update label
+          btn.textContent = expanded ? 'Expand' : 'Collapse';
+          var details = btn.nextElementSibling;
+          if (details) {
+            if (expanded) {
+              // collapse
+              details.style.maxHeight = '0px';
+              details.style.opacity = '0';
+            } else {
+              // expand to natural height
+              details.style.maxHeight = details.scrollHeight + 'px';
+              details.style.opacity = '1';
+            }
           }
-        }
+        });
       });
     });
-  });
-<!-- End cards toggle script -->
+  <!-- End cards toggle script -->
 </script>
-

@@ -9,7 +9,9 @@ layout: default
           {% if page.display_name or site.display_name %}
             {{ page.display_name | default: site.display_name }}
           {% else %}
-            {{ site.first_name }} {{ site.middle_name }} {{ site.last_name }}
+            {{ site.first_name }}
+            {{ site.middle_name }}
+            {{ site.last_name }}
           {% endif %}
         </span>
       {% else %}
@@ -82,7 +84,6 @@ layout: default
     {% if page.social %}
       <div class="social">
         <div class="contact-icons">{% include social.liquid %}</div>
-
       </div>
     {% endif %}
 

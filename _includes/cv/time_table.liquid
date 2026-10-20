@@ -1,23 +1,23 @@
 <ul class="card-text font-weight-light list-group list-group-flush cv-timeline{% if entry.colored_badges %} cv-timeline-colored{% endif %}">
   {% for content in entry.contents %}
-    {% assign badge_color = "" %}
-    {% assign icon_color = "" %}
+    {% assign badge_color = '' %}
+    {% assign icon_color = '' %}
     {% if entry.colored_badges %}
       {% if content.princeton %}
-        {% assign badge_color = "background-color: var(--global-theme-color) !important; color: white !important;" %}
-        {% assign icon_color = "color: var(--global-theme-color) !important;" %}
+        {% assign badge_color = 'background-color: var(--global-theme-color) !important; color: white !important;' %}
+        {% assign icon_color = 'color: var(--global-theme-color) !important;' %}
       {% elsif content.bogazici %}
-        {% assign badge_color = "background-color: #00adef !important; color: white !important;" %}
-        {% assign icon_color = "color: #00adef !important;" %}
+        {% assign badge_color = 'background-color: #00adef !important; color: white !important;' %}
+        {% assign icon_color = 'color: #00adef !important;' %}
       {% elsif content.wellsfargo %}
-        {% assign badge_color = "background-color: #D71E28 !important; color: white !important;" %}
-        {% assign icon_color = "color: #D71E28 !important;" %}
+        {% assign badge_color = 'background-color: #D71E28 !important; color: white !important;' %}
+        {% assign icon_color = 'color: #D71E28 !important;' %}
       {% elsif content.maxplanck %}
-        {% assign badge_color = "background-color: #006C66 !important; color: white !important;" %}
-        {% assign icon_color = "color: #006C66 !important;" %}
+        {% assign badge_color = 'background-color: #006C66 !important; color: white !important;' %}
+        {% assign icon_color = 'color: #006C66 !important;' %}
       {% elsif content.kal %}
-        {% assign badge_color = "background-color: #2E8B2E !important; color: white !important;" %}
-        {% assign icon_color = "color: #2E8B2E !important;" %}
+        {% assign badge_color = 'background-color: #2E8B2E !important; color: white !important;' %}
+        {% assign icon_color = 'color: #2E8B2E !important;' %}
       {% endif %}
     {% endif %}
     <li class="list-group-item">
@@ -51,7 +51,20 @@
           {% if content.title %}
             <h6 class="title font-weight-bold">{{ content.title }}</h6>
           {% endif %}
-          {% if content.department or content.institution or content.company or content.organization or content.employer or content.course or content.instructor or content.professor or content.princeton or content.bogazici or content.kal or content.maxplanck or content.wellsfargo %}
+          {% if content.department
+            or content.institution
+            or content.company
+            or content.organization
+            or content.employer
+            or content.course
+            or content.instructor
+            or content.professor
+            or content.princeton
+            or content.bogazici
+            or content.kal
+            or content.maxplanck
+            or content.wellsfargo
+          %}
             <table class="table-cv institution">
               <tbody>
                 {% if content.company or content.employer %}
@@ -146,8 +159,8 @@
             </table>
           {% endif %}
           {% if page.show_cards == false %}
-        </div>
-        <div class="col-12 cv-entry-body">
+            </div>
+            <div class="col-12 cv-entry-body">
           {% endif %}
           {% if page.details_toggle %}
             {% if content.maindescription or content.description or content.items %}

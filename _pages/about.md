@@ -15,7 +15,6 @@ profile:
   image_title: CogSci2026, Rio de Janeiro
   more_info: >
 
-
 selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
 
@@ -34,14 +33,13 @@ I am a fourth-year Ph.D. candidate at <img src='/assets/img/flags/princeton.svg'
 
 My research is in financial and applied mathematics, with a focus on markets and learning. I use tools from applied probability, stochastic control, and game theory to study <strong class="research-emphasis">price formation, strategic competition, and how information and individual behavior shape collective outcomes</strong>. My interests include:
 
+<!-- prettier-ignore -->
 - Prediction-market microstructure and mechanisms
 - Mean field games for competitive dynamic pricing
 - Social learning on networks
 {: .research-interests}
 
 You can find my resume <a href="{{ '/assets/pdf/burak_aydin_resume.pdf' | relative_url }}" target="_blank" rel="noopener noreferrer"><strong>here</strong></a>.
-
-
 
 <!-- Put your address / P.O. box / other info right below your picture. You can also disable any of these elements by editing `profile` property of the YAML header of your `_pages/about.md`. Edit `_bibliography/papers.bib` and Jekyll will render your [publications page](/al-folio/publications/) automatically. -->
 

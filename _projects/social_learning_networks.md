@@ -18,7 +18,7 @@ tags: [Social Learning, Network Dynamics, Applied Probability]
 
 ## Overview
 
-How do individual learning biases and social connections shape the evolution of language and other cultural traits? In *Nonlinear Social Learning and Cultural Evolution on Networks: A Perturbative Analysis*, we study Bayesian learners who repeatedly observe and learn from their neighbors.
+How do individual learning biases and social connections shape the evolution of language and other cultural traits? In _Nonlinear Social Learning and Cultural Evolution on Networks: A Perturbative Analysis_, we study Bayesian learners who repeatedly observe and learn from their neighbors.
 
 Our starting point is a model in which random social learning reproduces the learners' prior at the population level. We examine how this changes when learners favor the local majority (conformity bias) or prefer one cultural variant over another (utility bias).
 

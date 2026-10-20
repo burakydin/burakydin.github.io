@@ -1,5 +1,8 @@
-{% assign image_sizes = project.img_sizes | default: "(min-width: 992px) 300px, (min-width: 930px) 450px, (min-width: 768px) 50vw, 100vw" %}
-<article class="project-tile" style="--project-tile-color: {{ project.tile_color | default: '#ededed' }}; --project-tile-dark-color: {{ project.tile_color_dark | default: '#343436' }}; --project-image-position: {{ project.img_position | default: '50% 50%' }}; --project-image-width: {{ project.img_width | default: '100%' }};">
+{% assign image_sizes = project.img_sizes | default: '(min-width: 992px) 300px, (min-width: 930px) 450px, (min-width: 768px) 50vw, 100vw' %}
+<article
+  class="project-tile"
+  style="--project-tile-color: {{ project.tile_color | default: '#ededed' }}; --project-tile-dark-color: {{ project.tile_color_dark | default: '#343436' }}; --project-image-position: {{ project.img_position | default: '50% 50%' }}; --project-image-width: {{ project.img_width | default: '100%' }};"
+>
   <a class="project-tile-link" href="{% if project.redirect %}{{ project.redirect }}{% else %}{{ project.url | relative_url }}{% endif %}">
     <div class="project-tile-media">
       {% if project.img %}
@@ -11,7 +14,9 @@
       {% if project.status or project.year %}
         <p class="project-tile-meta">
           {% if project.status %}{{ project.status | capitalize }}{% endif %}
-          {% if project.status and project.year %}<span aria-hidden="true"> · </span>{% endif %}
+          {% if project.status and project.year -%}
+            <span aria-hidden="true"> · </span>
+          {%- endif %}
           {% if project.year %}{{ project.year }}{% endif %}
         </p>
       {% endif %}

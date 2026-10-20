@@ -63,8 +63,8 @@ on:
 
 permissions:
   contents: read
-  pages: write        # needed for actions/deploy-pages
-  id-token: write     # needed for actions/deploy-pages
+  pages: write # needed for actions/deploy-pages
+  id-token: write # needed for actions/deploy-pages
 
 concurrency:
   group: "pages"
@@ -130,8 +130,6 @@ jobs:
       - name: Deploy to GitHub Pages 🚀
         id: deployment
         uses: actions/deploy-pages@v4
-
-
 # name: Deploy site
 
 # on:

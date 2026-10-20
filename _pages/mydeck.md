@@ -1,8 +1,8 @@
 ---
 layout: page
-title: 
+title:
 permalink: /clashroyale/
-description: 
+description:
 nav: false
 ---
 

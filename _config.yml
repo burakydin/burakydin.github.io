@@ -10,16 +10,16 @@ display_name: Burak Aydın # visible name; titles and metadata use first_name/la
 contact_note: >
   please reach out to me via email or <a href='https://www.linkedin.com/in/burakydin/'>linkedin</a> if you have any questions, proposals or just to say hi
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
-    My personal website. PhD candidate at Princeton ORFE. Bachelor's in EE, minor in Econ.
+  My personal website. PhD candidate at Princeton ORFE. Bachelor's in EE, minor in Econ.
 footer_text: >
-   |     <i>"Live life, breathe air, I know somehow we're gonna get there."</i>
+  |     <i>"Live life, breathe air, I know somehow we're gonna get there."</i>
 keywords: jekyll, jekyll-theme, academic-website, portfolio-website # add your own keywords or leave empty
 lang: en # the language of your site (for example: en, fr, cn, ru, etc.)
 icon: favicon.svg # standalone 𓃮 glyph in /assets/img/
 icon_fallback: favicon.png # same glyph for Google Search and touch icons
 
 #   # Powered by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme.
-  # Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
+# Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
 
 url: https://burakydin.com # the base hostname & protocol for your site
 baseurl: # the subpath of your site, e.g. /blog/. Leave blank for root
@@ -639,7 +639,6 @@ third_party_libraries:
 #     json: https://orfe.princeton.edu/sites/g/files/toruqf1286/files/documents/cv_burak_aydin%20-%20burak%20aydin.pdf # assets/json/resume.json # it can also be an url
 
 jekyll_get_json: []
-
 
 jsonresume:
   - basics

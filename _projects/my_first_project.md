@@ -24,9 +24,9 @@ We study the dynamic pricing of discrete goods over a finite selling horizon. On
 - Feature 3 -->
 
 ## Links
+
 - [Mathematics and Financial Economics, Springer Nature Link](https://doi.org/10.1007/s11579-026-00412-x)
 - [arXiv submission](https://arxiv.org/abs/2506.13088)
 <!-- - [Live Demo](#) -->
-
 
 <a href="/projects/" style="font-size: 1.3rem;">← Back to Projects</a>
